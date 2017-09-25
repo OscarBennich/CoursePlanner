@@ -11,4 +11,4 @@ build:
 test:
     stage: test
     script:
-        - '"mstest.exe" /testcontainer:testproj.Tests/bin/Debug/testproj.Tests.dll'
+        - '"mstest.exe" /testcontainer:CoursePlanner.Tests/bin/Debug/CoursePlanner.Tests.dll'
