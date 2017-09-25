@@ -23,3 +23,29 @@ u:\visual studio 2013\Projects\GammaTeamProject\GammaTeamProject\bin\System.Web.
 u:\visual studio 2013\Projects\GammaTeamProject\GammaTeamProject\obj\Debug\GammaTeamProject.csprojResolveAssemblyReference.cache
 u:\visual studio 2013\Projects\GammaTeamProject\GammaTeamProject\obj\Debug\GammaTeamProject.dll
 u:\visual studio 2013\Projects\GammaTeamProject\GammaTeamProject\obj\Debug\GammaTeamProject.pdb
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\GammaTeamProject.dll.config
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\GammaTeamProject.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\GammaTeamProject.pdb
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\Antlr3.Runtime.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\Newtonsoft.Json.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Helpers.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Mvc.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Optimization.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Razor.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Webpages.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Webpages.Razor.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\WebGrease.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\Antlr3.Runtime.pdb
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\Newtonsoft.Json.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Optimization.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Razor.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Webpages.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Webpages.Razor.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Helpers.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\bin\System.Web.Mvc.xml
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\obj\Debug\GammaTeamProject.csprojResolveAssemblyReference.cache
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\obj\Debug\GammaTeamProject.dll
+C:\Users\Sofie\Documents\CoursePlanner.git\GammaTeamProject\obj\Debug\GammaTeamProject.pdb
