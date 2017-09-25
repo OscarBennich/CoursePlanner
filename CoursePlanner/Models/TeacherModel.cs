@@ -10,7 +10,7 @@ namespace CoursePlanner.Models
         private int _id;
         private string _name;
         private DateTime _dob;
-        private TeacherContractModel _contractDetails;
+        private TeacherContract _contractDetails;
         private int _allocatedHours;
         private string[] _ListOfCourses;
 
@@ -18,18 +18,18 @@ namespace CoursePlanner.Models
         {
             get { return _id; }
         }
-
+        
         public string Name
         {
             get { return _name; }
         }
 
-        public TeacherContractModel ContractDetails
+        public TeacherContract ContractDetails
         {
             get { return _contractDetails; }
         }
 
-        public TeacherModel(int id, string name, DateTime dob, TeacherContractModel contract)
+        public TeacherModel(int id, string name, DateTime dob, TeacherContract contract)
         {
             _id = id;
             _name = name;
@@ -46,9 +46,8 @@ namespace CoursePlanner.Models
             return 0;
         }
 
-        // Get hours for FALL
-
-        public int GetAllHoursFall()
+        // Get hours per term
+        public int GetAllHoursPerTerm()
         {
             return GetBaseAnnualHours() / 2;
         }
@@ -56,29 +55,34 @@ namespace CoursePlanner.Models
         // Should in future get all hours allocated for teacher on the courses in the courses list!
         public int GetAllocatedHoursFall()
         {
+            // Modell som innehåller kurs, lärare och antal timmar
+            // ANVÄND LINK: Where (this && "fall"), Select (Hours), sum (All)
+            // Hämta alla där läraren är "this"
+            // Summera alla timfält där term = fall
+
             return _allocatedHours;
         }
 
         public int GetRemaingHoursFall()
         {
-            return GetBaseAnnualHours() - GetAllocatedHoursFall();
+            return GetAllHoursPerTerm() - GetAllocatedHoursFall();
         }
 
-        // Gat hours for SPRING
-
-        public int GetAllHoursSpring()
-        {
-            return GetBaseAnnualHours() / 2;
-        }
-
+        // Get hours for SPRING
+        // Should in future get all hours allocated for teacher on the courses in the courses list!
         public int GetAllocatedHoursSpring()
         {
+            // Modell som innehåller kurs, lärare och antal timmar
+            // ANVÄND LINK: Where (this && "fall"), Select (Hours), sum (All)
+            // Hämta alla där läraren är "this"
+            // Summera alla timfält där term = fall
+
             return _allocatedHours;
         }
 
         public int GetRemaingHoursSpring()
         {
-            return GetBaseAnnualHours() - GetAllocatedHoursFall();
+            return GetAllHoursPerTerm() - GetAllocatedHoursSpring();
         }
 
         private int getAge()

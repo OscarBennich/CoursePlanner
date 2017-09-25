@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class TeacherContractModel
+    public class TeacherContract
     {
         private DateTime _start;
         private DateTime _end;
@@ -32,7 +32,7 @@ namespace CoursePlanner.Models
             get { return _position; }
         }
 
-        public TeacherContractModel(DateTime start, DateTime end, int procentage, string position)
+        public TeacherContract(DateTime start, DateTime end, int procentage, string position)
         {
             _start = start;
             _end = end;
