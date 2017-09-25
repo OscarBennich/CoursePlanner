@@ -14,7 +14,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestUnder30()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, 100, "Professor");
             var te = new TeacherModel(1, "Herbert", new DateTime(1992, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
@@ -26,7 +26,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestBetween30and40()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, 100, "Professor");
             var te = new TeacherModel(1, "Herbert", new DateTime(1982, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
@@ -38,7 +38,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestOver40()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, 100, "Professor");
             var te = new TeacherModel(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
@@ -53,7 +53,7 @@ namespace CoursePlanner.Models.Tests
             Assert.Fail();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void GetAllocatedHoursFallTest()
         {
             Assert.Fail();
