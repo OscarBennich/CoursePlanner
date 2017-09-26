@@ -5,47 +5,49 @@
     Layout = "~/Views/Shared/_DefaultLayout.cshtml";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
+<div id="loginForm" class="login-box">
 
-<section id="loginForm">
-<h2>Use a local account to log in.</h2>
-@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+    <div class="login-logo">
+        <b>UU</b> Course Planner
+    </div>
 
-    <fieldset>
-        <legend>Log in Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-                @Html.ValidationMessageFor(m => m.Password)
-            </li>
-            <li>
-                @Html.CheckBoxFor(m => m.RememberMe)
-                @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
-            </li>
-        </ol>
-        <input type="submit" value="Log in" />
-    </fieldset>
-    <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
-    </p>
-}
-</section>
+    <div class="login-box-body">
 
-<section class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
+        <p class="login-box-msg">Sign in to start your session</p>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <div class="form-group has-feedback">
+
+
+                    @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Username", @class = "form-control" })
+                    <span class="fa fa-user form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.UserName)
+
+                </div>
+
+                <div class="form-group has-feedback">
+
+                    @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control" })
+                    <span class="fa fa-lock form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.Password)
+
+
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="submit" class="btn btn-primary btn-block btn-flat" value="Sign In" />
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </fieldset>
+        }
+
+    </div>
+</div>
