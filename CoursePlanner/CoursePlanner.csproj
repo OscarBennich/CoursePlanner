@@ -268,9 +268,17 @@
     <Content Include="Content\dist\js\demo.js" />
     <Content Include="Content\dist\js\pages\dashboard.js" />
     <Content Include="Content\dist\js\pages\dashboard2.js" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.js" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
+    <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
+    <Content Include="Content\plugins\fastclick\fastclick.js" />
+    <Content Include="Content\plugins\fastclick\fastclick.min.js" />
     <Content Include="Content\plugins\jQueryUI\jquery-ui.js" />
     <Content Include="Content\plugins\jQueryUI\jquery-ui.min.js" />
     <Content Include="Content\plugins\jQuery\jquery-2.2.3.min.js" />
+    <Content Include="Content\plugins\slimScroll\jquery.slimscroll.js" />
+    <Content Include="Content\plugins\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -475,7 +483,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\_MainLayout.cshtml" />
+    <Content Include="Views\Shared\_DefaultLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
