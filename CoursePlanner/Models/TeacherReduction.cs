@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace CoursePlanner.Models
 {
+    [Table("TeacherReduction")]
     public class TeacherReduction
     {
         private int _id;

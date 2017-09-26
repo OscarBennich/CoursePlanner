@@ -236,17 +236,69 @@ namespace CoursePlanner.Models.Tests
         }
 
         [TestMethod]
-        public void GetRemaingHoursFallTest()
+        public void GetRemainingHoursFallZeroAllocatedTest()
         {
             var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
+            var result = te.GetRemainingHoursFall();
+            var target = 1700;
+
+            Assert.AreEqual(target, result);
         }
 
-        
+        [TestMethod]
+        public void GetRemainingHoursFall50HoursOneCourseTest()
+        {
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
+
+            // var courses = new List<Course>
+            //{
+            //      # Add One Spring Course
+            //}
+
+            var result = te.GetRemainingHoursFall();
+
+            const int target = 1700 - 50;
+
+            Assert.AreEqual(target, result);
+        }
+
+
+        [TestMethod]
+        public void GetRemainingHoursSpringZeroAllocatedTest()
+        {
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
+
+            var result = te.GetRemainingHoursSpring();
+            var target = 1700;
+
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetRemainingHoursSpring50HoursOneCourseTest()
+        {
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
+
+            // var courses = new List<Course>
+            //{
+            //      # Add One Spring Course
+            //}
+
+            var result = te.GetAllocatedHoursSpring();
+
+            const int target = 50;
+
+            Assert.AreEqual(target, result);
+        }
+
 
         [TestMethod()]
-        public void GetRemaingHoursSpringTest()
+        public void GetRemainingHoursSpringTest()
         {
             Assert.Fail();
         }

@@ -1,40 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
 namespace CoursePlanner.Models
 {
+    public class TeacherContext : DbContext
+    {
+        public TeacherContext()
+            : base("DefaultConnection")
+        {
+        }
+
+        public DbSet<Teacher> Teacher { get; set; }
+    }
+
+
+    [Table("Teacher")]
     public class Teacher
     {
-        private int _id;
-        private string _name;
-        private DateTime _dob;
-        private TeacherContract _contractDetails;
-        private int _allocatedHours;
-        private string[] _ListOfCourses;
-
-        public int Id
-        {
-            get { return _id; }
-        }
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int TeacherId { get; private set; }
         
-        public string Name
-        {
-            get { return _name; }
-        }
+        public string Name { get; set; }
+        public DateTime Dob { get; set; }
 
-        public TeacherContract ContractDetails
-        {
-            get { return _contractDetails; }
-        }
+        [ForeignKey("TeacherContract")]
+        public int ContractId { get; set; }
+        public TeacherContract ContractDetails { get; set; }
+        
 
         public Teacher(int id, string name, DateTime dob, TeacherContract contract)
         {
-            _id = id;
-            _name = name;
-            _dob = dob;
-            _contractDetails = contract;
+            TeacherId = id;
+            Name = name;
+            Dob = dob;
+            ContractDetails = contract;
 
         }
 
@@ -51,8 +57,8 @@ namespace CoursePlanner.Models
         {
             int baseHours = GetBaseAnnualHours();
 
-            float totalPercentage = _contractDetails.TotalPercentageFall;
-            float reductivePercentage = _contractDetails.FallTotalPercentageForReduction();
+            float totalPercentage = ContractDetails.TotalPercentageFall;
+            float reductivePercentage = ContractDetails.FallTotalPercentageForReduction();
             float teachingPercentage = totalPercentage * (1 - reductivePercentage);
 
             baseHours = (int)Math.Round(baseHours * teachingPercentage, MidpointRounding.ToEven);
@@ -65,8 +71,8 @@ namespace CoursePlanner.Models
         {
             int baseHours = GetBaseAnnualHours();
 
-            float totalPercentage = _contractDetails.TotalPercentageSpring;
-            float reductivePercentage = _contractDetails.SpringTotalPercentageForReduction();
+            float totalPercentage = ContractDetails.TotalPercentageSpring;
+            float reductivePercentage = ContractDetails.SpringTotalPercentageForReduction();
             float teachingPercentage = totalPercentage * (1 - reductivePercentage);
 
             baseHours = (int)Math.Round(baseHours * teachingPercentage, MidpointRounding.ToEven);
@@ -82,7 +88,7 @@ namespace CoursePlanner.Models
             // Hämta alla där läraren är "this"
             // Summera alla timfält där term = fall
 
-            return _allocatedHours;
+            return 0;
         }
 
         // Get hours for SPRING
@@ -94,22 +100,22 @@ namespace CoursePlanner.Models
             // Hämta alla där läraren är "this"
             // Summera alla timfält där term = fall
 
-            return _allocatedHours;
+            return 0;
         }
 
-        public int GetRemaingHoursFall()
+        public int GetRemainingHoursFall()
         {
             return GetAllTeachingHoursFall() - GetAllocatedHoursFall();
         }
 
-        public int GetRemaingHoursSpring()
+        public int GetRemainingHoursSpring()
         {
             return GetAllTeachingHoursSpring() - GetAllocatedHoursSpring();
         }
 
         private int getAge()
         {
-            return DateTime.Today.Year - _dob.Year;
+            return DateTime.Today.Year - Dob.Year;
         }
     }
 }

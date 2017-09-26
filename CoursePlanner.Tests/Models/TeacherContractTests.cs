@@ -32,7 +32,6 @@ namespace CoursePlanner.Models.Tests
         public void FallTotalPercentageForReductionZeroReductionTest()
         {
             var tc = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
-
             var target = 0;
             
             Assert.AreEqual(target, tc.FallTotalPercentageForReduction());

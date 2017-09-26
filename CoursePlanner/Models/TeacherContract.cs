@@ -1,12 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 namespace CoursePlanner.Models
 {
+    [Table("TeacherContract")]
     public class TeacherContract
     {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        private int _contractId;
+
         private DateTime _start;
         private DateTime _end;
         private float _totalPercentageFall;
@@ -103,12 +110,12 @@ namespace CoursePlanner.Models
 
         public IEnumerable<IGrouping<string, string>> FallReductionDescriptionWithPercentageGroupedByType()
         {
-            return _reductions.Where(x => x.Term == "Fall").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage.ToString() + "%");
+            return _reductions.Where(x => x.Term == "Fall").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage + "%");
         }
 
         public IEnumerable<IGrouping<string, string>> SpringReductionDescriptionWithPercentageGroupedByType()
         {
-            return _reductions.Where(x => x.Term == "Spring").GroupBy(x => x.Type, x => x.Description + x.Percentage.ToString());
+            return _reductions.Where(x => x.Term == "Spring").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage + "%");
         }
 
 
