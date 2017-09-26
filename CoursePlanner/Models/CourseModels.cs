@@ -8,7 +8,12 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    
+    public enum CourseClassifications
+    {
+        Basic,
+        Intermediate,
+        Advanced
+    }
 
     [Table("Course")]
     public class CourseModels
@@ -19,7 +24,10 @@ namespace CoursePlanner.Models
 
         public string CourseCode { get; set; }
         public string CourseName { get; set; }
-        public string CourseClassificiation { get; set; }
+
+        [EnumDataType(typeof(CourseClassifications))]
+        public CourseClassifications CourseClassificiation { get; set; }
+
         public string CourseType { get; set; }
         public string Credits { get; set; }
         public string HSTValue { get; set; }
@@ -27,7 +35,7 @@ namespace CoursePlanner.Models
         public string CourseBudget { get; set; }
         public string Term { get; set; }
         public string Period { get; set; }
-        public string StartDate { get; set; } //shouldn't be a string TESTING
+        public string StartDate { get; set; } //shouldn't be a string (TESTING)
         public string EndDate { get; set; }
     }
 }
