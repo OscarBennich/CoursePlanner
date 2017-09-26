@@ -14,8 +14,8 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestUnder30()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, 100, "Professor");
-            var te = new TeacherModel(1, "Herbert", new DateTime(1992, 7, 15), contract);
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1992, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
             var target = 1756;
@@ -26,8 +26,8 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestBetween30and40()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, 100, "Professor");
-            var te = new TeacherModel(1, "Herbert", new DateTime(1982, 7, 15), contract);
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1982, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
             var target = 1735;
@@ -38,8 +38,8 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestOver40()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 100, 100, "Professor");
-            var te = new TeacherModel(1, "Herbert", new DateTime(1972, 7, 15), contract);
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
             var target = 1700;
@@ -48,7 +48,36 @@ namespace CoursePlanner.Models.Tests
         }
 
         [TestMethod]
-        public void GetAllHoursPerTermTest()
+        public void GetAllTeachingHoursFallZeroReductionsTest()
+        {
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
+
+            var result = te.GetAllTeachingHoursFall();
+            var target = 1700;
+
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetAllTeachingHoursFallWithReductionsTest()
+        {
+            var reductionList = new List<TeacherReduction>()
+            {
+                new TeacherReduction(1, TeacherReduction.reductionTypes.Commitment, "", "Fall", 0.5F)
+            };
+
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor", reductionList);
+            var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
+
+            var result = te.GetAllTeachingHoursFall();
+            var target = 1700*0.5F;
+
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetAllTeachingHoursSpringTest()
         {
             Assert.Fail();
         }

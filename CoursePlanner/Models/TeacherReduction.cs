@@ -12,14 +12,13 @@ namespace CoursePlanner.Models
         private string _type;
         private string _term;
         private string _description;
-        private int _procentage;
+        private float _percentage;
 
         public enum reductionTypes
         {
             Commitment,
             Research,
             Other
-
         }
 
         public int Id
@@ -42,18 +41,18 @@ namespace CoursePlanner.Models
             get { return _term; }
         }
 
-        public int Procentage
+        public float Percentage
         {
-            get { return _procentage; }
+            get { return _percentage; }
         }
 
-        public TeacherReduction(int id, reductionTypes type, string description, string term, int procentage)
+        public TeacherReduction(int id, reductionTypes type, string description, string term, float percentage)
         {
             _id = id;
             _type = type.ToString();
             _description = description;
             _term = term;
-            _procentage = procentage;
+            _percentage = percentage;
         }
         
     }

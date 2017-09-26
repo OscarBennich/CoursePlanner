@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class TeacherModel
+    public class Teacher
     {
         private int _id;
         private string _name;
@@ -29,7 +29,7 @@ namespace CoursePlanner.Models
             get { return _contractDetails; }
         }
 
-        public TeacherModel(int id, string name, DateTime dob, TeacherContract contract)
+        public Teacher(int id, string name, DateTime dob, TeacherContract contract)
         {
             _id = id;
             _name = name;
@@ -47,9 +47,31 @@ namespace CoursePlanner.Models
         }
 
         // Get hours per term
-        public int GetAllHoursPerTerm()
+        public int GetAllTeachingHoursFall()
         {
-            return GetBaseAnnualHours() / 2;
+            int baseHours = GetBaseAnnualHours();
+
+            float totalPercentage = _contractDetails.TotalPercentageFall;
+            float reductivePercentage = _contractDetails.FallTotalPercentageForReduction();
+            float teachingPercentage = totalPercentage * (1 - reductivePercentage);
+
+            baseHours = (int)Math.Round(baseHours * teachingPercentage, MidpointRounding.ToEven);
+
+            return baseHours; 
+        }
+
+        // Get hours per term
+        public int GetAllTeachingHoursSpring()
+        {
+            int baseHours = GetBaseAnnualHours();
+
+            float totalPercentage = _contractDetails.TotalPercentageSpring;
+            float reductivePercentage = _contractDetails.SpringTotalPercentageForReduction();
+            float teachingPercentage = totalPercentage * (1 - reductivePercentage);
+
+            baseHours = (int)Math.Round(baseHours * teachingPercentage, MidpointRounding.ToEven);
+
+            return baseHours;
         }
 
         // Should in future get all hours allocated for teacher on the courses in the courses list!
@@ -61,11 +83,6 @@ namespace CoursePlanner.Models
             // Summera alla timfält där term = fall
 
             return _allocatedHours;
-        }
-
-        public int GetRemaingHoursFall()
-        {
-            return GetAllHoursPerTerm() - GetAllocatedHoursFall();
         }
 
         // Get hours for SPRING
@@ -80,9 +97,14 @@ namespace CoursePlanner.Models
             return _allocatedHours;
         }
 
+        public int GetRemaingHoursFall()
+        {
+            return GetAllTeachingHoursFall() - GetAllocatedHoursFall();
+        }
+
         public int GetRemaingHoursSpring()
         {
-            return GetAllHoursPerTerm() - GetAllocatedHoursSpring();
+            return GetAllTeachingHoursSpring() - GetAllocatedHoursSpring();
         }
 
         private int getAge()

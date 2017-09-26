@@ -16,5 +16,7 @@ namespace CoursePlanner.Controllers
             return View();
         }
 
+        // Make sure percentages are adjusted to decimals!
+
     }
 }
