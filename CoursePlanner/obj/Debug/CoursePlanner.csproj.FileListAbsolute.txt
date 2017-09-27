@@ -163,3 +163,6 @@ C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\bin\zh-Hant\System.Spatial.
 C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.csprojResolveAssemblyReference.cache
 C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.dll
 C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.pdb
+C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.Migrations.InitialMigration.resources
+C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.csproj.GenerateResource.Cache
+C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.Migrations.Secondbettermigration.resources

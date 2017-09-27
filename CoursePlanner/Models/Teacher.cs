@@ -9,40 +9,30 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class TeacherProfileContext : DbContext
-    {
-        public TeacherProfileContext()
-            : base("DefaultConnection")
-        {
-        }
-
-        public DbSet<Teacher> Teacher { get; set; }
-    }
-
-
-    [Table("Teacher")]
     public class Teacher
     {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int Id { get; private set; }
+        public int Id { get; set; }
         
         public string Name { get; set; }
         public DateTime Dob { get; private set; }
 
-        [ForeignKey("TeacherContract")]
+        public virtual TeacherContract TeacherContract { get; set; }
 
+        public Teacher() { }
 
-        public int ContractId { get; set; }
-        public TeacherContract ContractDetails { get; set; }
-        
+        public Teacher(string name, DateTime dob, TeacherContract contract)
+        {
+            Name = name;
+            Dob = dob;
+            TeacherContract = contract;
+        }
 
         public Teacher(int id, string name, DateTime dob, TeacherContract contract)
         {
             Id = id;
             Name = name;
             Dob = dob;
-            ContractDetails = contract;
+            TeacherContract = contract;
 
         }
 
@@ -59,8 +49,8 @@ namespace CoursePlanner.Models
         {
             int baseHours = GetBaseAnnualHours();
 
-            float totalPercentage = ContractDetails.TotalPercentageFall;
-            float reductivePercentage = ContractDetails.FallTotalPercentageForReduction();
+            float totalPercentage = TeacherContract.TotalPercentageFall;
+            float reductivePercentage = TeacherContract.FallTotalPercentageForReduction();
             float teachingPercentage = totalPercentage * (1 - reductivePercentage);
 
             baseHours = (int)Math.Round(baseHours * teachingPercentage, MidpointRounding.ToEven);
@@ -73,8 +63,8 @@ namespace CoursePlanner.Models
         {
             int baseHours = GetBaseAnnualHours();
 
-            float totalPercentage = ContractDetails.TotalPercentageSpring;
-            float reductivePercentage = ContractDetails.SpringTotalPercentageForReduction();
+            float totalPercentage = TeacherContract.TotalPercentageSpring;
+            float reductivePercentage = TeacherContract.SpringTotalPercentageForReduction();
             float teachingPercentage = totalPercentage * (1 - reductivePercentage);
 
             baseHours = (int)Math.Round(baseHours * teachingPercentage, MidpointRounding.ToEven);

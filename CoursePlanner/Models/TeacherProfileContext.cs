@@ -6,13 +6,13 @@ namespace CoursePlanner.Models
 {
     public class TeacherProfileContext : DbContext
     {
-        public TeacherProfileContext() : base("TeacherProfileContext")
+        public TeacherProfileContext() : base("DefaultConnection")
         {
         }
 
-        public DbSet<Teacher> Teacher { get; set; }
-        public DbSet<TeacherContract> TeacherContract { get; set; }
-        public DbSet<TeacherReduction> TeacherReduction { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<TeacherContract> TeacherContracts { get; set; }
+        public DbSet<TeacherReduction> TeacherReductions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

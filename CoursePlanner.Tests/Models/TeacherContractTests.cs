@@ -14,9 +14,9 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void AddReductionTest()
         {
-            var tc = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
+            var tc = new TeacherContract(1, 1, 1, Position.Professor);
             var target = 1;
-            tc.AddReduction(new TeacherReduction(1, ReductionType.Commitment, "Study director", "Fall", 20));
+            tc.AddReduction(new TeacherReduction(ReductionType.Commitment, "Study director", Term.Fall, 1, 1));
 
             Assert.AreEqual(target, tc.Reductions.Count);
         }
@@ -31,7 +31,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod()]
         public void FallTotalPercentageForReductionZeroReductionTest()
         {
-            var tc = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
+            var tc = new TeacherContract(1, 1, 1, Position.Professor);
             var target = 0;
             
             Assert.AreEqual(target, tc.FallTotalPercentageForReduction());
@@ -40,7 +40,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod()]
         public void FallTotalPercentageForReductionTest()
         {
-            var tc = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
+            var tc = new TeacherContract(1, 1, 1, Position.Professor);
 
             var target = 0;
 
