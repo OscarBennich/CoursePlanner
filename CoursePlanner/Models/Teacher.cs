@@ -9,9 +9,9 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class TeacherContext : DbContext
+    public class TeacherProfileContext : DbContext
     {
-        public TeacherContext()
+        public TeacherProfileContext()
             : base("DefaultConnection")
         {
         }
@@ -25,19 +25,21 @@ namespace CoursePlanner.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int TeacherId { get; private set; }
+        public int Id { get; private set; }
         
         public string Name { get; set; }
-        public DateTime Dob { get; set; }
+        public DateTime Dob { get; private set; }
 
         [ForeignKey("TeacherContract")]
+
+
         public int ContractId { get; set; }
         public TeacherContract ContractDetails { get; set; }
         
 
         public Teacher(int id, string name, DateTime dob, TeacherContract contract)
         {
-            TeacherId = id;
+            Id = id;
             Name = name;
             Dob = dob;
             ContractDetails = contract;

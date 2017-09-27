@@ -7,54 +7,33 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
+    public enum ReductionType
+    {
+        Commitment,
+        Research,
+        Other
+    }
+
     [Table("TeacherReduction")]
     public class TeacherReduction
     {
-        private int _id;
-        private string _type;
-        private string _term;
-        private string _description;
-        private float _percentage;
+        // Will be primary key
+        public int Id { get; set; }
+        public ReductionType Type { get; set; }
+        public string Description { get; set; }
+        public string Term { get; set; }
+        public float Percentage { get; set; }
 
-        public enum reductionTypes
-        {
-            Commitment,
-            Research,
-            Other
-        }
+        // Foreign key
+        public int ContractId { get; set; }
 
-        public int Id
+        public TeacherReduction(int id, ReductionType type, string description, string term, float percentage)
         {
-            get { return _id; }
-        }
-
-        public string Type
-        {
-            get { return _type; }
-        }
-
-        public string Description
-        {
-            get { return _description; }
-        }
-
-        public string Term
-        {
-            get { return _term; }
-        }
-
-        public float Percentage
-        {
-            get { return _percentage; }
-        }
-
-        public TeacherReduction(int id, reductionTypes type, string description, string term, float percentage)
-        {
-            _id = id;
-            _type = type.ToString();
-            _description = description;
-            _term = term;
-            _percentage = percentage;
+            Id = id;
+            Type = type;
+            Description = description;
+            Term = term;
+            Percentage = percentage;
         }
         
     }

@@ -7,115 +7,89 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
+    public enum Position
+    {
+        Professor,
+        Lektor,
+        Adjunkt,
+        Studievägledare,
+        Doktorand,
+        Amanuens
+    }
+
     [Table("TeacherContract")]
     public class TeacherContract
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        private int _contractId;
+        public int Id { get; private set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public float TotalPercentageFall { get; set; }
+        public float TotalPercentageSpring { get; set; }
+        public Position Position { get; set; }
+        public virtual List<TeacherReduction> Reductions { get; set; }
 
-        private DateTime _start;
-        private DateTime _end;
-        private float _totalPercentageFall;
-        private float _totalPercentageSpring;
-        private List<TeacherReduction> _reductions;
-        private string _position;
-
-        public DateTime Start
+        public TeacherContract(DateTime start, DateTime end, float percentageFall, float percentageString, Position position)
         {
-            get { return _start; }
-            set { _start = value; }
+            Start = start;
+            End = end;
+            TotalPercentageFall = percentageFall;
+            TotalPercentageSpring = percentageString;
+            Position = position;
+            // Reductions = new List<TeacherReduction>();
         }
 
-        public DateTime End
+        public TeacherContract(DateTime start, DateTime end, float percentageFall, float percentageString, Position position, List<TeacherReduction> reductions)
         {
-            get { return _end; }
-            set { _end = value; }
-        }
-
-        public float TotalPercentageFall
-        {
-            get { return _totalPercentageFall; }
-            set { _totalPercentageFall = value; }
-        }
-
-        public float TotalPercentageSpring
-        {
-            get { return _totalPercentageSpring; }
-            set { _totalPercentageSpring = value; }
-        }
-
-        public string Position
-        {
-            get { return _position; }
-            set { _position = value; }
-        }
-
-        public List<TeacherReduction> Reductions
-        {
-            get { return _reductions; }
-        }
-
-        public TeacherContract(DateTime start, DateTime end, float percentageFall, float percentageString, string position)
-        {
-            _start = start;
-            _end = end;
-            _totalPercentageFall = percentageFall;
-            _totalPercentageSpring = percentageString;
-            _position = position;
-            _reductions = new List<TeacherReduction>();
-        }
-
-        public TeacherContract(DateTime start, DateTime end, float percentageFall, float percentageString, string position, List<TeacherReduction> reductions)
-        {
-            _start = start;
-            _end = end;
-            _totalPercentageFall = percentageFall;
-            _totalPercentageSpring = percentageString;
-            _position = position;
-            _reductions = reductions;
+            Start = start;
+            End = end;
+            TotalPercentageFall = percentageFall;
+            TotalPercentageSpring = percentageString;
+            Position = position;
+            // Reductions = reductions;
         }
 
         public void AddReduction(TeacherReduction reduction)
         {
-            if (_reductions.Sum(x => x.Percentage) < 1) // Should 100 be fixed?  
-                _reductions.Add(reduction);
+            if (Reductions.Sum(x => x.Percentage) < 1) // Should 1 be fixed?  
+                Reductions.Add(reduction);
             // how are we going to do error handling?? 
         }
 
         public void RemoveReduction(TeacherReduction reduction)
         {
-            _reductions.Remove(reduction);
+            Reductions.Remove(reduction);
         }
 
         public float FallTotalPercentageForReduction()
         {
-            return _reductions.Where(x => x.Term == "Fall").Sum(y => y.Percentage);
+            return Reductions.Where(x => x.Term == "Fall").Sum(y => y.Percentage);
         }
 
         public float SpringTotalPercentageForReduction()
         {
-            return _reductions.Where(x => x.Term == "Spring").Sum(y => y.Percentage);
+            return Reductions.Where(x => x.Term == "Spring").Sum(y => y.Percentage);
         }
 
-        public float FallTotalPercentageForReductionType(TeacherReduction.reductionTypes type)
+        public float FallTotalPercentageForReductionType(ReductionType type)
         {
-            return _reductions.Where(x => x.Type == type.ToString() && x.Term == "Fall").Sum(y => y.Percentage);
+            return Reductions.Where(x => x.Type == type && x.Term == "Fall").Sum(y => y.Percentage);
+        }
+        
+        public float SpringTotalPercentageForReductionType(ReductionType type)
+        {   
+            return Reductions.Where(x => x.Type == type && x.Term == "Spring").Sum(y => y.Percentage);
         }
 
-        public float SpringTotalPercentageForReductionType(TeacherReduction.reductionTypes type)
+        public IEnumerable<IGrouping<ReductionType, string>> FallReductionDescriptionWithPercentageGroupedByType()
         {
-            return _reductions.Where(x => x.Type == type.ToString() && x.Term == "Spring").Sum(y => y.Percentage);
+            return Reductions.Where(x => x.Term == "Fall").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage + "%");
         }
 
-        public IEnumerable<IGrouping<string, string>> FallReductionDescriptionWithPercentageGroupedByType()
+        public IEnumerable<IGrouping<ReductionType, string>> SpringReductionDescriptionWithPercentageGroupedByType()
         {
-            return _reductions.Where(x => x.Term == "Fall").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage + "%");
-        }
-
-        public IEnumerable<IGrouping<string, string>> SpringReductionDescriptionWithPercentageGroupedByType()
-        {
-            return _reductions.Where(x => x.Term == "Spring").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage + "%");
+            return Reductions.Where(x => x.Term == "Spring").GroupBy(x => x.Type, x => x.Description + " " + x.Percentage + "%");
         }
 
 

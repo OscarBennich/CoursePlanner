@@ -14,7 +14,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestUnder30()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1992, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
@@ -26,7 +26,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestBetween30and40()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1982, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
@@ -38,7 +38,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetBaseAnnualHoursTestOver40()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetBaseAnnualHours();
@@ -50,7 +50,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllTeachingHoursFallZeroReductionsTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetAllTeachingHoursFall();
@@ -64,10 +64,10 @@ namespace CoursePlanner.Models.Tests
         {
             var reductionList = new List<TeacherReduction>()
             {
-                new TeacherReduction(1, TeacherReduction.reductionTypes.Commitment, "", "Fall", 0.5F)
+                new TeacherReduction(1, ReductionType.Commitment, "", "Fall", 0.5F)
             };
 
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor", reductionList);
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor, reductionList);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetAllTeachingHoursFall();
@@ -79,7 +79,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllTeachingHoursSpringZeroReductionsTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetAllTeachingHoursSpring();
@@ -93,10 +93,10 @@ namespace CoursePlanner.Models.Tests
         {
             var reductionList = new List<TeacherReduction>
             {
-                new TeacherReduction(1, TeacherReduction.reductionTypes.Commitment, "", "Spring", 0.5F)
+                new TeacherReduction(1, ReductionType.Commitment, "", "Spring", 0.5F)
             };
 
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor", reductionList);
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor, reductionList);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetAllTeachingHoursSpring();
@@ -108,7 +108,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursFallZeroHoursNoCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetAllocatedHoursFall();
@@ -120,7 +120,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursFallZeroHoursWithCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -137,7 +137,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursFall50HoursOneCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -154,7 +154,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursFall50HoursTwoCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -172,7 +172,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursSpringZeroHoursNoCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
             
             var result = te.GetAllocatedHoursSpring();
@@ -185,7 +185,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursSpringZeroHoursWithCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -202,7 +202,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursSpring50HoursOneCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -220,7 +220,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetAllocatedHoursSpring50HoursTwoCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -238,7 +238,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetRemainingHoursFallZeroAllocatedTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetRemainingHoursFall();
@@ -250,7 +250,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetRemainingHoursFall50HoursOneCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
@@ -269,7 +269,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetRemainingHoursSpringZeroAllocatedTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             var result = te.GetRemainingHoursSpring();
@@ -281,7 +281,7 @@ namespace CoursePlanner.Models.Tests
         [TestMethod]
         public void GetRemainingHoursSpring50HoursOneCourseTest()
         {
-            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, "Professor");
+            var contract = new TeacherContract(DateTime.MinValue, DateTime.MaxValue, 1, 1, Position.Professor);
             var te = new Teacher(1, "Herbert", new DateTime(1972, 7, 15), contract);
 
             // var courses = new List<Course>
