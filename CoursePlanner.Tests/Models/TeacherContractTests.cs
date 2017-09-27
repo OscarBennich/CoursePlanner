@@ -16,7 +16,7 @@ namespace CoursePlanner.Models.Tests
         {
             var tc = new TeacherContract(1, 1, 1, Position.Professor);
             var target = 1;
-            tc.AddReduction(new TeacherReduction(ReductionType.Commitment, "Study director", Term.Fall, 1, 1));
+            tc.AddReduction(new TeacherReduction(ReductionType.Commitment, "Study director", Term.Fall, 1F, tc));
 
             Assert.AreEqual(target, tc.Reductions.Count);
         }

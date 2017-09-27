@@ -14,20 +14,20 @@ namespace CoursePlanner.Models
         public int Id { get; set; }
         
         public string Name { get; set; }
-        public DateTime Dob { get; private set; }
+        public string Dob { get; set; }
 
         public virtual TeacherContract TeacherContract { get; set; }
 
         public Teacher() { }
 
-        public Teacher(string name, DateTime dob, TeacherContract contract)
+        public Teacher(string name, string dob, TeacherContract contract)
         {
             Name = name;
             Dob = dob;
             TeacherContract = contract;
         }
 
-        public Teacher(int id, string name, DateTime dob, TeacherContract contract)
+        public Teacher(int id, string name, string dob, TeacherContract contract)
         {
             Id = id;
             Name = name;
@@ -107,7 +107,7 @@ namespace CoursePlanner.Models
 
         private int getAge()
         {
-            return DateTime.Today.Year - Dob.Year;
+            return DateTime.Today.Year - int.Parse(Dob.Substring(0,4));
         }
     }
 }

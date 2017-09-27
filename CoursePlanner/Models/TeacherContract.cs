@@ -23,6 +23,12 @@ namespace CoursePlanner.Models
         Amanuens
     }
 
+    public enum ContractType
+    {
+        Temporary,
+        Permanent
+    }
+
     public class TeacherContract
     {
         //[Key]
@@ -30,6 +36,8 @@ namespace CoursePlanner.Models
         public int Id { get; set; }
         public float TotalPercentageFall { get; set; }
         public float TotalPercentageSpring { get; set; }
+        public ContractType ContractType { get; set; }
+        public string TemporaryContractEndDate { get; set; }
         public Position Position { get; set; }
 
         public virtual List<TeacherReduction> Reductions { get; set; }
@@ -41,6 +49,7 @@ namespace CoursePlanner.Models
             TotalPercentageFall = percentageFall;
             TotalPercentageSpring = percentageString;
             Position = position;
+
             // Reductions = new List<TeacherReduction>();
         }
 

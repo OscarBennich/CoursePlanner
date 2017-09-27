@@ -200,16 +200,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\CourseContext.cs" />
-=======
     <Compile Include="Models\TeacherProfileContext.cs" />
     <Compile Include="Models\TeacherProfileDataInitializer.cs" />
     <Compile Include="Models\TeacherReduction.cs" />
     <Compile Include="Models\TeacherContract.cs" />
     <Compile Include="Models\Teacher.cs" />
->>>>>>> TeacherProfileViewAndController
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -701,16 +698,13 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\_DefaultLayout.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\Delete.cshtml" />
-=======
     <Content Include="Views\TeacherProfile\OLDTeacherProfile.cshtml" />
->>>>>>> TeacherProfileViewAndController
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
