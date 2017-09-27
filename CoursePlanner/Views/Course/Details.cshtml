@@ -1,99 +1,129 @@
 ﻿@model CoursePlanDraft.Models.CourseModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.CourseName + " - " + Model.CourseCode;
 }
 
-<h2>Details</h2>
+<style>
+    h1{
+        visibility : hidden;
+    }
 
-<fieldset>
-    <legend>CourseModel</legend>
+    h2{
+        font-size : 5em;
+    }
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CourseCode)
+    h3{
+        font-size: 2em;
+    }
+</style>
+
+<div class="jumbotron text-center">
+    <h2>@Html.DisplayFor(model => model.CourseName)</h2>
+    <h3>@Html.DisplayFor(model => model.CourseCode)</h3>
+</div>
+
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">Course Information</h3>
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CourseCode)
+    <!-- /.box-header -->
+    <div class="box-body">
+        <strong><i class="fa fa-university margin-r-5"></i> Category </strong>
+        <p class="text-muted">
+            @Html.DisplayNameFor(model => model.CourseClassificiation) :
+            @Html.DisplayFor(model => model.CourseClassificiation) <br />
+
+            @Html.DisplayNameFor(model => model.CourseType) :
+            @Html.DisplayFor(model => model.CourseType)
+        </p>
+        <hr>
+        <strong><i class="fa fa-money margin-r-5"></i> Budget </strong>
+        <p class="text-muted">
+            @Html.DisplayNameFor(model => model.Credits) :
+            @Html.DisplayFor(model => model.Credits) <br />
+
+            @Html.DisplayNameFor(model => model.HSTValue) :
+            @Html.DisplayFor(model => model.HSTValue) <br />
+
+            @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents) :
+            @Html.DisplayFor(model => model.BudgetedNumberOfStudents) <br />
+
+            @Html.DisplayNameFor(model => model.CourseBudget) :
+            @Html.DisplayFor(model => model.CourseBudget)
+        </p>
+        <hr>
+        <strong><i class="fa fa-calendar-check-o margin-r-5"></i> Dates </strong>
+        <p class="text-muted">
+            @Html.DisplayNameFor(model => model.Term) :
+            @Html.DisplayFor(model => model.Term) <br />
+
+            @Html.DisplayNameFor(model => model.Period) :
+            @Html.DisplayFor(model => model.Period) <br />
+
+            @Html.DisplayNameFor(model => model.StartDate) :
+            @Html.DisplayFor(model => model.StartDate) <br />
+
+            @Html.DisplayNameFor(model => model.EndDate) :
+            @Html.DisplayFor(model => model.EndDate)
+        </p>
+        <hr>
+        <strong><i class="fa fa-file-text-o margin-r-5"></i> Course History </strong>
+        <p class="text-muted"> 
+            Placeholder Text 
+        </p>
+    </div>
+    <!-- /.box-body -->
+</div>
+
+@*
+<div class="panel panel-success">
+    <div class="panel-heading"> 
+        Panel #1 
+        <span class="fa fa-camera-retro"></span>
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CourseName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CourseName)
-    </div>
+    <div class="panel-body">
+        @Html.DisplayNameFor(model => model.CourseClassificiation) :
+        @Html.DisplayFor(model => model.CourseClassificiation) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CourseClassificiation)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CourseClassificiation)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CourseType)
-    </div>
-    <div class="display-field">
+        @Html.DisplayNameFor(model => model.CourseType) :
         @Html.DisplayFor(model => model.CourseType)
     </div>
+</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Credits)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Credits)
-    </div>
+<div class="panel panel-info">
+    <div class="panel-heading"> Panel #2 </div>
+    <div class="panel-body">
+        @Html.DisplayNameFor(model => model.Credits) :
+        @Html.DisplayFor(model => model.Credits) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.HSTValue)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.HSTValue)
-    </div>
+        @Html.DisplayNameFor(model => model.HSTValue) :
+        @Html.DisplayFor(model => model.HSTValue) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.BudgetedNumberOfStudents)
-    </div>
+        @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents) :
+        @Html.DisplayFor(model => model.BudgetedNumberOfStudents) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CourseBudget)
-    </div>
-    <div class="display-field">
+        @Html.DisplayNameFor(model => model.CourseBudget) :
         @Html.DisplayFor(model => model.CourseBudget)
     </div>
+</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Term)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Term)
-    </div>
+<div class="panel panel-warning">
+    <div class="panel-heading"> Panel #3 </div>
+    <div class="panel-body">
+        @Html.DisplayNameFor(model => model.Term) :
+        @Html.DisplayFor(model => model.Term) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Period)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Period)
-    </div>
+        @Html.DisplayNameFor(model => model.Period) :
+        @Html.DisplayFor(model => model.Period) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartDate)
-    </div>
+        @Html.DisplayNameFor(model => model.StartDate) :
+        @Html.DisplayFor(model => model.StartDate) <br />
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndDate)
-    </div>
-    <div class="display-field">
+        @Html.DisplayNameFor(model => model.EndDate) :
         @Html.DisplayFor(model => model.EndDate)
     </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</div>*@
+
+

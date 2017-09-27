@@ -20,18 +20,30 @@ namespace CoursePlanDraft.Models
 
         [Required]
         [StringLength(60, MinimumLength = 3)]
-        [Display(Name = "Course Name")]
+        [Display(Name = "Name")]
         public string CourseName { get; set; }
 
+        [Display(Name = "Classification")]
         public string CourseClassificiation { get; set; }
+        [Display(Name = "Type")]
         public string CourseType { get; set; }
+
+        [Display(Name = "Credits")]
         public string Credits { get; set; }
+        [Display(Name = "HST")]
         public string HSTValue { get; set; }
+        [Display(Name = "Budgeted Number of Students")]
         public string BudgetedNumberOfStudents { get; set; }
+        [Display(Name = "Budget")]
         public string CourseBudget { get; set; }
+
+        [Display(Name = "Term")]
         public string Term { get; set; }
+        [Display(Name = "Period")]
         public string Period { get; set; }
-        public string StartDate { get; set; } //shouldn't be a string (TESTING)
+        [Display(Name = "Start Date")]
+        public string StartDate { get; set; }
+        [Display(Name = "End Date")]
         public string EndDate { get; set; }
     }
 }
