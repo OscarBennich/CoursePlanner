@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using CoursePlanner.Models;
 
-namespace CoursePlanner.Models
+namespace CoursePlanner.DAL
 {
-    public class TeacherProfileContext : DbContext
+    public class CoursePlannerContext : DbContext
     {
-        public TeacherProfileContext() : base("DefaultConnection")
+        public CoursePlannerContext() : base("CoursePlannerContext")
         {
         }
 
+        public DbSet<CourseModel> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TeacherContract> TeacherContracts { get; set; }
         public DbSet<TeacherReduction> TeacherReductions { get; set; }

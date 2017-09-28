@@ -190,24 +190,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709271312491_Initial Migration.cs" />
-    <Compile Include="Migrations\201709271312491_Initial Migration.Designer.cs">
-      <DependentUpon>201709271312491_Initial Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709271324300_Second better migration.cs" />
-    <Compile Include="Migrations\201709271324300_Second better migration.Designer.cs">
-      <DependentUpon>201709271324300_Second better migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709280932491_third migration.cs" />
-    <Compile Include="Migrations\201709280932491_third migration.Designer.cs">
-      <DependentUpon>201709280932491_third migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\CourseModel.cs" />
-    <Compile Include="Models\CourseContext.cs" />
-    <Compile Include="Models\TeacherProfileContext.cs" />
-    <Compile Include="Models\TeacherProfileDataInitializer.cs" />
+    <Compile Include="DAL\CourseContext.cs" />
+    <Compile Include="DAL\CoursePlannerContext.cs" />
+    <Compile Include="Models\CoursePlannerDataInitializer.cs" />
     <Compile Include="Models\TeacherReduction.cs" />
     <Compile Include="Models\TeacherContract.cs" />
     <Compile Include="Models\Teacher.cs" />
@@ -663,7 +650,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -715,17 +704,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709271312491_Initial Migration.resx">
-      <DependentUpon>201709271312491_Initial Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709271324300_Second better migration.resx">
-      <DependentUpon>201709271324300_Second better migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709280932491_third migration.resx">
-      <DependentUpon>201709280932491_third migration.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

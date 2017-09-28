@@ -1,14 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using CoursePlanner.DAL;
 
 namespace CoursePlanner.Models
 {
-    public class TeacherProfileDataInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<TeacherProfileContext>
+    public class CoursePlannerDataInitializer : DropCreateDatabaseAlways<CoursePlannerContext>
     {
-        protected override void Seed(TeacherProfileContext context)
+        protected override void Seed(CoursePlannerContext context)
         {
+            var courses = new List<CourseModel>()
+            {
+                new CourseModel {
+                    CourseCode = "F20000",
+                    CourseName = "Agile Methods",
+                    CourseClassificiation = "Advanced",
+                    CourseType = "?",
+                    Credits = "15",
+                    HSTValue = "1",
+                    BudgetedNumberOfStudents = "15",
+                    CourseBudget = "100",
+                    Term =  "Fall",
+                    Period = "1,2"},
+                new CourseModel {
+                    CourseCode = "F20220",
+                    CourseName = "Declarative Programming",
+                    CourseClassificiation = "Advanced",
+                    CourseType = "?",
+                    Credits = "7.5",
+                    HSTValue = "1",
+                    BudgetedNumberOfStudents = "15",
+                    CourseBudget = "100",
+                    Term =  "Fall",
+                    Period = "1"
+                }
+
+            };
+
+            courses.ForEach(s => context.Courses.Add(s));
+            context.SaveChanges();
+
+
+
             var contract1 = new TeacherContract
             {
                 TotalPercentageFall = 1,

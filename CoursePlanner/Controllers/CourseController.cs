@@ -5,13 +5,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CoursePlanDraft.Models;
+using CoursePlanner.DAL;
+using CoursePlanner.Models;
 
 namespace CoursePlanner.Controllers
 {
     public class CourseController : Controller
     {
-        private CourseContext db = new CourseContext();
+        private CoursePlannerContext db = new CoursePlannerContext();
 
         //
         // GET: /Course/
