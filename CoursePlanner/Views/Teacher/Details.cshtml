@@ -1,29 +1,81 @@
 ﻿@model CoursePlanner.Models.Teacher
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
 }
+
+
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="box box-danger">
+            <div class="box-body box-profile">
+                <h3 class="profile-username text-center">@Html.DisplayFor(model => model.Name)</h3>
+                <p class="text-muted text-center">Software Engineer</p>
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Following</b> <a class="pull-right">543</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Friends</b> <a class="pull-right">13,287</a>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-danger btn-block"><b>Follow</b></a>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#activity" data-toggle="tab">Hours during Year</a></li>
+                <li><a href="#timeline" data-toggle="tab">Fall Term</a></li>
+                <li><a href="#settings" data-toggle="tab">Spring Term</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                    
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="timeline">
+                    
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="settings">
+                    
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+
 
 <h2>Details</h2>
 
 <fieldset>
-    <legend>Teacher</legend>
+    <legend>@Html.DisplayFor(model => model.Name)</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Dob)
+        @Html.DisplayNameFor(model => model.Dob)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Dob)
     </div>
 </fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
