@@ -86,3 +86,4 @@ C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.Mig
 C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.csproj.GenerateResource.Cache
 C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.dll
 C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.pdb
+C:\Users\Sofie\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.Migrations.thirdmigration.resources
