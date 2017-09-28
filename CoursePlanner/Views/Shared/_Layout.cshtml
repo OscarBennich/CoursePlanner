@@ -144,10 +144,10 @@
                             <ul class="dropdown-menu">
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
+                                    <div class="pull-up">
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
-                                    <div class="pull-right">
+                                    <div class="pull-down">
                                         @if (Request.IsAuthenticated)
                                         {
                                             <text>
@@ -174,29 +174,12 @@
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                    <li class=" treeview">
-                        <a href="#">
-                            <i class="fa fa-envelope"></i> <span>Sub Links</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Sub Link1</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Sub Link2</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-calendar"></i> <span>Link with Numbers</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-red">3</small>
-                                <small class="label pull-right bg-blue">17</small>
-                            </span>
-                        </a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-book"></i> <span>Link</span></a></li>
+                    <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-file-text"></i> <span>Overview</span></a></li>
+                   
+                     <li><a href="@Url.Action("Index","Course")"><i class="fa fa-book"></i> <span>Courses</span></a></li>
+                        
+                    
+                    <li><a href="#"><i class="fa fa-book"></i> <span>Teachers</span></a></li>
 
                 </ul>
             </section>
