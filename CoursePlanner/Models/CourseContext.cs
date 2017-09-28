@@ -4,7 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace CoursePlanDraft.Models
+namespace CoursePlanner.Models
 {
 
     public class CourseContext : DbContext

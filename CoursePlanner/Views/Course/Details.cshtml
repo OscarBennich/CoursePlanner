@@ -1,4 +1,4 @@
-﻿@model CoursePlanDraft.Models.CourseModel
+﻿@model CoursePlanner.Models.CourseModel
 
 @{
     ViewBag.Title = Model.CourseName + " - " + Model.CourseCode;
@@ -16,7 +16,23 @@
     h3{
         font-size: 2em;
     }
+
+    .hidden{display: none}
+    .show{display:inline !important}
+
 </style>
+
+<script type="text/javascript">
+    function EditBudget() {    
+        document.getElementById('editBudget').className = "btn btn-warning btn-xs hidden";
+        document.getElementById('budgetEditForm').className = "show";
+    }
+
+    function SaveBudget() {
+        document.getElementById('editBudget').className = "btn btn-warning btn-xs show";
+        document.getElementById('budgetEditForm').className = "hidden";
+    }
+</script>
 
 <div class="jumbotron text-center">
     <h2>@Html.DisplayFor(model => model.CourseName)</h2>
@@ -48,9 +64,20 @@
 
             @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents) :
             @Html.DisplayFor(model => model.BudgetedNumberOfStudents) <br />
-
+           
             @Html.DisplayNameFor(model => model.CourseBudget) :
             @Html.DisplayFor(model => model.CourseBudget)
+
+            <button id="editBudget" class="btn btn-warning btn-xs" onclick="EditBudget()"> Edit Budget </button>
+
+            @using (Html.BeginForm()) { 
+                @Html.AntiForgeryToken()
+                <fieldset hidden id="budgetEditForm">
+                    <input type="text" value="@Html.ValueFor(model => model.CourseBudget)" name="newBudget" />
+                    <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() /> 
+                </fieldset>
+            }
+
         </p>
         <hr>
         <strong><i class="fa fa-calendar-check-o margin-r-5"></i> Dates </strong>
@@ -76,54 +103,6 @@
     <!-- /.box-body -->
 </div>
 
-@*
-<div class="panel panel-success">
-    <div class="panel-heading"> 
-        Panel #1 
-        <span class="fa fa-camera-retro"></span>
-    </div>
-
-    <div class="panel-body">
-        @Html.DisplayNameFor(model => model.CourseClassificiation) :
-        @Html.DisplayFor(model => model.CourseClassificiation) <br />
-
-        @Html.DisplayNameFor(model => model.CourseType) :
-        @Html.DisplayFor(model => model.CourseType)
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
-
-<div class="panel panel-info">
-    <div class="panel-heading"> Panel #2 </div>
-    <div class="panel-body">
-        @Html.DisplayNameFor(model => model.Credits) :
-        @Html.DisplayFor(model => model.Credits) <br />
-
-        @Html.DisplayNameFor(model => model.HSTValue) :
-        @Html.DisplayFor(model => model.HSTValue) <br />
-
-        @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents) :
-        @Html.DisplayFor(model => model.BudgetedNumberOfStudents) <br />
-
-        @Html.DisplayNameFor(model => model.CourseBudget) :
-        @Html.DisplayFor(model => model.CourseBudget)
-    </div>
-</div>
-
-<div class="panel panel-warning">
-    <div class="panel-heading"> Panel #3 </div>
-    <div class="panel-body">
-        @Html.DisplayNameFor(model => model.Term) :
-        @Html.DisplayFor(model => model.Term) <br />
-
-        @Html.DisplayNameFor(model => model.Period) :
-        @Html.DisplayFor(model => model.Period) <br />
-
-        @Html.DisplayNameFor(model => model.StartDate) :
-        @Html.DisplayFor(model => model.StartDate) <br />
-
-        @Html.DisplayNameFor(model => model.EndDate) :
-        @Html.DisplayFor(model => model.EndDate)
-    </div>
-</div>*@
-
-

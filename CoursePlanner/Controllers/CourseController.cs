@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using CoursePlanDraft.Models;
+using CoursePlanner.Models;
 
 namespace CoursePlanner.Controllers
 {
@@ -33,6 +33,17 @@ namespace CoursePlanner.Controllers
                 return HttpNotFound();
             }
             return View(coursemodel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int id, string newBudget)
+        {   
+            CourseModel coursemodel = db.Courses.Find(id);
+            coursemodel.CourseBudget = newBudget;
+            db.Entry(coursemodel).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details/" + coursemodel.Id);
         }
 
         //
