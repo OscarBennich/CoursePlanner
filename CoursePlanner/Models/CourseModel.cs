@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace CoursePlanDraft.Models
+namespace CoursePlanner.Models
 {
     [Table("Course")]
     public class CourseModel

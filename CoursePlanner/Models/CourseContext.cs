@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
 
-namespace CoursePlanDraft.Models
+namespace CoursePlanner.Models
 {
 
     public class CourseContext : DbContext
@@ -15,6 +16,12 @@ namespace CoursePlanDraft.Models
         }
 
         public DbSet<CourseModel> Courses { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<CourseContext>(null);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
 }
