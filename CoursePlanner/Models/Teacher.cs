@@ -9,7 +9,7 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class Teacher
+    public class Teacher : UserProfile
     {
         public int Id { get; set; }
         

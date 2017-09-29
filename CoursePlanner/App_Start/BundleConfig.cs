@@ -44,7 +44,9 @@ namespace CoursePlanner
                       "~/Content/dist/css/AdminLTE.min.css",
                       "~/Content/dist/css/skins/skin-red-light.min.css",
                       "~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css",
-                      "~/Content/plugins/datatables/dataTables.bootstrap.css"
+                      "~/Content/plugins/datatables/dataTables.bootstrap.css",
+                      "~/Content/plugins/fullcalendar/fullcalendar.min.css",
+                      "~/Content/plugins/fullcalendar/fullcalendar.print.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/Js").Include(
@@ -56,10 +58,9 @@ namespace CoursePlanner
                      "~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
                      "~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
                      "~/Content/plugins/fastclick/fastclick.js",
+                     "~/Content/plugins/fullcalendar/fullcalendar.min.js",
                      "~/Content/dist/js/app.min.js"
                      ));
-
-
 
             BundleTable.EnableOptimizations = true;
 

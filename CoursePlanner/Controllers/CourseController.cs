@@ -22,6 +22,14 @@ namespace CoursePlanner.Controllers
         }
 
         //
+        // GET: /Course/Calendar
+
+        public ActionResult Calendar()
+        {
+            return View(db.Courses.ToList());
+        }
+
+        //
         // GET: /Course/Details/5
 
         public ActionResult Details(int id = 0)
@@ -62,7 +70,7 @@ namespace CoursePlanner.Controllers
 
         //
         // GET: /Course/Edit/5
-
+        
         public ActionResult Edit(int id = 0)
         {
             CourseModel coursemodel = db.Courses.Find(id);
