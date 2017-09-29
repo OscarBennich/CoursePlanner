@@ -35,6 +35,17 @@ namespace CoursePlanner.Controllers
             return View(coursemodel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int id, string newBudget)
+        {   
+            CourseModel coursemodel = db.Courses.Find(id);
+            coursemodel.CourseBudget = newBudget;
+            db.Entry(coursemodel).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details/" + coursemodel.Id);
+        }
+
         //
         // GET: /Course/Create
 
