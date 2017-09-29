@@ -16,7 +16,7 @@ namespace CoursePlanner.DAL
         {
         }
 
-        public DbSet<CourseModel> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

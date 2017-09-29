@@ -8,9 +8,9 @@ namespace CoursePlanner.Models
     {
         protected override void Seed(CoursePlannerContext context)
         {
-            var courses = new List<CourseModel>()
+            var courses = new List<Course>()
             {
-                new CourseModel {
+                new Course {
                     CourseCode = "F20000",
                     CourseName = "Agile Methods",
                     CourseClassificiation = "Advanced",
@@ -21,7 +21,7 @@ namespace CoursePlanner.Models
                     CourseBudget = "100",
                     Term =  "Fall",
                     Period = "1,2"},
-                new CourseModel {
+                new Course {
                     CourseCode = "F20220",
                     CourseName = "Declarative Programming",
                     CourseClassificiation = "Advanced",

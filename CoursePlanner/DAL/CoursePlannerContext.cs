@@ -11,7 +11,7 @@ namespace CoursePlanner.DAL
         {
         }
 
-        public DbSet<CourseModel> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TeacherContract> TeacherContracts { get; set; }
         public DbSet<TeacherReduction> TeacherReductions { get; set; }

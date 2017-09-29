@@ -17,6 +17,7 @@ namespace CoursePlanner.Models
         public string Dob { get; set; }
 
         public virtual TeacherContract TeacherContract { get; set; }
+        public virtual List<Course> Courses { get; set; }
 
         public Teacher() { }
 
@@ -25,6 +26,7 @@ namespace CoursePlanner.Models
             Name = name;
             Dob = dob;
             TeacherContract = contract;
+            Courses = new List<Course>();
         }
 
         public Teacher(int id, string name, string dob, TeacherContract contract)
@@ -33,6 +35,7 @@ namespace CoursePlanner.Models
             Name = name;
             Dob = dob;
             TeacherContract = contract;
+            Courses = new List<Course>();
 
         }
 

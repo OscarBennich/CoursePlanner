@@ -31,8 +31,6 @@ namespace CoursePlanner.Models
 
     public class TeacherContract
     {
-        //[Key]
-        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public float TotalPercentageFall { get; set; }
         public float TotalPercentageSpring { get; set; }

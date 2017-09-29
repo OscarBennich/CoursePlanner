@@ -8,7 +8,7 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class CourseModel
+    public class Course
     {
         public int Id { get; set; }
 
@@ -26,6 +26,8 @@ namespace CoursePlanner.Models
         public string Period { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+
+        public virtual List<Teacher> Teachers { get; set; }
     }
 }
 

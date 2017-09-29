@@ -27,8 +27,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Details(int id = 0)
         {   
-            
-            CourseModel coursemodel = db.Courses.Find(id);
+            Course coursemodel = db.Courses.Find(id);
             if (coursemodel == null)
             {
                 return HttpNotFound();
@@ -49,7 +48,7 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CourseModel coursemodel)
+        public ActionResult Create(Course coursemodel)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +65,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            CourseModel coursemodel = db.Courses.Find(id);
+            Course coursemodel = db.Courses.Find(id);
             if (coursemodel == null)
             {
                 return HttpNotFound();
@@ -79,7 +78,7 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CourseModel coursemodel)
+        public ActionResult Edit(Course coursemodel)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +94,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            CourseModel coursemodel = db.Courses.Find(id);
+            Course coursemodel = db.Courses.Find(id);
             if (coursemodel == null)
             {
                 return HttpNotFound();
@@ -110,7 +109,7 @@ namespace CoursePlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CourseModel coursemodel = db.Courses.Find(id);
+            Course coursemodel = db.Courses.Find(id);
             db.Courses.Remove(coursemodel);
             db.SaveChanges();
             return RedirectToAction("Index");
