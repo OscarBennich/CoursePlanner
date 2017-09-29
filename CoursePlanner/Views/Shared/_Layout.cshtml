@@ -131,35 +131,46 @@
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#"class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="hidden-xs">
                                     @if (Request.IsAuthenticated)
                                     {
                                         <text>
-                                            Hello, @User.Identity.Name!
+                                            Hello, @User.Identity.Name 
+
                                         </text>
+
+                                        <span class="fa fa-tasks"></span>
                                     }
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <div class="pull-up">
+                                      
+                                       
+                                        <a href="#" style="color: #dd4b39"><span class="fa fa-user"></span> Profile</a>
                                     </div>
-                                    <div class="pull-right">
+                                    <div class="pull-down">
                                         @if (Request.IsAuthenticated)
                                         {
+                                            
+                                            
                                             <text>
                                                 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                                 {
                                                     @Html.AntiForgeryToken()
-                                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default btn-flat">Sign out</a>
+                                                    <a href="javascript:document.getElementById('logoutForm').submit()" style="color: #dd4b39"><span class="fa fa-power-off"></span> Sign out</a>
                                                 }
                                             </text>
                                         }
                                     </div>
                                 </li>
+                                
+                                
+      
+                               
                             </ul>
                         </li>
                     </ul>
@@ -174,29 +185,27 @@
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-                    <li class=" treeview">
+                    <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-file-text"></i> <span>Dashboard</span></a></li>
+                    <li class="treeview">
                         <a href="#">
-                            <i class="fa fa-envelope"></i> <span>Sub Links</span>
+                            <i class="fa fa-book"></i>
+                            <span>Courses</span>
                             <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
+                                <span class="label label-primary pull-right">2</span>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Sub Link1</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Sub Link2</a></li>
-                        </ul>
+                            <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Course Overview</a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i> Course Conflicts </a></li>
+                        </ul>    
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="fa fa-calendar"></i> <span>Link with Numbers</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-red">3</small>
-                                <small class="label pull-right bg-blue">17</small>
-                            </span>
-                        </a>
-                    </li>
-                    <li><a href="#"><i class="fa fa-book"></i> <span>Link</span></a></li>
+
+
+
+                        
+                    
+                    <li><a href="#"><i class="fa fa-users"></i> <span>Teachers</span></a></li>
+                 
 
                 </ul>
             </section>
