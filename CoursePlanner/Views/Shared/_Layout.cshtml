@@ -150,7 +150,7 @@
                                     <div class="pull-up">
                                       
                                        
-                                        <a href="#" style="color: #dd4b39"><span class="fa fa-user"></span> Profile</a>
+                                        <a href="@Url.Action("Details/2", "Teacher")" style="color: #dd4b39"><span class="fa fa-user"></span> Profile</a>
                                     </div>
                                     <div class="pull-down">
                                         @if (Request.IsAuthenticated)
@@ -198,15 +198,10 @@
                             <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Course Overview</a></li>
                             <li><a href="@Url.Action("Calendar","Course")"><i class="fa fa-circle-o"></i> Course Conflicts </a></li>
                         </ul>    
-                    </li>
-
-
-
-                        
-                    
-                    <li><a href="#"><i class="fa fa-users"></i> <span>Teachers</span></a></li>
-                 
-
+                    </li>                
+                    <li>
+                        <a href="@Url.Action("Index", "Teacher")"><i class="fa fa-users"></i> <span>Teachers</span></a>
+                    </li>                
                 </ul>
             </section>
             <!-- /.sidebar -->
