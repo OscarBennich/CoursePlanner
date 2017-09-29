@@ -1,8 +1,8 @@
-CoursePlanner/bin/
-CoursePlanner/obj/
+CoursePlanner/bin/**
+CoursePlanner/obj/**
 
-CoursePlanner.Tests/bin/
-CoursePlanner.Tests/obj/
+CoursePlanner.Tests/bin/**
+CoursePlanner.Tests/obj/**
 
 .vs/
 *.suo
