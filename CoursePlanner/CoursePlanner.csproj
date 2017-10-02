@@ -192,12 +192,12 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="DAL\CourseContext.cs" />
     <Compile Include="DAL\CoursePlannerContext.cs" />
     <Compile Include="Models\CoursePlannerDataInitializer.cs" />
     <Compile Include="Models\TeacherReduction.cs" />
     <Compile Include="Models\TeacherContract.cs" />
     <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

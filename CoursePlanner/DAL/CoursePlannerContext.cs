@@ -20,5 +20,7 @@ namespace CoursePlanner.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public DbSet<User> Users { get; set; }
     }
 }

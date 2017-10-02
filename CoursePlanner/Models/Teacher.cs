@@ -9,11 +9,9 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class Teacher
+    public class Teacher : User
     {
-        public int Id { get; set; }
         
-        public string Name { get; set; }
         public string Dob { get; set; }
 
         public virtual TeacherContract TeacherContract { get; set; }
