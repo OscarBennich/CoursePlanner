@@ -11,45 +11,102 @@
         <div class="box box-danger">
             <div class="box-body box-profile">
                 <h3 class="profile-username text-center">@Html.DisplayFor(model => model.Name)</h3>
-                <p class="text-muted text-center">Software Engineer</p>
+                <p class="text-muted text-center">Excellent Lärare</p>
                 <ul class="list-group list-group-unbordered">
+                    @*<li class="list-group-item">
+                            <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
+                        </li>*@
                     <li class="list-group-item">
-                        <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
+                        <b>Contract</b> <a class="pull-right">Permanent 100%</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Following</b> <a class="pull-right">543</a>
+                        <b>Teaching hours available</b> <a class="pull-right">150</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Friends</b> <a class="pull-right">13,287</a>
+                        <b>Allocated teaching hours</b> <a class="pull-right">100</a>
                     </li>
+                    <li class="list-group-item">
+                        <b>Remaining teaching hours</b> <a class="pull-right">50</a>
+                    </li>
+                    @*<li class="list-group-item">
+                        <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
+                    </li>*@
                 </ul>
-                <a href="#" class="btn btn-danger btn-block"><b>Follow</b></a>
+                @*<a href="#" class="btn btn-danger btn-block"><b>Follow</b></a>*@
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
     </div>
     <!-- /.col -->
-    <div class="col-md-9">
-        <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#activity" data-toggle="tab">Hours during Year</a></li>
-                <li><a href="#timeline" data-toggle="tab">Fall Term</a></li>
-                <li><a href="#settings" data-toggle="tab">Spring Term</a></li>
+    <div class="col-md-9  skin-red-light">
+        <div class="nav-tabs-custom  skin-red-light">
+            <ul class="nav nav-tabs skin-red-light">
+                <li class="active skin-red-light"><a href="#activity" data-toggle="tab">Fall Term</a></li>
+                <li><a href="#timeline" data-toggle="tab">Spring Term</a></li>
+                <li><a href="#settings" data-toggle="tab">Hours During Year</a></li>
+                <li><a href="#history" data-toggle="tab">History</a></li>
+
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="activity">
-                    
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-danger">
+                                @*<div class="box-header">
+                                    <h2 class="box-title">Course Overview</h2>
+                                </div>*@
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover" id="courseoverview">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Course Code
+                                                </th>
+                                                <th>
+                                                    Course Name
+                                                </th>
+                                                <th>
+                                                    Amount of hours
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    17NIIKA
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/7", "Course")"><span>Declarative Problem Solving</span></a>
+                                                </td>
+                                                <td>
+                                                    85
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="timeline">
-                    
+
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="settings">
-                    
+
                 </div>
                 <!-- /.tab-pane -->
+                <div class="tab-pane" id="history">
+
+                </div>
             </div>
             <!-- /.tab-content -->
         </div>
@@ -58,24 +115,22 @@
     <!-- /.col -->
 </div>
 <!-- /.row -->
+@*<h2>Details</h2>
 
+    <fieldset>
+        <legend>@Html.DisplayFor(model => model.Name)</legend>
 
-<h2>Details</h2>
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.Name)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Name)
+        </div>
 
-<fieldset>
-    <legend>@Html.DisplayFor(model => model.Name)</legend>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
-
-    <div class="display-label">
-        @Html.DisplayNameFor(model => model.Dob)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Dob)
-    </div>
-</fieldset>
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.Dob)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Dob)
+        </div>
+    </fieldset>*@

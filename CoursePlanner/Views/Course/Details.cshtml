@@ -5,25 +5,29 @@
 }
 
 <style>
-    h1{
-        visibility : hidden;
+    h1 {
+        visibility: hidden;
     }
 
-    h2{
-        font-size : 5em;
+    h2 {
+        font-size: 5em;
     }
 
-    h3{
+    h3 {
         font-size: 2em;
     }
 
-    .hidden{display: none}
-    .show{display:inline !important}
+    .hidden {
+        display: none;
+    }
 
+    .show {
+        display: inline !important;
+    }
 </style>
 
 <script type="text/javascript">
-    function EditBudget() {    
+    function EditBudget() {
         document.getElementById('editBudget').className = "btn btn-warning btn-xs hidden";
         document.getElementById('budgetEditForm').className = "show";
     }
@@ -64,18 +68,18 @@
 
             @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents) :
             @Html.DisplayFor(model => model.BudgetedNumberOfStudents) <br />
-           
+
             @Html.DisplayNameFor(model => model.CourseBudget) :
             @Html.DisplayFor(model => model.CourseBudget)
 
             <button id="editBudget" class="btn btn-warning btn-xs" onclick="EditBudget()"> Edit Budget </button>
 
-            @using (Html.BeginForm()) { 
-                @Html.AntiForgeryToken()
-                <fieldset hidden id="budgetEditForm">
-                    <input type="text" value="@Html.ValueFor(model => model.CourseBudget)" name="newBudget" />
-                    <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() /> 
-                </fieldset>
+            @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+            <fieldset hidden id="budgetEditForm">
+                <input type="text" value="@Html.ValueFor(model => model.CourseBudget)" name="newBudget" />
+                <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
+            </fieldset>
             }
 
         </p>
@@ -96,13 +100,27 @@
         </p>
         <hr>
         <strong><i class="fa fa-file-text-o margin-r-5"></i> Course History </strong>
-        <p class="text-muted"> 
-            Placeholder Text 
+        <p class="text-muted">
+            Placeholder Text
         </p>
     </div>
     <!-- /.box-body -->
+
+
 </div>
 
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">Teachers</h3>
+    </div>
+
+</div>
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">History</h3>
+    </div>
+
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

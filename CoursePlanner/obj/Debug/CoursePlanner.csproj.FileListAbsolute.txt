@@ -81,3 +81,4 @@ U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.Migrations.thir
 U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.csproj.GenerateResource.Cache
 U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.dll
 U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.pdb
+U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.csprojResolveAssemblyReference.cache

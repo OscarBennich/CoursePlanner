@@ -1,7 +1,245 @@
-﻿@{
-    ViewBag.Title = "Dashboard";
-}
-@section featured {
-    
+﻿@model IEnumerable<CoursePlanner.Models.CourseModel>
+
+@{
+    ViewBag.Title = "Course Conflicts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<div class="row">
+    <div class="col-xs-10">
+        <div class="box box-danger">
+            @*<div class="box-header">
+                    <h2 class="box-title">Course Overview</h2>
+                </div>*@
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-hover table-responsive ui-accordion-content" id="courseoverview" style="table-layout: fixed">
+                    <thead>
+                        <tr>
+                            <th colspan="4"><center><b>Fall</b></center></th>
+                            <th colspan="4"><center><b>Spring</b></center></th>
+
+                        </tr>
+                        <tr>
+                            <th>P1</th>
+                            <th>P2</th>
+                            <th>P3</th>
+                            <th>P4</th>
+                            <th>P1</th>
+                            <th>P2</th>
+                            <th>P3</th>
+                            <th>P4</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-success">
+                                    <b>Declarative Problem Solving</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td> </td>
+                            <td colspan="4">
+                                <div class="callout callout-success">
+                                    <b>Master's Thesis</b>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-warning">
+                                    <b>Object-Oriented Programming I</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-danger">
+                                    <b>Research Methodology</b>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td style="display:none;"></td>
+                            <td> </td>
+                            <td colspan="2">
+                                <div class="callout callout-info">
+                                    <b>Bachelor's Thesis</b>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-success">
+                                    <b>JavaScript 101</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-success">
+                                    <b>Advanced Web Development</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-warning">
+                                    <b>Information Systems A</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-info">
+                                    <b>Object-Oriented Programming II</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td>
+                                <div class="callout callout-success">
+                                    <b>Artificial Intelligence</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="callout callout-danger">
+                                    <b>Information Security</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="callout callout-success">
+                                    <b>Basic HCI</b>
+                                </div>
+                            </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!--/.col-xs-12-->
+    <div class="col-xs-2 hidden-xs hidden-sm">
+        <div class="box box-danger">
+            <div class="box-body">
+                <div class="callout callout-danger">
+                    <b>Hours issue</b>
+                    <p>This type of course contains an issue with work hours assigned to teachers.</p>
+                </div>
+                <div class="callout callout-warning">
+                    <b>Minor issue</b>
+                    <p>There is a general problem with the course and should be checked out.</p>
+                </div>
+                <div class="callout callout-info">
+                    <b>Notification</b>
+                    <p>Someone has made a request concerning this course.</p>
+                </div>
+                <div class="callout callout-success">
+                    <b>No issue</b>
+                    <p>There are no outstanding issues with this course.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+@section MyScripts{
+    <script>
+        $(document).ready(function () {
+            $('#courseoverview').DataTable()
+        });
+    </script>
+}
