@@ -1,0 +1,40 @@
+﻿    /* Course term overview CSS
+    ----------------------------------------------------------*/ 
+    
+        .wide-row {
+            width: 200px;
+        }
+        
+        td+td {
+            width: auto;
+        }
+        
+        #courseoverviewtable{
+            table-layout: fixed;
+        }
+        
+        #courseoverviewtable td {
+            height: 20px;
+            padding: 1%;
+            position: relative;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .perioditem {
+            width: 100%;
+            height: 100%;
+            float: left;
+        }
+        
+        .perioditem.danger {
+            background-color: #dd4b39 !important;
+        }
+        .perioditem.normal {
+            background-color: #008d4c !important;
+        }
+        .perioditem.varning {
+            background-color: #db8b0b !important;
+        }
+        .perioditem.item {
+            background-color: #00a7d0 !important;
+        }

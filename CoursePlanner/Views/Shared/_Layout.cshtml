@@ -131,12 +131,12 @@
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
-                            <a href="#"class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="hidden-xs">
                                     @if (Request.IsAuthenticated)
                                     {
                                         <text>
-                                            Hello, @User.Identity.Name 
+                                            Hello, @User.Identity.Name
 
                                         </text>
 
@@ -148,15 +148,15 @@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-up">
-                                      
-                                       
+
+
                                         <a href="@Url.Action("Details/2", "Teacher")" style="color: #dd4b39"><span class="fa fa-user"></span> Profile</a>
                                     </div>
                                     <div class="pull-down">
                                         @if (Request.IsAuthenticated)
                                         {
-                                            
-                                            
+
+
                                             <text>
                                                 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                                                 {
@@ -167,10 +167,10 @@
                                         }
                                     </div>
                                 </li>
-                                
-                                
-      
-                               
+
+
+
+
                             </ul>
                         </li>
                     </ul>
@@ -187,24 +187,26 @@
                     <li class="header">MAIN NAVIGATION</li>
                     <li><a href="@Url.Action("Calendar", "Course")"><i class="active fa fa-file-text"></i> <span>Overview</span></a></li>
                     @*<li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-book"></i>
-                            <span>Courses</span>
-                            <span class="pull-right-container">
-                                <span class="label label-primary pull-right">2</span>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Course List</a></li>
-                            <li><a href="@Url.Action("Calendar","Course")"><i class="fa fa-circle-o"></i> Course Conflicts </a></li>
-                        </ul>    
-                    </li>*@  
+                            <a href="#">
+                                <i class="fa fa-book"></i>
+                                <span>Courses</span>
+                                <span class="pull-right-container">
+                                    <span class="label label-primary pull-right">2</span>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Course List</a></li>
+                                <li><a href="@Url.Action("Calendar","Course")"><i class="fa fa-circle-o"></i> Course Conflicts </a></li>
+                            </ul>
+                        </li>*@
                     <li>
                         <a href="@Url.Action("Index", "Course")"><i class="fa fa-book"></i> <span>Courses</span></a>
-                    </li>               
+                    </li>
                     <li>
                         <a href="@Url.Action("Index", "Teacher")"><i class="fa fa-users"></i> <span>Teachers</span></a>
-                    </li>                
+                    </li>
+                    <li><a href="@Url.Action("CoursePeriodOverview", "Home")"><i></i> <span>Test Overview</span></a></li>
+
                 </ul>
             </section>
             <!-- /.sidebar -->

@@ -50,7 +50,7 @@ namespace CoursePlanner.Models
             TotalPercentageSpring = percentageString;
             Position = position;
 
-            // Reductions = new List<TeacherReduction>();
+            Reductions = new List<TeacherReduction>();
         }
 
         public TeacherContract(int id, float percentageFall, float percentageString, Position position)
@@ -59,7 +59,7 @@ namespace CoursePlanner.Models
             TotalPercentageFall = percentageFall;
             TotalPercentageSpring = percentageString;
             Position = position;
-            // Reductions = new List<TeacherReduction>();
+            Reductions = new List<TeacherReduction>();
         }
 
         public TeacherContract(float percentageFall, float percentageString, Position position, List<TeacherReduction> reductions)
@@ -67,7 +67,7 @@ namespace CoursePlanner.Models
             TotalPercentageFall = percentageFall;
             TotalPercentageSpring = percentageString;
             Position = position;
-            // Reductions = reductions;
+            Reductions = reductions;
         }
 
         public TeacherContract(int id, float percentageFall, float percentageString, Position position, List<TeacherReduction> reductions)
@@ -76,7 +76,7 @@ namespace CoursePlanner.Models
             TotalPercentageFall = percentageFall;
             TotalPercentageSpring = percentageString;
             Position = position;
-            // Reductions = reductions;
+            Reductions = reductions;
         }
 
         public void AddReduction(TeacherReduction reduction)
