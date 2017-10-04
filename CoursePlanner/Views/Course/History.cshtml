@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CoursePlanner.Models.CourseModel>
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-danger">
+            @*<div class="box-header">
+                    <h2 class="box-title">Course Overview</h2>
+                </div>*@
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-hover" id="courseoverview">
+                    <thead>
+                        <tr>
+                            <th>
+                                Course Code
+                            </th>
+                            <th>
+                                Course Name
+                            </th>
+
+                            <th>
+                                Course Type
+                            </th>
+                            <th>
+                                Credits
+                            </th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!--/.col-xs-12-->
+</div>

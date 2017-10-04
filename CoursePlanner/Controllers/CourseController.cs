@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CoursePlanner.Models;
 
+
 namespace CoursePlanner.Controllers
 {
     public class CourseController : Controller
@@ -33,16 +34,23 @@ namespace CoursePlanner.Controllers
         // GET: /Course/Details/5
 
         public ActionResult Details(int id = 0)
-        {   
-            
+        {
             CourseModel coursemodel = db.Courses.Find(id);
             if (coursemodel == null)
             {
                 return HttpNotFound();
             }
+
             return View(coursemodel);
+
+            
+
         }
 
+        public ActionResult History()
+        {
+            return View();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Details(int id, string newBudget)
