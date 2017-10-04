@@ -93,6 +93,140 @@ namespace CoursePlanner.Controllers
             return View(model);
         }
 
+
+        //
+        //Role Create
+
+
+        public ActionResult RoleCreate()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        //[Authorize(Roles = "Study Director")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RoleCreate(string RoleName)
+        {
+
+            Roles.CreateRole(Request.Form["RoleName"]);
+            // ViewBag.ResultMessage = "Role created successfully !";
+
+            return RedirectToAction("RoleIndex", "Account");
+        }
+
+
+        //[Authorize(Roles = "Study Director")]
+        public ActionResult RoleIndex()
+        {
+            var roles = Roles.GetAllRoles();
+            return View(roles);
+        }
+
+
+       
+        public ActionResult RoleDelete(string RoleName)
+        {
+
+            Roles.DeleteRole(RoleName);
+            // ViewBag.ResultMessage = "Role deleted succesfully !";
+
+
+            return RedirectToAction("RoleIndex", "Account");
+        }
+
+        /// <summary>
+        /// Create a new role to the user
+        /// </summary>
+        /// <returns></returns>
+        //[Authorize(Roles = "Study Director")]
+        public ActionResult ManageUserRoles()
+        {
+            SelectList roleList = new SelectList(Roles.GetAllRoles());
+            ViewBag.Roles = roleList;
+
+
+
+
+
+
+
+
+
+            return View();
+        }
+
+        /// <summary>
+        /// Add role to the user
+        /// </summary>
+        /// <param name="RoleName"></param>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+       // [Authorize(Roles = "Study Director")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ManageUserRoles(string RoleName, string UserName)
+        {
+
+            if (Roles.IsUserInRole(UserName, RoleName))
+            {
+                ViewBag.ResultMessage = "This user already has the role specified !";
+            }
+            else
+            {
+                Roles.AddUserToRole(UserName, RoleName);
+                ViewBag.ResultMessage = "Username added to the role succesfully !";
+            }
+            SelectList roleList = new SelectList(Roles.GetAllRoles());
+            ViewBag.Roles = roleList;
+
+
+            return View();
+        }
+
+        /// <summary>
+        /// Get all the roles for a particular user
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        // [Authorize(Roles = "Study Director")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetRoles(string UserName)
+        {
+            if (!string.IsNullOrWhiteSpace(UserName))
+            {
+                ViewBag.RolesForThisUser = Roles.GetRolesForUser(UserName);
+                SelectList list = new SelectList(Roles.GetAllRoles());
+                ViewBag.Roles = list;
+            }
+            return View("ManageUserRoles");
+        }
+
+        [HttpPost]
+        //[Authorize(Roles = "Study Director")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteRoleForUser(string UserName, string RoleName)
+        {
+
+            if (Roles.IsUserInRole(UserName, RoleName))
+            {
+                Roles.RemoveUserFromRole(UserName, RoleName);
+                ViewBag.ResultMessage = "Role removed from this user successfully !";
+            }
+            else
+            {
+                ViewBag.ResultMessage = "This user doesn't belong to selected role.";
+            }
+            ViewBag.RolesForThisUser = Roles.GetRolesForUser(UserName);
+            SelectList list = new SelectList(Roles.GetAllRoles());
+            ViewBag.Roles = list;
+
+
+            return View("ManageUserRoles");
+        }
+
         //
         // POST: /Account/Disassociate
 
