@@ -186,32 +186,18 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\TeacherTestController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709271312491_Initial Migration.cs" />
-    <Compile Include="Migrations\201709271312491_Initial Migration.Designer.cs">
-      <DependentUpon>201709271312491_Initial Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709271324300_Second better migration.cs" />
-    <Compile Include="Migrations\201709271324300_Second better migration.Designer.cs">
-      <DependentUpon>201709271324300_Second better migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709280932491_third migration.cs" />
-    <Compile Include="Migrations\201709280932491_third migration.Designer.cs">
-      <DependentUpon>201709280932491_third migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\CourseModel.cs" />
     <Compile Include="Models\CourseContext.cs" />
-    <Compile Include="Models\TeacherProfileContext.cs" />
-    <Compile Include="Models\TeacherProfileDataInitializer.cs" />
+    <Compile Include="Models\TeacherContext.cs" />
+    <Compile Include="Models\TeacherModel.cs" />
     <Compile Include="Models\TeacherReduction.cs" />
     <Compile Include="Models\TeacherContract.cs" />
-    <Compile Include="Models\Teacher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -710,29 +696,23 @@
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\Delete.cshtml" />
     <Content Include="Views\TeacherProfile\OLDTeacherProfile.cshtml" />
-    <Content Include="Views\Teacher\Index.cshtml" />
-    <Content Include="Views\Teacher\Details.cshtml" />
-    <Content Include="Views\Teacher\Create.cshtml" />
-    <Content Include="Views\Teacher\Edit.cshtml" />
-    <Content Include="Views\Teacher\Delete.cshtml" />
+    <Content Include="Views\TeacherOLD\Index.cshtml" />
+    <Content Include="Views\TeacherOLD\Details.cshtml" />
+    <Content Include="Views\TeacherOLD\Create.cshtml" />
+    <Content Include="Views\TeacherOLD\Edit.cshtml" />
+    <Content Include="Views\TeacherOLD\Delete.cshtml" />
     <Content Include="Views\Course\Calendar.cshtml" />
+    <Content Include="Views\TeacherTest\Index.cshtml" />
+    <Content Include="Views\TeacherTest\Details.cshtml" />
+    <Content Include="Views\TeacherTest\Create.cshtml" />
+    <Content Include="Views\TeacherTest\Edit.cshtml" />
+    <Content Include="Views\TeacherTest\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709271312491_Initial Migration.resx">
-      <DependentUpon>201709271312491_Initial Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709271324300_Second better migration.resx">
-      <DependentUpon>201709271324300_Second better migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709280932491_third migration.resx">
-      <DependentUpon>201709280932491_third migration.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

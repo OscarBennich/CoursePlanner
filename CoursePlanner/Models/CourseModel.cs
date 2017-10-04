@@ -45,6 +45,9 @@ namespace CoursePlanner.Models
         public string StartDate { get; set; }
         [Display(Name = "End Date")]
         public string EndDate { get; set; }
+        
+        //[ForeignKey]
+        public TeacherModel HeadTeacher { get; set; }
     }
 }
 

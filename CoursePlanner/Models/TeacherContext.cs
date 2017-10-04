@@ -7,20 +7,21 @@ using System.Web;
 
 namespace CoursePlanner.Models
 {
-    public class CourseContext : DbContext
+    public class TeacherContext : DbContext
     {
-        public CourseContext()
+        public TeacherContext()
             : base("DefaultConnection")
         {
         }
 
-        public DbSet<CourseModel> Courses { get; set; }
+        public DbSet<TeacherModel> Teachers { get; set; }
+        //public DbSet<TeacherContract> TeacherContracts { get; set; }
+        //public DbSet<TeacherReduction> TeacherReductions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            Database.SetInitializer<CourseContext>(null);
+            Database.SetInitializer<TeacherContext>(null);
             base.OnModelCreating(modelBuilder);
         }
     }
-
 }

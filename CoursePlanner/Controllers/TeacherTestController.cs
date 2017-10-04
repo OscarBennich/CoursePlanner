@@ -9,33 +9,33 @@ using CoursePlanner.Models;
 
 namespace CoursePlanner.Controllers
 {
-    public class TeacherController : Controller
+    public class TeacherTestController : Controller
     {
         private TeacherContext db = new TeacherContext();
 
         //
-        // GET: /Teacher/
+        // GET: /TeacherTest/
 
         public ActionResult Index()
         {
-            return View(db.TeachersToList());
+            return View(db.Teachers.ToList());
         }
 
         //
-        // GET: /Teacher/Details/5
+        // GET: /TeacherTest/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            Teacher teacher = db.Teachers.Find(id);
-            if (teacher == null)
+            TeacherModel teachermodel = db.Teachers.Find(id);
+            if (teachermodel == null)
             {
                 return HttpNotFound();
             }
-            return View(teacher);
+            return View(teachermodel);
         }
 
         //
-        // GET: /Teacher/Create
+        // GET: /TeacherTest/Create
 
         public ActionResult Create()
         {
@@ -43,73 +43,73 @@ namespace CoursePlanner.Controllers
         }
 
         //
-        // POST: /Teacher/Create
+        // POST: /TeacherTest/Create
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Teacher teacher)
+        public ActionResult Create(TeacherModel teachermodel)
         {
             if (ModelState.IsValid)
             {
-                db.Teachers.Add(teacher);
+                db.Teachers.Add(teachermodel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(teacher);
+            return View(teachermodel);
         }
 
         //
-        // GET: /Teacher/Edit/5
+        // GET: /TeacherTest/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
-            Teacher teacher = db.Teachers.Find(id);
-            if (teacher == null)
+            TeacherModel teachermodel = db.Teachers.Find(id);
+            if (teachermodel == null)
             {
                 return HttpNotFound();
             }
-            return View(teacher);
+            return View(teachermodel);
         }
 
         //
-        // POST: /Teacher/Edit/5
+        // POST: /TeacherTest/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Teacher teacher)
+        public ActionResult Edit(TeacherModel teachermodel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(teacher).State = EntityState.Modified;
+                db.Entry(teachermodel).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(teacher);
+            return View(teachermodel);
         }
 
         //
-        // GET: /Teacher/Delete/5
+        // GET: /TeacherTest/Delete/5
 
         public ActionResult Delete(int id = 0)
         {
-            Teacher teacher = db.Teachers.Find(id);
-            if (teacher == null)
+            TeacherModel teachermodel = db.Teachers.Find(id);
+            if (teachermodel == null)
             {
                 return HttpNotFound();
             }
-            return View(teacher);
+            return View(teachermodel);
         }
 
         //
-        // POST: /Teacher/Delete/5
+        // POST: /TeacherTest/Delete/5
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Teacher teacher = db.Teachers.Find(id);
-            db.Teachers.Remove(teacher);
+            TeacherModel teachermodel = db.Teachers.Find(id);
+            db.Teachers.Remove(teachermodel);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
