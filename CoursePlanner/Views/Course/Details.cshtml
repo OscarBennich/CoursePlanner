@@ -2,30 +2,10 @@
 
 
 @{
-    ViewBag.Title = Model.CourseName + " - " + Model.CourseCode;
+    ViewBag.Title = "Course Information";
 }
 
-<style>
-    h1 {
-        visibility: hidden;
-    }
 
-    h2 {
-        font-size: 5em;
-    }
-
-    h3 {
-        font-size: 2em;
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .show {
-        display: inline !important;
-    }
-</style>
 
 <script type="text/javascript">
     function EditBudget() {
@@ -39,121 +19,249 @@
     }
 </script>
 
-<div class="jumbotron text-center">
-    <h2>@Html.DisplayFor(model => model.CourseName)</h2>
-    <h3>@Html.DisplayFor(model => model.CourseCode)</h3>
-</div>
 
-<div class="box box-danger">
-    <div class="box-header with-border">
-        <h3 class="box-title">Course Information</h3>
-    </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <strong><i class="fa fa-university margin-r-5"></i> Category </strong>
-        <p class="text-muted">
-            @Html.DisplayNameFor(model => model.CourseClassificiation) :
-            @Html.DisplayFor(model => model.CourseClassificiation) <br />
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="box box-danger">
+            <div class="box-body box-profile">
+                <h3 class="profile-username text-center">@Html.DisplayFor(model => model.CourseName)</h3>
+                <p class="text-muted text-center">@Html.DisplayFor(model => model.CourseCode)</p>
+                <ul class="list-group list-group-unbordered">
+                    @*<li class="list-group-item">
+                            <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
+                        </li>*@
+                    <li class="list-group-item">
+                        <b>Classification</b> <a class="pull-right">@Html.DisplayFor(model => model.CourseClassificiation) <br /></a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Course Type</b> <a class="pull-right">@Html.DisplayFor(model => model.CourseType)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Credits</b> <a class="pull-right">@Html.DisplayFor(model => model.Credits)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b> HST Value</b> <a class="pull-right">@Html.DisplayFor(model => model.HSTValue)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Budget Number of Students</b> <a class="pull-right">@Html.DisplayFor(model => model.BudgetedNumberOfStudents)</a>
+                    </li>
 
-            @Html.DisplayNameFor(model => model.CourseType) :
-            @Html.DisplayFor(model => model.CourseType)
-        </p>
-        <hr>
-        <strong><i class="fa fa-money margin-r-5"></i> Budget </strong>
-        <p class="text-muted">
-            @Html.DisplayNameFor(model => model.Credits) :
-            @Html.DisplayFor(model => model.Credits) <br />
-
-            @Html.DisplayNameFor(model => model.HSTValue) :
-            @Html.DisplayFor(model => model.HSTValue) <br />
-
-            @Html.DisplayNameFor(model => model.BudgetedNumberOfStudents) :
-            @Html.DisplayFor(model => model.BudgetedNumberOfStudents) <br />
-
-            @Html.DisplayNameFor(model => model.CourseBudget) :
-            @Html.DisplayFor(model => model.CourseBudget)
-
-            <button id="editBudget" class="btn btn-warning btn-xs" onclick="EditBudget()"> Edit Budget </button>
-
-            @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-            <fieldset hidden id="budgetEditForm">
-                <input type="text" value="@Html.ValueFor(model => model.CourseBudget)" name="newBudget" />
-                <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
-            </fieldset>
-            }
-
-        </p>
-        <hr>
-        <strong><i class="fa fa-calendar-check-o margin-r-5"></i> Dates </strong>
-        <p class="text-muted">
-            @Html.DisplayNameFor(model => model.Term) :
-            @Html.DisplayFor(model => model.Term) <br />
-
-            @Html.DisplayNameFor(model => model.Period) :
-            @Html.DisplayFor(model => model.Period) <br />
-
-            @Html.DisplayNameFor(model => model.StartDate) :
-            @Html.DisplayFor(model => model.StartDate) <br />
-
-            @Html.DisplayNameFor(model => model.EndDate) :
-            @Html.DisplayFor(model => model.EndDate)
-        </p>
-        <hr>
-        <strong><i class="fa fa-file-text-o margin-r-5"></i> Course History </strong>
-        <p class="text-muted">
-            Placeholder Text
-        </p>
-    </div>
-    <!-- /.box-body -->
+                    <li class="list-group-item">
+                        <b>Course Budget</b> <a class="pull-right">@Html.DisplayFor(model => model.CourseBudget)</a>
+                        <button id="editBudget" class="btn btn-warning btn-xs" onclick="EditBudget()"> Edit Budget </button>
+                    </li>
 
 
-</div>
 
-<div class="box box-danger">
-    <div class="box-header with-border">
+                    <li class="list-group-item">
+                        <b>Term</b> <a class="pull-right">@Html.DisplayFor(model => model.Term)</a>
+                    </li>
 
-        <h3 class="box-title">Teachers</h3>
-        <div class="box-body">
-            <strong><i class="fa fa-university margin-r-5"></i> Category </strong>
-            <p class="text-muted">
-              :
-            
-                
-            </p>
-            <hr>
-            <strong><i class="fa fa-money margin-r-5"></i> Budget </strong>
-            <p class="text-muted">
-              
+                    <li class="list-group-item">
+                        <b>Period</b> <a class="pull-right">@Html.DisplayFor(model => model.Period)</a>
+                    </li>
 
-               
+
+
+                    <li class="list-group-item">
+                        <b>Start Date</b> <a class="pull-right">@Html.DisplayFor(model => model.StartDate)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>End Date</b> <a class="pull-right">@Html.DisplayFor(model => model.EndDate)</a>
+                    </li>
+
+
+
+
+                    @*<li class="list-group-item">
+                            <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
+                        </li>*@
+
+
+                    @*<li class="list-group-item">
+                            <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
+                        </li>*@
+
+
+                </ul>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <fieldset hidden id="budgetEditForm">
+                        <input type="text" value="@Html.ValueFor(model => model.CourseBudget)" name="newBudget" />
+                        <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
+                    </fieldset>
                 }
 
-            </p>
-            <hr>
-            <strong><i class="fa fa-calendar-check-o margin-r-5"></i> Dates </strong>
-            <p class="text-muted">
-             
-
-
-            </p>
-            <hr>
-            <strong><i class="fa fa-file-text-o margin-r-5"></i> Course History </strong>
-            <p class="text-muted">
-                Placeholder Text
-            </p>
+            </div>
+            <!-- /.box-body -->
         </div>
-
-        
-
+        <!-- /.box -->
     </div>
-            </div>
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <a href="@Url.Action("History", "Course")"> History </a>
-                </div>
+    <!-- /.col -->
 
+
+
+    <div class="col-md-9  skin-red-light">
+        <div class="nav-tabs-custom  skin-red-light">
+            <ul class="nav nav-tabs skin-red-light">
+               
+                <li class="active skin-red-light"><a href="#history" data-toggle="tab">History</a></li>
+                <li><a href="#activity" data-toggle="tab">Teachers</a></li>
+
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="history">
+                    <div class="row">
+                        <div class="col-xs-12">
+                             <div class="box-body">
+                                    <table class="table table-bordered table-hover" id="courseoverview">
+                                        <thead>
+                                            <tr>
+                                              
+                                                <th>
+                                                    Course Classification
+                                                </th>
+                                                <th>
+                                                    Course Type
+                                                </th>
+                                                <th>
+                                                    Credits
+                                                </th>
+                                                <th>
+                                                    HST Value
+                                                </th>
+                                                <th>
+                                                    Student Number Budget
+                                                </th>
+                                                <th>
+                                                    Course Budget
+                                                </th>
+                                                <th>
+                                                    Term
+                                                </th>
+                                                <th>
+                                                    Period
+                                                </th>
+                                                <th>
+                                                    Start Date
+                                                </th>
+                                                <th>
+                                                    End Date
+                                                </th>
+                                               
+                                            </tr>
+                                        </thead>
+                                        @*<tbody>
+
+                                            @ foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CourseClassificiation)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CourseType)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Credits)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.HSTValue)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.BudgetedNumberOfStudents)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CourseBudget)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Term)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Period)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                                    </td>
+                                                   
+                                                </tr>
+                                            }
+                                        </tbody>*@
+
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                           
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="activity">
+                </div>
             </div>
-            <div>
-                @Html.ActionLink("Back to List", "Index")
-            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+@section MyScripts{
+    <script>
+        $(document).ready(function () {
+            $('#courseoverview').DataTable()
+        });
+    </script>
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

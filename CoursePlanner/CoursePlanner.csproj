@@ -719,7 +719,6 @@
     <Content Include="Views\Account\ManageUserRoles.cshtml" />
     <Content Include="Views\Account\RoleCreate.cshtml" />
     <Content Include="Views\Account\RoleIndex.cshtml" />
-    <Content Include="Views\Course\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

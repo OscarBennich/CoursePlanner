@@ -47,10 +47,7 @@ namespace CoursePlanner.Controllers
 
         }
 
-        public ActionResult History()
-        {
-            return View();
-        }
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Details(int id, string newBudget)
