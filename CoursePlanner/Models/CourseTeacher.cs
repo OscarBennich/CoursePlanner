@@ -12,14 +12,13 @@ namespace CoursePlanner.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TeacherReduction
+    public partial class CourseTeacher
     {
-        public int ReductionId { get; set; }
+        public int CourseOccurrenceId { get; set; }
         public int TeacherId { get; set; }
-        public Nullable<ReductionTypes> ReductionType { get; set; }
-        public Nullable<Terms> Term { get; set; }
-        public Nullable<double> Percentage { get; set; }
+        public Nullable<int> Hours { get; set; }
     
+        public virtual CourseOccurrence CourseOccurrence { get; set; }
         public virtual Teacher Teacher { get; set; }
     }
 }

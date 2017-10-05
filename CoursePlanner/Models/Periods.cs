@@ -10,16 +10,18 @@
 namespace CoursePlanner.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TeacherReduction
+    public enum Periods : int
     {
-        public int ReductionId { get; set; }
-        public int TeacherId { get; set; }
-        public Nullable<ReductionTypes> ReductionType { get; set; }
-        public Nullable<Terms> Term { get; set; }
-        public Nullable<double> Percentage { get; set; }
-    
-        public virtual Teacher Teacher { get; set; }
+        P1 = 0,
+        P2 = 1,
+        P3 = 2,
+        P4 = 3,
+        P1P2 = 4,
+        P2P3 = 5,
+        P3P4 = 6,
+        P1P2P3 = 7,
+        P2P3P4 = 8,
+        P1P2P3P4 = 9
     }
 }

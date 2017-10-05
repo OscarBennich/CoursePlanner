@@ -1,4 +1,4 @@
-﻿@model CoursePlanner.Models.CourseModel
+﻿@model CoursePlanner.Models.Course
 
 @{
     ViewBag.Title = "Create";
@@ -11,7 +11,7 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>CourseModel</legend>
+        <legend>Course</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.CourseCode)
@@ -28,87 +28,13 @@
             @Html.EditorFor(model => model.CourseName)
             @Html.ValidationMessageFor(model => model.CourseName)
         </div>
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.CourseClassificiation)
+            @Html.LabelFor(model => model.CourseLevel)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CourseClassificiation)
-            @Html.ValidationMessageFor(model => model.CourseClassificiation)
+            @Html.EditorFor(model => model.CourseLevel)
+            @Html.ValidationMessageFor(model => model.CourseName)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CourseType)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CourseType)
-            @Html.ValidationMessageFor(model => model.CourseType)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Credits)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Credits)
-            @Html.ValidationMessageFor(model => model.Credits)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.HSTValue)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.HSTValue)
-            @Html.ValidationMessageFor(model => model.HSTValue)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BudgetedNumberOfStudents)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BudgetedNumberOfStudents)
-            @Html.ValidationMessageFor(model => model.BudgetedNumberOfStudents)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CourseBudget)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CourseBudget)
-            @Html.ValidationMessageFor(model => model.CourseBudget)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Term)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Term)
-            @Html.ValidationMessageFor(model => model.Term)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Period)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Period)
-            @Html.ValidationMessageFor(model => model.Period)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StartDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EndDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
-        </div>
-
         <p>
             <input type="submit" value="Create" />
         </p>

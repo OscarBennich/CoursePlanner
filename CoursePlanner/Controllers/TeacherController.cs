@@ -11,14 +11,14 @@ namespace CoursePlanner.Controllers
 {
     public class TeacherController : Controller
     {
-        private TeacherProfileContext db = new TeacherProfileContext();
+        private CoursePlannerEntities db = new CoursePlannerEntities();
 
         //
         // GET: /Teacher/
 
         public ActionResult Index()
         {
-            return View(db.Teachers.ToList());
+            return View(db.Teacher.ToList());
         }
 
         //
@@ -26,7 +26,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Teacher teacher = db.Teachers.Find(id);
+            Teacher teacher = db.Teacher.Find(id);
             if (teacher == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace CoursePlanner.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Teachers.Add(teacher);
+                db.Teacher.Add(teacher);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -64,7 +64,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Teacher teacher = db.Teachers.Find(id);
+            Teacher teacher = db.Teacher.Find(id);
             if (teacher == null)
             {
                 return HttpNotFound();
@@ -93,7 +93,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Teacher teacher = db.Teachers.Find(id);
+            Teacher teacher = db.Teacher.Find(id);
             if (teacher == null)
             {
                 return HttpNotFound();
@@ -108,8 +108,8 @@ namespace CoursePlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Teacher teacher = db.Teachers.Find(id);
-            db.Teachers.Remove(teacher);
+            Teacher teacher = db.Teacher.Find(id);
+            db.Teacher.Remove(teacher);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

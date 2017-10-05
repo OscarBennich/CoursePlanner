@@ -10,16 +10,10 @@
 namespace CoursePlanner.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class TeacherReduction
+    public enum Terms : int
     {
-        public int ReductionId { get; set; }
-        public int TeacherId { get; set; }
-        public Nullable<ReductionTypes> ReductionType { get; set; }
-        public Nullable<Terms> Term { get; set; }
-        public Nullable<double> Percentage { get; set; }
-    
-        public virtual Teacher Teacher { get; set; }
+        Fall = 0,
+        Spring = 1
     }
 }

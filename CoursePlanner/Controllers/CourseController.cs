@@ -11,47 +11,27 @@ namespace CoursePlanner.Controllers
 {
     public class CourseController : Controller
     {
-        private CourseContext db = new CourseContext();
+        private CoursePlannerEntities db = new CoursePlannerEntities();
 
         //
         // GET: /Course/
 
         public ActionResult Index()
         {
-            return View(db.Courses.ToList());
-        }
-
-        //
-        // GET : /Course/Calendar
-
-        public ActionResult Calendar()
-        {
-            return View(db.Courses.ToList());
+            return View(db.Course.ToList());
         }
 
         //
         // GET: /Course/Details/5
 
         public ActionResult Details(int id = 0)
-        {   
-            
-            CourseModel coursemodel = db.Courses.Find(id);
-            if (coursemodel == null)
+        {
+            Course course = db.Course.Find(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(coursemodel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Details(int id, string newBudget)
-        {   
-            CourseModel coursemodel = db.Courses.Find(id);
-            coursemodel.CourseBudget = newBudget;
-            db.Entry(coursemodel).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("Details/" + coursemodel.Id);
+            return View(course);
         }
 
         //
@@ -67,16 +47,16 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CourseModel coursemodel)
+        public ActionResult Create(Course course)
         {
             if (ModelState.IsValid)
             {
-                db.Courses.Add(coursemodel);
+                db.Course.Add(course);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(coursemodel);
+            return View(course);
         }
 
         //
@@ -84,12 +64,12 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            CourseModel coursemodel = db.Courses.Find(id);
-            if (coursemodel == null)
+            Course course = db.Course.Find(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(coursemodel);
+            return View(course);
         }
 
         //
@@ -97,15 +77,15 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CourseModel coursemodel)
+        public ActionResult Edit(Course course)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(coursemodel).State = EntityState.Modified;
+                db.Entry(course).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(coursemodel);
+            return View(course);
         }
 
         //
@@ -113,12 +93,12 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            CourseModel coursemodel = db.Courses.Find(id);
-            if (coursemodel == null)
+            Course course = db.Course.Find(id);
+            if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(coursemodel);
+            return View(course);
         }
 
         //
@@ -128,8 +108,8 @@ namespace CoursePlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CourseModel coursemodel = db.Courses.Find(id);
-            db.Courses.Remove(coursemodel);
+            Course course = db.Course.Find(id);
+            db.Course.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

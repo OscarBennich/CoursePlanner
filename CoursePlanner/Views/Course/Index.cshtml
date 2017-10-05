@@ -1,122 +1,39 @@
-﻿@model IEnumerable<CoursePlanner.Models.CourseModel>
+﻿@model IEnumerable<CoursePlanner.Models.Course>
 
 @{
-    ViewBag.Title = "Course Overview";
+    ViewBag.Title = "Index";
 }
+
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th></th>
+    </tr>
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box box-danger">
-            @*<div class="box-header">
-                <h2 class="box-title">Course Overview</h2>
-            </div>*@
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table class="table table-bordered table-hover" id="courseoverview">
-                    <thead>
-                        <tr>
-                            <th>
-                                Course Code
-                            </th>
-                            <th>
-                                Course Name
-                            </th>
-                            <th>
-                                Course Classification
-                            </th>
-                            <th>
-                                Course Type
-                            </th>
-                            <th>
-                                Credits
-                            </th>
-                            <th>
-                                HST Value
-                            </th>
-                            <th>
-                                Student Number Budget
-                            </th>
-                            <th>
-                                Course Budget
-                            </th>
-                            <th>
-                                Term
-                            </th>
-                            <th>
-                                Period
-                            </th>
-                            <th>
-                                Start Date
-                            </th>
-                            <th>
-                                End Date
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CourseCode)
-                                </td>
-                                <td>
-                                    @Html.ActionLink(item.CourseName, "Details", new { id = item.Id })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CourseClassificiation)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CourseType)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Credits)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.HSTValue)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BudgetedNumberOfStudents)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CourseBudget)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Term)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Period)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.StartDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.EndDate)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    </div>
-    <!--/.col-xs-12-->
-</div>
-<!--/.row-->
-@section MyScripts{
-    <script>
-        $(document).ready(function () {
-            $('#courseoverview').DataTable()
-        });
-    </script>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
+        </td>
+    </tr>
 }
+
+</table>

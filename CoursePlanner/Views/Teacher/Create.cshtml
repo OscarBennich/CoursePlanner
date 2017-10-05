@@ -14,19 +14,51 @@
         <legend>Teacher</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.TeacherName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.TeacherName)
+            @Html.ValidationMessageFor(model => model.TeacherName)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Dob)
+            @Html.LabelFor(model => model.TeacherDob)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Dob)
-            @Html.ValidationMessageFor(model => model.Dob)
+            @Html.EditorFor(model => model.TeacherDob)
+            @Html.ValidationMessageFor(model => model.TeacherDob)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TeacherUserId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TeacherUserId)
+            @Html.ValidationMessageFor(model => model.TeacherUserId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TotalPercentageFall)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TotalPercentageFall)
+            @Html.ValidationMessageFor(model => model.TotalPercentageFall)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TotalPercentageSpring)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TotalPercentageSpring)
+            @Html.ValidationMessageFor(model => model.TotalPercentageSpring)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FixedContractEndDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FixedContractEndDate)
+            @Html.ValidationMessageFor(model => model.FixedContractEndDate)
         </div>
 
         <p>

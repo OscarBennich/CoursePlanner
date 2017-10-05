@@ -46,6 +46,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -191,27 +193,67 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201709271312491_Initial Migration.cs" />
-    <Compile Include="Migrations\201709271312491_Initial Migration.Designer.cs">
-      <DependentUpon>201709271312491_Initial Migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709271324300_Second better migration.cs" />
-    <Compile Include="Migrations\201709271324300_Second better migration.Designer.cs">
-      <DependentUpon>201709271324300_Second better migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709280932491_third migration.cs" />
-    <Compile Include="Migrations\201709280932491_third migration.Designer.cs">
-      <DependentUpon>201709280932491_third migration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\CourseModel.cs" />
-    <Compile Include="Models\CourseContext.cs" />
-    <Compile Include="Models\TeacherProfileContext.cs" />
-    <Compile Include="Models\TeacherProfileDataInitializer.cs" />
-    <Compile Include="Models\TeacherReduction.cs" />
-    <Compile Include="Models\TeacherContract.cs" />
-    <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\ContractTypes.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseClassifications.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseCredits.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseLevels.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseOccurrence.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CoursePlannerModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoursePlannerModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CoursePlannerModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CoursePlannerModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CoursePlannerModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseTeacher.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseTypes.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Periods.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Positions.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReductionTypes.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Statuses.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Teacher.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TeacherReduction.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Terms.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -649,7 +691,24 @@
     <Content Include="Content\plugins\datatables\extensions\TableTools\images\psd\file_types.psd" />
     <Content Include="Content\plugins\datatables\extensions\TableTools\images\psd\printer.psd" />
     <Content Include="Content\plugins\datatables\extensions\TableTools\Readme.md" />
+    <EntityDeploy Include="Models\CoursePlannerModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CoursePlannerModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CoursePlannerModel.edmx.diagram">
+      <DependentUpon>CoursePlannerModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Models\CoursePlannerModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CoursePlannerModel.edmx</DependentUpon>
+      <LastGenOutput>CoursePlannerModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CoursePlannerModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CoursePlannerModel.edmx</DependentUpon>
+      <LastGenOutput>CoursePlannerModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -696,29 +755,25 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\_DefaultLayout.cshtml" />
+    <Content Include="Views\Account\ManageUserRoles.cshtml" />
+    <Content Include="Views\Account\RoleCreate.cshtml" />
+    <Content Include="Views\Account\RoleIndex.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\Delete.cshtml" />
-    <Content Include="Views\TeacherProfile\OLDTeacherProfile.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Teacher\Details.cshtml" />
     <Content Include="Views\Teacher\Create.cshtml" />
     <Content Include="Views\Teacher\Edit.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
-    <Content Include="Views\Course\Calendar.cshtml" />
-    <Content Include="Views\Account\ManageUserRoles.cshtml" />
-    <Content Include="Views\Account\RoleCreate.cshtml" />
-    <Content Include="Views\Account\RoleIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -727,15 +782,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709271312491_Initial Migration.resx">
-      <DependentUpon>201709271312491_Initial Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709271324300_Second better migration.resx">
-      <DependentUpon>201709271324300_Second better migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709280932491_third migration.resx">
-      <DependentUpon>201709280932491_third migration.cs</DependentUpon>
-    </EmbeddedResource>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
