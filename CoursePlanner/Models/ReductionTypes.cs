@@ -13,8 +13,9 @@ namespace CoursePlanner.Models
     
     public enum ReductionTypes : int
     {
-        Commitment = 0,
+        Assignments = 0,
         Research = 1,
-        Other = 2
+        Other = 2,
+        Administration = 3
     }
 }
