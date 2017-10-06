@@ -161,3 +161,4 @@ U:\Documents\CoursePlanner\CoursePlanner\bin\zh-Hans\System.Spatial.resources.dl
 U:\Documents\CoursePlanner\CoursePlanner\bin\zh-Hant\System.Spatial.resources.dll
 U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.dll
 U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.pdb
+U:\Documents\CoursePlanner\CoursePlanner\obj\Debug\CoursePlanner.csprojResolveAssemblyReference.cache

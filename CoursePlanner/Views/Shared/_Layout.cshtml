@@ -185,28 +185,13 @@
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li><a href="@Url.Action("Calendar", "Course")"><i class="active fa fa-file-text"></i> <span>Overview</span></a></li>
-                    @*<li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-book"></i>
-                                <span>Courses</span>
-                                <span class="pull-right-container">
-                                    <span class="label label-primary pull-right">2</span>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="@Url.Action("Index","Course")"><i class="fa fa-circle-o"></i> Course List</a></li>
-                                <li><a href="@Url.Action("Calendar","Course")"><i class="fa fa-circle-o"></i> Course Conflicts </a></li>
-                            </ul>
-                        </li>*@
+                    <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-file-text"></i> <span>Overview</span></a></li>
                     <li>
                         <a href="@Url.Action("Index", "Course")"><i class="fa fa-book"></i> <span>Courses</span></a>
                     </li>
                     <li>
                         <a href="@Url.Action("Index", "Teacher")"><i class="fa fa-users"></i> <span>Teachers</span></a>
                     </li>
-                    <li><a href="@Url.Action("CoursePeriodOverview", "Home")"><i></i> <span>Test Overview</span></a></li>
-
                 </ul>
             </section>
             <!-- /.sidebar -->
