@@ -2,6 +2,7 @@
     ViewBag.Title = "Role Listing";
 }
 
+
 <p>&nbsp;</p>
 <div class="spacerBody">
     @Html.ActionLink("Create New Role", "RoleCreate") | @Html.ActionLink("Manage User Roles", "ManageUserRoles")
@@ -15,6 +16,8 @@
                 <div class="td">
                     @s
                 </div>
+                @if (User.IsInRole("Study Director"))
+                { 
                 <div class="td">
                     <span onclick="return confirm('Are you sure to delete?')">
                         
@@ -23,6 +26,8 @@
                         </a>
                     </span>
                 </div>
+                }
+
             </div>
         }
     </div>
