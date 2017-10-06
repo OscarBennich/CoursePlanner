@@ -1,57 +1,125 @@
 ﻿@model CoursePlanner.Models.Teacher
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.TeacherName;
 }
 
-<h2>Details</h2>
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="box box-danger">
+            <div class="box-body box-profile">
+                <h3 class="profile-username text-center">@Html.DisplayFor(model => model.TeacherName)</h3>
+                <p class="text-muted text-center">@Html.DisplayFor(model => model.TeacherPosition)</p>
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Contract type</b> <a class="pull-right">@Html.DisplayFor(model => model.TeacherContractType)</a>
+                    </li>
+                    @if(Model.FixedContractEndDate.Value != null)
+                    { 
+                        <li class="list-group-item">
+                            <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
+                        </li>
+                    }
+                    <li class="list-group-item">
+                        <b>Total percentage fall</b> <a class="pull-right">@Html.DisplayFor(model => model.TotalPercentageFall)%</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Total percentage spring</b> <a class="pull-right">@Html.DisplayFor(model => model.TotalPercentageSpring)%</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Teaching hours available</b> <a class="pull-right">150</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Allocated teaching hours</b> <a class="pull-right">100</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Remaining teaching hours</b> <a class="pull-right">50</a>
+                    </li>
+                </ul>
+                @*<a href="#" class="btn btn-danger btn-block"><b>Follow</b></a>*@
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9  skin-red-light">
+        <div class="nav-tabs-custom  skin-red-light">
+            <ul class="nav nav-tabs skin-red-light">
+                <li class="active skin-red-light"><a href="#activity" data-toggle="tab">Fall Term</a></li>
+                <li><a href="#timeline" data-toggle="tab">Spring Term</a></li>
+                <li><a href="#settings" data-toggle="tab">Hours During Year</a></li>
+                <li><a href="#history" data-toggle="tab">History</a></li>
 
-<fieldset>
-    <legend>Teacher</legend>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="activity">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-danger">
+                                @*<div class="box-header">
+                                        <h2 class="box-title">Course Overview</h2>
+                                    </div>*@
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered table-hover" id="courseoverview">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Course Code
+                                                </th>
+                                                <th>
+                                                    Course Name
+                                                </th>
+                                                <th>
+                                                    Amount of hours
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TeacherName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TeacherName)
-    </div>
+                                            <tr>
+                                                <td>
+                                                    17NIIKA
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/7", "Course")"><span>Declarative Problem Solving</span></a>
+                                                </td>
+                                                <td>
+                                                    85
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="timeline">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TeacherDob)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TeacherDob)
-    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="settings">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TeacherUserId)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TeacherUserId)
-    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="history">
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TotalPercentageFall)
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TotalPercentageFall)
-    </div>
+    <!-- /.col -->
+</div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.TotalPercentageSpring)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TotalPercentageSpring)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.FixedContractEndDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.FixedContractEndDate)
-    </div>
-</fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.TeacherId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

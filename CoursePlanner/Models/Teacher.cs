@@ -23,7 +23,7 @@ namespace CoursePlanner.Models
     
         public int TeacherId { get; set; }
         public string TeacherName { get; set; }
-        public string TeacherDob { get; set; }
+        public System.DateTime TeacherDateOfBirth { get; set; }
         public Nullable<int> TeacherUserId { get; set; }
         public Nullable<Positions> TeacherPosition { get; set; }
         public Nullable<double> TotalPercentageFall { get; set; }

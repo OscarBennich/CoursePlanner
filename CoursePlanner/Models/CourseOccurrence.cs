@@ -33,8 +33,8 @@ namespace CoursePlanner.Models
         public int CourseID { get; set; }
         public Nullable<int> CourseResponsibleID { get; set; }
     
-        public virtual Teacher Teacher { get; set; }
         public virtual ICollection<CourseTeacher> CourseTeacher { get; set; }
         public virtual Course Course { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

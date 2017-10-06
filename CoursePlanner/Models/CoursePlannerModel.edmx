@@ -50,7 +50,7 @@
           </Key>
           <Property Name="TeacherId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TeacherName" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="TeacherDob" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TeacherDateOfBirth" Type="date" Nullable="false" />
           <Property Name="TeacherUserId" Type="int" />
           <Property Name="TeacherPosition" Type="int" />
           <Property Name="TotalPercentageFall" Type="float" />
@@ -176,9 +176,9 @@
           <Property Name="Status" Type="Model.Statuses" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
           <Property Name="CourseResponsibleID" Type="Int32" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK_CourseOccurrence_Teacher" FromRole="CourseOccurrence" ToRole="Teacher" />
           <NavigationProperty Name="CourseTeacher" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseOccurrence" ToRole="CourseTeacher" />
           <NavigationProperty Name="Course" Relationship="Model.FK_CourseOccurrence_Course" FromRole="CourseOccurrence" ToRole="Course" />
+          <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="CourseOccurrence" ToRole="Teacher" />
         </EntityType>
         <EntityType Name="CourseTeacher">
           <Key>
@@ -189,24 +189,7 @@
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
           <Property Name="Hours" Type="Int32" />
           <NavigationProperty Name="CourseOccurrence" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseTeacher" ToRole="CourseOccurrence" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK_CourseTeacher_Teacher" FromRole="CourseTeacher" ToRole="Teacher" />
-        </EntityType>
-        <EntityType Name="Teacher">
-          <Key>
-            <PropertyRef Name="TeacherId" />
-          </Key>
-          <Property Name="TeacherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TeacherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TeacherDob" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TeacherUserId" Type="Int32" />
-          <Property Name="TeacherPosition" Type="Model.Positions" />
-          <Property Name="TotalPercentageFall" Type="Double" />
-          <Property Name="TotalPercentageSpring" Type="Double" />
-          <Property Name="TeacherContractType" Type="Model.ContractTypes" />
-          <Property Name="FixedContractEndDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="CourseOccurrence" Relationship="Self.FK_CourseOccurrence_Teacher" FromRole="Teacher" ToRole="CourseOccurrence" />
-          <NavigationProperty Name="CourseTeacher" Relationship="Self.FK_CourseTeacher_Teacher" FromRole="Teacher" ToRole="CourseTeacher" />
-          <NavigationProperty Name="TeacherReduction" Relationship="Self.FK_TeacherReduction_Teacher" FromRole="Teacher" ToRole="TeacherReduction" />
+          <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseTeacher_Teacher" FromRole="CourseTeacher" ToRole="Teacher" />
         </EntityType>
         <EntityType Name="TeacherReduction">
           <Key>
@@ -217,20 +200,8 @@
           <Property Name="ReductionType" Type="Model.ReductionTypes" />
           <Property Name="Term" Type="Model.Terms" />
           <Property Name="Percentage" Type="Double" />
-          <NavigationProperty Name="Teacher" Relationship="Self.FK_TeacherReduction_Teacher" FromRole="TeacherReduction" ToRole="Teacher" />
+          <NavigationProperty Name="Teacher" Relationship="Model.FK_TeacherReduction_Teacher" FromRole="TeacherReduction" ToRole="Teacher" />
         </EntityType>
-        <Association Name="FK_CourseOccurrence_Teacher">
-          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1" />
-          <End Role="CourseOccurrence" Type="Self.CourseOccurrence" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teacher">
-              <PropertyRef Name="TeacherId" />
-            </Principal>
-            <Dependent Role="CourseOccurrence">
-              <PropertyRef Name="CourseResponsibleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CourseTeacher_Course">
           <End Role="CourseOccurrence" Type="Self.CourseOccurrence" Multiplicity="1" />
           <End Role="CourseTeacher" Type="Self.CourseTeacher" Multiplicity="*" />
@@ -243,55 +214,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CourseTeacher_Teacher">
-          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
-          <End Role="CourseTeacher" Type="Self.CourseTeacher" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teacher">
-              <PropertyRef Name="TeacherId" />
-            </Principal>
-            <Dependent Role="CourseTeacher">
-              <PropertyRef Name="TeacherId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TeacherReduction_Teacher">
-          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
-          <End Role="TeacherReduction" Type="Self.TeacherReduction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Teacher">
-              <PropertyRef Name="TeacherId" />
-            </Principal>
-            <Dependent Role="TeacherReduction">
-              <PropertyRef Name="TeacherId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="CoursePlannerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CourseOccurrence" EntityType="Self.CourseOccurrence" />
           <EntitySet Name="CourseTeacher" EntityType="Self.CourseTeacher" />
-          <EntitySet Name="Teacher" EntityType="Self.Teacher" />
           <EntitySet Name="TeacherReduction" EntityType="Self.TeacherReduction" />
-          <AssociationSet Name="FK_CourseOccurrence_Teacher" Association="Self.FK_CourseOccurrence_Teacher">
-            <End Role="Teacher" EntitySet="Teacher" />
-            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
-          </AssociationSet>
           <AssociationSet Name="FK_CourseTeacher_Course" Association="Self.FK_CourseTeacher_Course">
             <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
             <End Role="CourseTeacher" EntitySet="CourseTeacher" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CourseTeacher_Teacher" Association="Self.FK_CourseTeacher_Teacher">
-            <End Role="Teacher" EntitySet="Teacher" />
-            <End Role="CourseTeacher" EntitySet="CourseTeacher" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeacherReduction_Teacher" Association="Self.FK_TeacherReduction_Teacher">
-            <End Role="Teacher" EntitySet="Teacher" />
-            <End Role="TeacherReduction" EntitySet="TeacherReduction" />
           </AssociationSet>
           <EntitySet Name="Course" EntityType="Model.Course" />
           <AssociationSet Name="FK_CourseOccurrence_Course" Association="Model.FK_CourseOccurrence_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+          </AssociationSet>
+          <EntitySet Name="Teacher" EntityType="Model.Teacher" />
+          <AssociationSet Name="FK_CourseOccurrence_Teacher" Association="Model.FK_CourseOccurrence_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CourseTeacher_Teacher" Association="Model.FK_CourseTeacher_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="CourseTeacher" EntitySet="CourseTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeacherReduction_Teacher" Association="Model.FK_TeacherReduction_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="TeacherReduction" EntitySet="TeacherReduction" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Course">
@@ -377,6 +324,59 @@
           <Member Name="Fall" />
           <Member Name="Spring" />
         </EnumType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherId" />
+          </Key>
+          <Property Name="TeacherId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherDateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TeacherUserId" Type="Int32" />
+          <Property Name="TeacherPosition" Type="Model.Positions" />
+          <Property Name="TotalPercentageFall" Type="Double" />
+          <Property Name="TotalPercentageSpring" Type="Double" />
+          <Property Name="TeacherContractType" Type="Model.ContractTypes" />
+          <Property Name="FixedContractEndDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CourseOccurrence" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="Teacher" ToRole="CourseOccurrence" />
+          <NavigationProperty Name="CourseTeacher" Relationship="Model.FK_CourseTeacher_Teacher" FromRole="Teacher" ToRole="CourseTeacher" />
+          <NavigationProperty Name="TeacherReduction" Relationship="Model.FK_TeacherReduction_Teacher" FromRole="Teacher" ToRole="TeacherReduction" />
+        </EntityType>
+        <Association Name="FK_CourseOccurrence_Teacher">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="0..1" />
+          <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="CourseOccurrence">
+              <PropertyRef Name="CourseResponsibleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CourseTeacher_Teacher">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Model.CourseTeacher" Role="CourseTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="CourseTeacher">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TeacherReduction_Teacher">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Model.TeacherReduction" Role="TeacherReduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="TeacherReduction">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -411,21 +411,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Teacher">
-            <EntityTypeMapping TypeName="Model.Teacher">
-              <MappingFragment StoreEntitySet="Teacher">
-                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
-                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
-                <ScalarProperty Name="TeacherDob" ColumnName="TeacherDob" />
-                <ScalarProperty Name="TeacherUserId" ColumnName="TeacherUserId" />
-                <ScalarProperty Name="TeacherPosition" ColumnName="TeacherPosition" />
-                <ScalarProperty Name="TotalPercentageFall" ColumnName="TotalPercentageFall" />
-                <ScalarProperty Name="TotalPercentageSpring" ColumnName="TotalPercentageSpring" />
-                <ScalarProperty Name="TeacherContractType" ColumnName="TeacherContractType" />
-                <ScalarProperty Name="FixedContractEndDate" ColumnName="FixedContractEndDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TeacherReduction">
             <EntityTypeMapping TypeName="Model.TeacherReduction">
               <MappingFragment StoreEntitySet="TeacherReduction">
@@ -447,6 +432,21 @@
                 <ScalarProperty Name="CourseName" ColumnName="CourseName" />
                 <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
                 <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teacher">
+            <EntityTypeMapping TypeName="Model.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="FixedContractEndDate" ColumnName="FixedContractEndDate" />
+                <ScalarProperty Name="TeacherContractType" ColumnName="TeacherContractType" />
+                <ScalarProperty Name="TotalPercentageSpring" ColumnName="TotalPercentageSpring" />
+                <ScalarProperty Name="TotalPercentageFall" ColumnName="TotalPercentageFall" />
+                <ScalarProperty Name="TeacherPosition" ColumnName="TeacherPosition" />
+                <ScalarProperty Name="TeacherUserId" ColumnName="TeacherUserId" />
+                <ScalarProperty Name="TeacherDateOfBirth" ColumnName="TeacherDateOfBirth" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
