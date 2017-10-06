@@ -1,5 +1,4 @@
-﻿INSERT INTO webpages_Roles(RoleName)
-VALUES ('Study Director');
+﻿drop table TeacherReduction;
+drop table TeacherContract;
 
-INSERT INTO webpages_Roles(RoleName)
-VALUES ('Teacher');
+delete from TeacherReduction
