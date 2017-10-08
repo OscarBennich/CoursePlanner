@@ -31,16 +31,44 @@
                         <b>Base annual working hours</b> <a class="pull-right">@ViewBag.BaseAnnualWorkingHours</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Teaching hours available</b> <a class="pull-right">@ViewBag.Test</a>
+                        / / / / / / / / / / / / / / / /
+                    </li>
+
+                    <li class="list-group-item">
+                        <b>Teaching hours available [Fall]</b> <a class="pull-right">@ViewBag.TeachingHoursAvailableFall</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Allocated teaching hours</b> <a class="pull-right">100</a>
+                        <b>Allocated teaching hours [Fall]</b> <a class="pull-right">@ViewBag.TeachingHoursAllocatedFall</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Remaining teaching hours</b> <a class="pull-right">50</a>
+                        <b>Remaining teaching hours [Fall]</b> 
+                        @if(ViewBag.TeachingHoursAvailableFall-ViewBag.TeachingHoursAllocatedFall < 0)
+                        {
+                            <a class="pull-right">Too many hours allocated</a>
+                        }
+                        else
+                        {
+                            <a class="pull-right">@(ViewBag.TeachingHoursAvailableFall-ViewBag.TeachingHoursAllocatedFall)</a>     
+                        }                           
+                    </li>
+                    <li class="list-group-item">
+                        <b>Teaching hours available [Spring]</b> <a class="pull-right">@ViewBag.TeachingHoursAvailableSpring</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Allocated teaching hours [Spring]</b> <a class="pull-right">@ViewBag.TeachingHoursAllocatedSpring</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Remaining teaching hours [Spring]</b> 
+                        @if (ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring < 0)
+                        {
+                            <a class="pull-right">Too many hours allocated</a>
+                        }
+                        else
+                        {
+                            <a class="pull-right">@(ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring)</a>
+                        } 
                     </li>
                 </ul>
-                @*<a href="#" class="btn btn-danger btn-block"><b>Follow</b></a>*@
             </div>
             <!-- /.box-body -->
         </div>
