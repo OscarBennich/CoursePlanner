@@ -18,7 +18,7 @@ deploy:
     script:
         - '"nuget.exe" restore'
         - '"msbuild.exe" /p:VisualStudioVersion=15.0 /p:PublishProfile=LocalWebPublish /p:DeployOnBuild=true /p:Configuration=Release'
-        - xcopy .\CoursePlanner\bin\Release\PublishOutput\* C:\Users\Gamma\Desktop\GammaWeb\ /i /s /y
+        - xcopy .\CoursePlanner\PublishOutput\* C:\Users\Gamma\Desktop\GammaWeb\ /i /s /y
     artifacts:
         untracked: true
     only:
