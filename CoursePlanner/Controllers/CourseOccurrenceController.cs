@@ -53,29 +53,18 @@ namespace CoursePlanner.Controllers
                 return HttpNotFound();
             }
 
-            //List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID,courseoccurrence.Year).ToList();
-    
+            string CurrentEduYear = GetCurrentEducationalYear();
 
-            //ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
-           
-
+            List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID, CurrentEduYear).ToList();
+            ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
+          
             return View(courseoccurrence);
         }
 
-        //private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID,string year)
-        //{
-        //    //return db.CourseOccurrence.Where(c =>courseID ==c.CourseID).Select(c => c.CourseOccurrence);
-        //    //return db.CourseOccurrence.Where(c => c.CourseTeacher.Where(t => t.TeacherId == teacherID).FirstOrDefault && c.Term == term);
-        //    var currentYear= GetCurrentEducationalYear();
-        //    var courseHistory = (from m in db.CourseOccurrence.AsEnumerable()
-        //                         where m.CourseID == courseID
-        //                         select db.CourseOccurrence);
-                                  
-                                
-
-        //    return courseHistory;        
-
-        //}
+        private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID, string year)
+        {
+            return db.CourseOccurrence.Where(c => c.CourseID == courseID && c.Year != year).ToList();
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

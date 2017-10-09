@@ -236,46 +236,38 @@
 
                                         </tr>
                                     </thead>
-                                    @*<tbody>
-
-                                            @foreach (var item in Model)
+                                    <tbody>
+                                            @foreach (CoursePlanner.Models.CourseOccurrence courseOccurance in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesHistory)
                                             {
                                                 <tr>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Course. )
+                                                        @courseOccurance.HST
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.CourseType)
+                                                        @courseOccurance.Budget
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Credits)
+                                                        @courseOccurance.NoOfStudents
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.HSTValue)
+                                                       @courseOccurance.NoOfPassingStudents
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.BudgetedNumberOfStudents)
+                                                        @((courseOccurance.NoOfPassingStudents*100) / courseOccurance.NoOfStudents)%
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.CourseBudget)
+                                                        @courseOccurance.Year
+                                                    </td>
+                                                    <td>                     
+                                                       @courseOccurance.CourseResponsibleID 
+                                                       @*courseOccurance.CourseTeacher.Where(x => x.TeacherId == courseOccurance.CourseOccurrenceID).Select(y => y.Teacher.TeacherName)*@                                
                                                     </td>
                                                     <td>
-                                                        @Html.DisplayFor(modelItem => item.Term)
+                                                        NOT IMPLEMENTED
                                                     </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.Period)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.StartDate)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.EndDate)
-                                                    </td>
-
                                                 </tr>
                                             }
-                                        </tbody>*@
-
+                                        </tbody>
                                 </table>
                             </div>
                             <!-- /.box-body -->
