@@ -338,6 +338,8 @@
     <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.all.min.js" />
     <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.css" />
     <Content Include="Content\plugins\bootstrap-wysihtml5\bootstrap3-wysihtml5.min.css" />
+    <Content Include="Content\plugins\chartjs\Chart.js" />
+    <Content Include="Content\plugins\chartjs\Chart.min.js" />
     <Content Include="Content\plugins\datatables\dataTables.bootstrap.css" />
     <Content Include="Content\plugins\datatables\dataTables.bootstrap.js" />
     <Content Include="Content\plugins\datatables\dataTables.bootstrap.min.js" />
@@ -802,7 +804,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55004</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55046/</IISUrl>
+          <IISUrl>http://localhost:55077/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

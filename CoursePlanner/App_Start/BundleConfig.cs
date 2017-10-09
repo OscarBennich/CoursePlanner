@@ -57,6 +57,8 @@ namespace CoursePlanner
                      "~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
                      "~/Content/plugins/slimScroll/jquery.slimscroll.min.js",
                      "~/Content/plugins/fastclick/fastclick.js",
+                     "~/Content/plugins/chartjs/Chart.js",
+                     "~/Content/plugins/chartjs/Chart.min.js",
                      "~/Content/dist/js/app.min.js",
                      "~/Content/clickable-row-function.js"
                      ));
