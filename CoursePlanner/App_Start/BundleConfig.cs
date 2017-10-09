@@ -41,6 +41,7 @@ namespace CoursePlanner
 
             bundles.Add(new StyleBundle("~/Css").Include(
                       "~/Content/bootstrap/css/bootstrap.min.css",
+                      "~/Content/dist/css/alt/AdminLTE-select2.min.css",
                       "~/Content/dist/css/AdminLTE.min.css",
                       "~/Content/dist/css/skins/skin-red-light.min.css",
                       "~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css",
@@ -60,7 +61,8 @@ namespace CoursePlanner
                      "~/Content/plugins/chartjs/Chart.js",
                      "~/Content/plugins/chartjs/Chart.min.js",
                      "~/Content/dist/js/app.min.js",
-                     "~/Content/clickable-row-function.js"
+                     "~/Content/clickable-row-function.js",
+                     "~/Content/plugins/select2/select2.full.min.js"
                      ));
 
 
