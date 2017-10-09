@@ -56,7 +56,12 @@ namespace CoursePlanner.Controllers
             string CurrentEduYear = GetCurrentEducationalYear();
 
             List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID, CurrentEduYear).ToList();
+            
+            List<Teacher> teachersCourse = GetTeachers(courseoccurrence.CourseOccurrenceID).ToList();
+
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
+            ViewBag.teachersCourse = teachersCourse;
+
           
             return View(courseoccurrence);
         }
@@ -171,6 +176,13 @@ namespace CoursePlanner.Controllers
         {
             db.Dispose();
             base.Dispose(disposing);
+        }
+
+
+        private IEnumerable<Teacher> GetTeachers(int courseOccurenceID)
+        {
+
+            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher);
         }
     }
 }

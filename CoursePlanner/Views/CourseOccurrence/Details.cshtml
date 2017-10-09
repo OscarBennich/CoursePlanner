@@ -29,34 +29,34 @@
                 <p class="text-center">
                     @if (Model.Status.ToString() == "Planned")
                     {
-                        
-                            <span class="label label-warning">Planned</span>
-                       
+
+                        <span class="label label-warning">Planned</span>
+
                     }
                     else if (Model.Status.ToString() == "Ongoing")
                     {
-                        
 
-                            <span class="label label-primary">Ongoing</span>
-                      
+
+                        <span class="label label-primary">Ongoing</span>
+
 
 
                     }
                     else if (Model.Status.ToString() == "Completed")
                     {
-                        
 
-                            <span class="label label-success">Completed</span>
-                       
+
+                        <span class="label label-success">Completed</span>
+
 
 
                     }
                     else
                     {
-                       
 
-                            <span>Nothing</span>
-                        
+
+                        <span>Nothing</span>
+
 
 
                     }
@@ -78,25 +78,25 @@
                         <b>Course Type</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseType)</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Credits</b> 
-                        
-                       
-                                           @if (Model.Course.CourseCredit.ToString() == "C7_5")
-                                           {
-                                              
-                                                   <a class="pull-right">C7.5</a>
+                        <b>Credits</b>
 
-                                           }
-                                           else
-                                           {
 
-                                            <a class="pull-right">@Model.Course.CourseCredit</a>
-                                                   
-                                               
-                                           }
-                        
-                        
-                        
+                        @if (Model.Course.CourseCredit.ToString() == "C7_5")
+                        {
+
+                            <a class="pull-right">C7.5</a>
+
+                        }
+                        else
+                        {
+
+                            <a class="pull-right">@Model.Course.CourseCredit</a>
+
+
+                        }
+
+
+
                     </li>
                     <li class="list-group-item">
                         <b> HST Value</b> <a class="pull-right">@Html.DisplayFor(model => model.HST)</a>
@@ -149,7 +149,7 @@
                     </li>
 
                     <li class="list-group-item">
-                        <b>End Date</b> 
+                        <b>End Date</b>
                         @if (Model.EndDate != null)
                         {
                             <a class="pull-right">
@@ -162,7 +162,7 @@
                                 No end date set
                             </a>
                         }
-                    
+
                     </li>
 
 
@@ -180,7 +180,7 @@
 
                 </ul>
 
-               
+
 
             </div>
             <!-- /.box-body -->
@@ -194,13 +194,56 @@
     <div class="col-md-9  skin-red-light">
         <div class="nav-tabs-custom  skin-red-light">
             <ul class="nav nav-tabs skin-red-light">
-
-                <li class="active skin-red-light"><a href="#history" data-toggle="tab">History</a></li>
-                <li><a href="#activity" data-toggle="tab">Teachers</a></li>
-
+                <li class="active skin-red-light"><a href="#teachers" data-toggle="tab">Teachers</a></li>
+                <li><a href="#history" data-toggle="tab">History</a></li>
             </ul>
             <div class="tab-content">
-                <div class="active tab-pane" id="history">
+                <div class="active tab-pane" id="teachers">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box-body">
+                                <table class="table table-bordered table-hover table-responsive" id="courseoverview">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Teacher Name
+                                            </th>
+                                            <th>
+                                                Course Responsible?
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>   
+
+
+                                       @foreach (CoursePlanner.Models.Teacher teacher in(List<CoursePlanner.Models.Teacher>)ViewBag.teachersCourse)
+                                       { 
+                                        <tr>
+                                            <td>
+                                               
+
+                                                <a href="@Url.Action("Details/" + @teacher.TeacherId, "Teacher")"><span>@teacher.TeacherName</span></a>
+                                               
+                                            </td>
+                                            <td>
+
+                                              
+                                            </td>
+                                        </tr>
+                                       }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!-- /.tab-pane -->
+
+                <div class="tab-pane" id="history">
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box-body">
@@ -221,10 +264,10 @@
                                                 Number of Passing Students
                                             </th>
                                             <th>
-                                                Passing Percentage 
+                                                Passing Percentage
                                             </th>
                                             <th>
-                                               Educational Year
+                                                Educational Year
                                             </th>
                                             <th>
                                                 Course Responsible
@@ -232,42 +275,42 @@
                                             <th>
                                                 Teachers
                                             </th>
-                                           
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            @foreach (CoursePlanner.Models.CourseOccurrence courseOccurance in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesHistory)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        @courseOccurance.HST
-                                                    </td>
-                                                    <td>
-                                                        @courseOccurance.Budget
-                                                    </td>
-                                                    <td>
-                                                        @courseOccurance.NoOfStudents
-                                                    </td>
-                                                    <td>
-                                                       @courseOccurance.NoOfPassingStudents
-                                                    </td>
-                                                    <td>
-                                                        @((courseOccurance.NoOfPassingStudents*100) / courseOccurance.NoOfStudents)%
-                                                    </td>
-                                                    <td>
-                                                        @courseOccurance.Year
-                                                    </td>
-                                                    <td>                     
-                                                       @courseOccurance.CourseResponsibleID 
-                                                       @*courseOccurance.CourseTeacher.Where(x => x.TeacherId == courseOccurance.CourseOccurrenceID).Select(y => y.Teacher.TeacherName)*@                                
-                                                    </td>
-                                                    <td>
-                                                        NOT IMPLEMENTED
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
+
+                                        @foreach (CoursePlanner.Models.CourseOccurrence courseOccurance in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesHistory)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @courseOccurance.HST
+                                                </td>
+                                                <td>
+                                                    @courseOccurance.Budget
+                                                </td>
+                                                <td>
+                                                    @courseOccurance.NoOfStudents
+                                                </td>
+                                                <td>
+                                                    @courseOccurance.NoOfPassingStudents
+                                                </td>
+                                                <td>
+                                                    @((courseOccurance.NoOfPassingStudents * 100) / courseOccurance.NoOfStudents)%
+                                                </td>
+                                                <td>
+                                                    @courseOccurance.Year
+                                                </td>
+                                                <td>
+                                                    @courseOccurance.CourseResponsibleID
+                                                    @*courseOccurance.CourseTeacher.Where(x => x.TeacherId == courseOccurance.CourseOccurrenceID).Select(y => y.Teacher.TeacherName)*@
+                                                    @*@courseOccurance.CourseTeacher.Where(x => x.CourseOccurrenceId == courseOccurance.CourseOccurrenceID && x.TeacherId == courseOccurance.CourseResponsibleID).Select(y => y.Teacher.TeacherName)*@
+                                                </td>
+                                                <td>
+                                                    NOT IMPLEMENTED
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.box-body -->
@@ -278,8 +321,6 @@
                     <!--/.row-->
                 </div>
                 <!-- /.tab-pane -->
-                <div class="tab-pane" id="activity">
-                </div>
             </div>
             <!-- /.tab-content -->
         </div>
@@ -290,10 +331,10 @@
 <!-- /.row -->
 @section MyScripts{
     @*<script>
-        $(document).ready(function () {
-            $('#courseoverview').DataTable()
-        });
-    </script>*@
+            $(document).ready(function () {
+                $('#courseoverview').DataTable()
+            });
+        </script>*@
 }
 
 
