@@ -19,7 +19,27 @@ namespace CoursePlanner.Controllers
         public ActionResult Index()
         {
             var courseoccurrence = db.CourseOccurrence.Include(c => c.Course).Include(c => c.Teacher);
+            ViewBag.CurrentEduYear = GetCurrentEducationalYear();
             return View(courseoccurrence.ToList());
+        }
+
+        private string GetCurrentEducationalYear()
+        {
+            string currentEduYear;
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+            if (currentMonth >= 8)
+            {
+                int nextYear =currentYear+1;
+                 currentEduYear = currentYear.ToString() + "-" + nextYear.ToString();
+            }
+            else
+            {
+                int previousYear = currentYear - 1;
+                 currentEduYear = previousYear.ToString() + "-" + currentYear.ToString();
+            }
+
+            return currentEduYear;
         }
 
         //
@@ -32,7 +52,42 @@ namespace CoursePlanner.Controllers
             {
                 return HttpNotFound();
             }
+
+            //List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID,courseoccurrence.Year).ToList();
+    
+
+            //ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
+           
+
             return View(courseoccurrence);
+        }
+
+        //private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID,string year)
+        //{
+        //    //return db.CourseOccurrence.Where(c =>courseID ==c.CourseID).Select(c => c.CourseOccurrence);
+        //    //return db.CourseOccurrence.Where(c => c.CourseTeacher.Where(t => t.TeacherId == teacherID).FirstOrDefault && c.Term == term);
+        //    var currentYear= GetCurrentEducationalYear();
+        //    var courseHistory = (from m in db.CourseOccurrence.AsEnumerable()
+        //                         where m.CourseID == courseID
+        //                         select db.CourseOccurrence);
+                                  
+                                
+
+        //    return courseHistory;        
+
+        //}
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details(int id, int newBudget)
+        {
+            //CourseModel coursemodel = db.Courses.Find(id);
+            CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
+            courseoccurrence.Budget = newBudget;
+            db.Entry(courseoccurrence).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
         }
 
         //

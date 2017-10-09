@@ -1,9 +1,18 @@
 ﻿@model IEnumerable<CoursePlanner.Models.CourseOccurrence>
 
 @{
-    ViewBag.Title = "Course List";
+    ViewBag.Title = "Course List for : " + ViewBag.CurrentEduYear;
 }
+<style>
 
+     h1{
+        visibility : hidden;
+    }
+
+</style>
+<p>
+    <button type="button" class="btn btn-danger btn-lg">Course List For Current Year : <span class="badge">@ViewBag.CurrentEduYear</span></button>
+</p>
 
 
 <p>
@@ -17,9 +26,21 @@
             @*<div class="box-header">
                     <h2 class="box-title">Course Overview</h2>
                 </div>*@
+         
             <!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-bordered table-hover" id="courseoverview">
+                <div class="dataTables_filter">
+
+                    Choose Term : 
+                    
+                    <select id='termSelector'>
+                        <option value='C'>All</option>
+                        <option value='Fall'>Fall</option>
+                        <option value='Spring'>Spring</option>
+                    </select>
+                    <p/>
+                </div>
+                <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                     <thead>
                         <tr>
                             <th>
@@ -33,18 +54,16 @@
                                 Credits
                             </th>
                             <th>
-                                Course Budget
+                                Course Budget(Hrs)
 
                             </th>
 
 
                             <th>
-                                Allocated Hours
+                                No. Of Students 
 
                             </th>
-                            <th>
-                               Year
-                            </th>
+                            
                             <th>
                                 Term
 
@@ -66,6 +85,8 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            if (item.Year == ViewBag.CurrentEduYear)
+                            { 
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Course.CourseCode)
@@ -76,9 +97,18 @@
                                     @Html.ActionLink(item.Course.CourseName, "Details", new { id = item.CourseOccurrenceID })
                                     
                                 </td>
-                                <td>
+
+                                @if (item.Course.CourseCredit.ToString() == "C7_5")
+                                {
+                                    <td>
+                                        C7.5
+                                    </td>
+                                }
+                                else { 
+                               <td>
                                     @Html.DisplayFor(modelItem => item.Course.CourseCredit)
                                 </td>
+                                }
 
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Budget)
@@ -88,11 +118,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.NoOfStudents)
                                 </td>
+                               
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Year)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Term)
+                                    @item.Term.ToString()
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Period)
@@ -106,14 +134,14 @@
                                 @if (item.Status.ToString() == "Planned")
                                 {
                                     <td>
-                                        <span class="label label-primary">Planned</span>
+                                        <span class="label label-warning">Planned</span>
                                     </td>
                                 }
                                 else if (item.Status.ToString() == "Ongoing")
                                 {
                                     <td>
 
-                                        <span class="label label-info">Ongoing</span>
+                                        <span class="label label-primary">Ongoing</span>
                                     </td>
 
 
@@ -139,6 +167,7 @@
 
                                
                             </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -156,6 +185,37 @@
         $(document).ready(function () {
             $('#courseoverview').DataTable()
         });
+
+        
+
+ 
+
+
+        $(document).ready(function ($) {
+           
+
+            $('#termSelector').change(function () {
+                var selection = $(this).val();
+                $('table').hide();
+                if (!(selection == "Fall" || selection == 'Spring')) {
+                    $.each($('#courseoverview tbody tr'), function (index, item) {
+                        $(item)[$(item).is(':contains('+ selection + ')') ? 'show' : 'hide']();
+                    });
+                    
+                }
+                $('table')[selection ? 'show' : 'hide']();
+
+                if (selection == "Fall" || selection == 'Spring') {  // iterate only if `selection` is not empty
+                    $.each($('#courseoverview tbody tr'), function (index, item) {
+                        $(item)[$(item).is(':contains(' + selection + ')') ? 'show' : 'hide']();
+                    });
+                }
+              
+
+            });
+        });
+
+
     </script>
 }
 

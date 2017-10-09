@@ -26,6 +26,47 @@
             <div class="box-body box-profile">
                 <h3 class="profile-username text-center">@Html.DisplayFor(model => model.Course.CourseName)</h3>
                 <p class="text-muted text-center">@Html.DisplayFor(model => model.Course.CourseCode)</p>
+                <p class="text-center">
+                    @if (Model.Status.ToString() == "Planned")
+                    {
+                        
+                            <span class="label label-warning">Planned</span>
+                       
+                    }
+                    else if (Model.Status.ToString() == "Ongoing")
+                    {
+                        
+
+                            <span class="label label-primary">Ongoing</span>
+                      
+
+
+                    }
+                    else if (Model.Status.ToString() == "Completed")
+                    {
+                        
+
+                            <span class="label label-success">Completed</span>
+                       
+
+
+                    }
+                    else
+                    {
+                       
+
+                            <span>Nothing</span>
+                        
+
+
+                    }
+
+
+
+                </p>
+
+
+
                 <ul class="list-group list-group-unbordered">
                     @*<li class="list-group-item">
                             <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
@@ -37,18 +78,44 @@
                         <b>Course Type</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseType)</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Credits</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseCredit)</a>
+                        <b>Credits</b> 
+                        
+                       
+                                           @if (Model.Course.CourseCredit.ToString() == "C7_5")
+                                           {
+                                              
+                                                   <a class="pull-right">C7.5</a>
+
+                                           }
+                                           else
+                                           {
+
+                                            <a class="pull-right">@Model.Course.CourseCredit</a>
+                                                   
+                                               
+                                           }
+                        
+                        
+                        
                     </li>
                     <li class="list-group-item">
                         <b> HST Value</b> <a class="pull-right">@Html.DisplayFor(model => model.HST)</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Budget Number of Students</b> <a class="pull-right">@Html.DisplayFor(model => model.NoOfPassingStudents)</a>
+                        <b>Total Number of Students</b> <a class="pull-right">@Html.DisplayFor(model => model.NoOfPassingStudents)</a>
                     </li>
 
                     <li class="list-group-item">
                         <b>Course Budget</b> <a class="pull-right">@Html.DisplayFor(model => model.Budget)</a>
-                        <button id="editBudget" class="btn btn-warning btn-xs" onclick="EditBudget()"> Edit Budget </button>
+                        <button id="editBudget" class="btn btn-danger btn-xs" onclick="EditBudget()"> Edit Budget </button>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <fieldset hidden id="budgetEditForm">
+                                <input type="text" value="@Html.ValueFor(model => model.Budget)" name="newBudget" />
+                                <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
+                            </fieldset>
+                        }
                     </li>
 
 
@@ -113,14 +180,7 @@
 
                 </ul>
 
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    <fieldset hidden id="budgetEditForm">
-                        <input type="text" value="@Html.ValueFor(model => model.Budget)" name="newBudget" />
-                        <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
-                    </fieldset>
-                }
+               
 
             </div>
             <!-- /.box-body -->
@@ -144,40 +204,35 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box-body">
-                                <table class="table table-bordered table-hover" id="courseoverview">
+                                <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                                     <thead>
                                         <tr>
 
                                             <th>
-                                                Course Classification
-                                            </th>
-                                            <th>
-                                                Course Type
-                                            </th>
-                                            <th>
-                                                Credits
-                                            </th>
-                                            <th>
                                                 HST Value
-                                            </th>
-                                            <th>
-                                                Student Number Budget
                                             </th>
                                             <th>
                                                 Course Budget
                                             </th>
                                             <th>
-                                                Term
+                                                Number of Students
                                             </th>
                                             <th>
-                                                Period
+                                                Number of Passing Students
                                             </th>
                                             <th>
-                                                Start Date
+                                                Passing Percentage 
                                             </th>
                                             <th>
-                                                End Date
+                                               Educational Year
                                             </th>
+                                            <th>
+                                                Course Responsible
+                                            </th>
+                                            <th>
+                                                Teachers
+                                            </th>
+                                           
 
                                         </tr>
                                     </thead>
@@ -242,11 +297,11 @@
 </div>
 <!-- /.row -->
 @section MyScripts{
-    <script>
+    @*<script>
         $(document).ready(function () {
             $('#courseoverview').DataTable()
         });
-    </script>
+    </script>*@
 }
 
 
