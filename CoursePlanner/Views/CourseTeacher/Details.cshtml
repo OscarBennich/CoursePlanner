@@ -1,0 +1,36 @@
+﻿@model CoursePlanner.Models.CourseTeacher
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>CourseTeacher</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseOccurrence.Year)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseOccurrence.Year)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Teacher.TeacherName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Teacher.TeacherName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Hours)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Hours)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
