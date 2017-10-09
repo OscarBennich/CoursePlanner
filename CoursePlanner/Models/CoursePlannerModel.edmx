@@ -316,9 +316,10 @@
           <Member Name="Continuous" />
         </EnumType>
         <EnumType Name="ReductionTypes">
-          <Member Name="Commitment" />
+          <Member Name="Assignments" />
           <Member Name="Research" />
           <Member Name="Other" />
+          <Member Name="Administration" />
         </EnumType>
         <EnumType Name="Terms">
           <Member Name="Fall" />
