@@ -1,0 +1,61 @@
+﻿@model CoursePlanner.Models.Teacher
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Teacher</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherDob)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherDob)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherUserId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherUserId)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TotalPercentageFall)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TotalPercentageFall)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TotalPercentageSpring)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TotalPercentageSpring)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FixedContractEndDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FixedContractEndDate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
