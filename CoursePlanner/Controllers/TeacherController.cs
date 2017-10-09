@@ -237,7 +237,14 @@ namespace CoursePlanner.Controllers
 
         private IEnumerable<CourseOccurrence> GetTeacherCourses(int teacherID, Terms term)
         {
-            return db.CourseTeacher.Where(c => c.TeacherId == teacherID && c.CourseOccurrence.Term == term).Select(c => c.CourseOccurrence);
+            string academicYear = DateTime.Today.Year + "-" + (DateTime.Today.Year + 1);
+
+            if (DateTime.Today.Month <= 6)
+            {
+                academicYear = (DateTime.Today.Year-1) + "-" + DateTime.Today.Year;
+            }
+
+            return db.CourseTeacher.Where(c => c.TeacherId == teacherID && c.CourseOccurrence.Term == term && c.CourseOccurrence.Year == academicYear).Select(c => c.CourseOccurrence);
         }
     }
 }

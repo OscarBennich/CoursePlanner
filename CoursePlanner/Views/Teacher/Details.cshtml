@@ -41,15 +41,15 @@
                         <b>Allocated teaching hours [Fall]</b> <a class="pull-right">@ViewBag.TeachingHoursAllocatedFall</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Remaining teaching hours [Fall]</b> 
-                        @if(ViewBag.TeachingHoursAvailableFall-ViewBag.TeachingHoursAllocatedFall < 0)
+                        <b>Remaining teaching hours [Fall]</b>
+                        @if (ViewBag.TeachingHoursAvailableFall - ViewBag.TeachingHoursAllocatedFall < 0)
                         {
                             <a class="pull-right">Too many hours allocated</a>
                         }
                         else
                         {
-                            <a class="pull-right">@(ViewBag.TeachingHoursAvailableFall-ViewBag.TeachingHoursAllocatedFall)</a>     
-                        }                           
+                            <a class="pull-right">@(ViewBag.TeachingHoursAvailableFall - ViewBag.TeachingHoursAllocatedFall)</a>
+                        }
                     </li>
                     <li class="list-group-item">
                         <b>Teaching hours available [Spring]</b> <a class="pull-right">@ViewBag.TeachingHoursAvailableSpring</a>
@@ -58,7 +58,7 @@
                         <b>Allocated teaching hours [Spring]</b> <a class="pull-right">@ViewBag.TeachingHoursAllocatedSpring</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Remaining teaching hours [Spring]</b> 
+                        <b>Remaining teaching hours [Spring]</b>
                         @if (ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring < 0)
                         {
                             <a class="pull-right">Too many hours allocated</a>
@@ -66,7 +66,7 @@
                         else
                         {
                             <a class="pull-right">@(ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring)</a>
-                        } 
+                        }
                     </li>
                 </ul>
             </div>
@@ -103,6 +103,9 @@
                                                 <th>
                                                     Amount of hours
                                                 </th>
+                                                <th>
+                                                    Course Responsible
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -117,6 +120,13 @@
                                                     </td>
                                                     <td>
                                                         @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
+                                                            <span>
+                                                                @c.CourseTeacher.Where(x => x.CourseOccurrence.CourseResponsibleID == c.CourseResponsibleID).Select(y => y.Teacher.TeacherName).FirstOrDefault()
+                                                            </span>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             }
