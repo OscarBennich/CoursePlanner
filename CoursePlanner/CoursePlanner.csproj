@@ -257,6 +257,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-CoursePlanner-20170925143114.mdf" />
+    <Content Include="App_Data\aspnet-CoursePlanner-20170925143114_log.ldf">
+      <DependentUpon>aspnet-CoursePlanner-20170925143114.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap\css\bootstrap.css" />
@@ -265,6 +269,7 @@
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
+    <Content Include="Content\clickable-row-function.js" />
     <Content Include="Content\dist\css\AdminLTE.css" />
     <Content Include="Content\dist\css\AdminLTE.min.css" />
     <Content Include="Content\dist\css\alt\AdminLTE-bootstrap-social.css" />
@@ -275,32 +280,8 @@
     <Content Include="Content\dist\css\alt\AdminLTE-select2.min.css" />
     <Content Include="Content\dist\css\alt\AdminLTE-without-plugins.css" />
     <Content Include="Content\dist\css\alt\AdminLTE-without-plugins.min.css" />
-    <Content Include="Content\dist\css\skins\skin-black-light.css" />
-    <Content Include="Content\dist\css\skins\skin-black-light.min.css" />
-    <Content Include="Content\dist\css\skins\skin-black.css" />
-    <Content Include="Content\dist\css\skins\skin-black.min.css" />
-    <Content Include="Content\dist\css\skins\skin-blue-light.css" />
-    <Content Include="Content\dist\css\skins\skin-blue-light.min.css" />
-    <Content Include="Content\dist\css\skins\skin-blue.css" />
-    <Content Include="Content\dist\css\skins\skin-blue.min.css" />
-    <Content Include="Content\dist\css\skins\skin-green-light.css" />
-    <Content Include="Content\dist\css\skins\skin-green-light.min.css" />
-    <Content Include="Content\dist\css\skins\skin-green.css" />
-    <Content Include="Content\dist\css\skins\skin-green.min.css" />
-    <Content Include="Content\dist\css\skins\skin-purple-light.css" />
-    <Content Include="Content\dist\css\skins\skin-purple-light.min.css" />
-    <Content Include="Content\dist\css\skins\skin-purple.css" />
-    <Content Include="Content\dist\css\skins\skin-purple.min.css" />
     <Content Include="Content\dist\css\skins\skin-red-light.css" />
     <Content Include="Content\dist\css\skins\skin-red-light.min.css" />
-    <Content Include="Content\dist\css\skins\skin-red.css" />
-    <Content Include="Content\dist\css\skins\skin-red.min.css" />
-    <Content Include="Content\dist\css\skins\skin-yellow-light.css" />
-    <Content Include="Content\dist\css\skins\skin-yellow-light.min.css" />
-    <Content Include="Content\dist\css\skins\skin-yellow.css" />
-    <Content Include="Content\dist\css\skins\skin-yellow.min.css" />
-    <Content Include="Content\dist\css\skins\_all-skins.css" />
-    <Content Include="Content\dist\css\skins\_all-skins.min.css" />
     <Content Include="Content\dist\img\avatar.png" />
     <Content Include="Content\dist\img\avatar04.png" />
     <Content Include="Content\dist\img\avatar2.png" />
@@ -531,6 +512,7 @@
     <Content Include="Content\plugins\jQuery\jquery-2.2.3.min.js" />
     <Content Include="Content\plugins\slimScroll\jquery.slimscroll.js" />
     <Content Include="Content\plugins\slimScroll\jquery.slimscroll.min.js" />
+    <Content Include="Content\TermCourseOverview.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -698,6 +680,7 @@
     <Content Include="Models\CoursePlannerModel.edmx.diagram">
       <DependentUpon>CoursePlannerModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\LocalWebPublish.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Models\CoursePlannerModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -775,9 +758,7 @@
     <Content Include="Views\Teacher\Edit.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

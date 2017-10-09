@@ -1,0 +1,53 @@
+﻿@model CoursePlanner.Models.LoginModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<div id="loginForm" class="login-box skin-red-light">
+
+    <div class="login-logo">
+        <b>UU</b> Course Planner
+    </div>
+
+    <div class="login-box-body">
+
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <fieldset>
+                <div class="form-group has-feedback">
+
+
+                    @Html.TextBoxFor(m => m.UserName, new { @placeholder = "Username", @class = "form-control" })
+                    <span class="fa fa-user form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+
+                </div>
+
+                <div class="form-group has-feedback">
+
+                    @Html.PasswordFor(m => m.Password, new { @placeholder = "Password", @class = "form-control text-danger" })
+                    <span class="fa fa-lock form-control-feedback"></span>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input type="submit" class="btn btn-danger btn-block btn-flat" value="Sign In" />
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </fieldset>
+        }
+
+    </div>
+</div>
