@@ -73,7 +73,7 @@
 
                             </th>
                             <th>
-                                Head Teacher
+                                Course Responisble
 
                             </th>
                             <th>
@@ -127,7 +127,8 @@
                                 </td>
                                
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
+                                    <a href="@Url.Action("Details/" + @item.CourseResponsibleID, "Teacher")"><span>@Html.DisplayFor(modelItem => item.Teacher.TeacherName)</span></a>
+                                   
                                 </td>
 
 

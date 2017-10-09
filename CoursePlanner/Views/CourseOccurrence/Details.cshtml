@@ -186,10 +186,14 @@
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
+        <p>
+
+            <input type="button" class="btn btn-primary btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "CourseOccurrence")'" />
+        </p>
     </div>
     <!-- /.col -->
 
-
+  
 
     <div class="col-md-9  skin-red-light">
         <div class="nav-tabs-custom  skin-red-light">
@@ -207,6 +211,9 @@
                                         <tr>
                                             <th>
                                                 Teacher Name
+                                            </th>
+                                            <th>
+                                                Teacher Position
                                             </th>
                                             <th>
                                                 Course Responsible?
@@ -227,7 +234,26 @@
                                             </td>
                                             <td>
 
-                                              
+                                                @teacher.TeacherPosition
+                                            </td>
+                                            <td>
+
+                                            @* @Html.ViewBag.IsCourseResponsibleName(Convert.ToInt32(teacher.TeacherId),Convert.ToInt32(@Model.CourseOccurrenceID))*@
+                                              @if (ViewBag.IsCourseResponsibleName(Convert.ToInt32(teacher.TeacherId), Convert.ToInt32(@Model.CourseOccurrenceID)) == "Yes")
+                                              {
+
+                                                <span class="label label-success "> Yes </span>
+
+                                              }
+                                              else if (ViewBag.IsCourseResponsibleName(Convert.ToInt32(teacher.TeacherId), Convert.ToInt32(@Model.CourseOccurrenceID)) == "No")
+                                              {
+
+
+                                                <span class="label label-danger"> No </span>
+
+
+
+                                              }
                                             </td>
                                         </tr>
                                        }
@@ -301,12 +327,22 @@
                                                     @courseOccurance.Year
                                                 </td>
                                                 <td>
-                                                    @courseOccurance.CourseResponsibleID
-                                                    @*courseOccurance.CourseTeacher.Where(x => x.TeacherId == courseOccurance.CourseOccurrenceID).Select(y => y.Teacher.TeacherName)*@
-                                                    @*@courseOccurance.CourseTeacher.Where(x => x.CourseOccurrenceId == courseOccurance.CourseOccurrenceID && x.TeacherId == courseOccurance.CourseResponsibleID).Select(y => y.Teacher.TeacherName)*@
+                                                    <a href="@Url.Action("Details/" + @courseOccurance.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(courseOccurance.CourseResponsibleID))</span></a>
+                                                  
+                                                 
                                                 </td>
                                                 <td>
-                                                    NOT IMPLEMENTED
+                                                   @foreach (CoursePlanner.Models.Teacher teacher in (List<CoursePlanner.Models.Teacher>)ViewBag.TeachersHistory(Convert.ToInt32(courseOccurance.CourseOccurrenceID)))
+                                                   {
+                                                      
+                                               
+
+                                                       <a href="@Url.Action("Details/" + @teacher.TeacherId, "Teacher")"><span>@teacher.TeacherName</span></a>
+                                                       <p/>
+                                                       <p/>
+                                               
+                                            
+                                                   }
                                                 </td>
                                             </tr>
                                         }

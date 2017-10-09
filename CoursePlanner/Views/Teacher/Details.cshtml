@@ -80,7 +80,10 @@
             </div>
             <!-- /.box-body -->
         </div>
-        
+       
+        <p>
+            <input type="button" class="btn btn-primary btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "Teacher")'" />
+       </p>
         <!-- /.box -->
     </div>
     <!-- /.col -->
@@ -125,7 +128,7 @@
                                                         @c.Course.CourseCode
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action("Details/" + @c.CourseID, "Course")"><span>@c.Course.CourseName</span></a>
+                                                        <a href="@Url.Action("Details/" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
                                                     </td>
                                                     <td>
                                                         @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
@@ -144,6 +147,7 @@
                         </div>
                         <!--/.col-xs-12-->
                     </div>
+                    
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="spring">
@@ -216,9 +220,7 @@
     </div>
     <!-- /.col -->
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 
 @section PieCharts{
     <script>

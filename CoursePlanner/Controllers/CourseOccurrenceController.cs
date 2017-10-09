@@ -61,14 +61,62 @@ namespace CoursePlanner.Controllers
 
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
             ViewBag.teachersCourse = teachersCourse;
+            ViewBag.TeachersHistory = 
+                new Func<int, IEnumerable<Teacher>>(GetTeacherHistory);
 
+            ViewBag.GetCourseResponsibleName =
+              new Func<int, string>(GetCourseResponsibleNameFind);
+
+            ViewBag.IsCourseResponsibleName =
+              new Func<int, int,string>(IsCourseResponsibleNameFind);
           
             return View(courseoccurrence);
+        }
+
+        private IEnumerable<Teacher> GetTeacherHistory(int courseOccurenceID)
+        {
+
+            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher).ToList();
+        }
+
+        private IEnumerable<Teacher> GetTeachers(int courseOccurenceID)
+        {
+
+            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher);
         }
 
         private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID, string year)
         {
             return db.CourseOccurrence.Where(c => c.CourseID == courseID && c.Year != year).ToList();
+        }
+
+
+
+        public string IsCourseResponsibleNameFind(int teacherId,int courseOccurrenceID)
+        {
+            var courseResponsibleID = (from m in db.CourseOccurrence
+                                       where m.CourseOccurrenceID == courseOccurrenceID
+                                      select m.CourseResponsibleID).Single();
+
+            if (courseResponsibleID == teacherId)
+            {
+                return "Yes";
+            }else{
+                return "No";
+            }
+            
+
+        }
+
+        public string GetCourseResponsibleNameFind(int id)
+        {
+            var CourseResponsibleName = (from m in db.Teacher
+                                         where m.TeacherId == id
+                                         select m.TeacherName).Single();
+
+
+            return Convert.ToString(CourseResponsibleName);
+
         }
 
         [HttpPost]
@@ -179,10 +227,6 @@ namespace CoursePlanner.Controllers
         }
 
 
-        private IEnumerable<Teacher> GetTeachers(int courseOccurenceID)
-        {
-
-            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher);
-        }
+       
     }
 }
