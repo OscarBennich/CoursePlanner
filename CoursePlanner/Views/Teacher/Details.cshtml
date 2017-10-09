@@ -15,7 +15,7 @@
                     <li class="list-group-item">
                         <b>Contract type</b> <a class="pull-right">@Html.DisplayFor(model => model.TeacherContractType)</a>
                     </li>
-                    @if(Model.FixedContractEndDate.Value != null)
+                    @if(Model.FixedContractEndDate!= null)
                     { 
                         <li class="list-group-item">
                             <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
