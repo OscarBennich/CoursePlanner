@@ -1,0 +1,392 @@
+﻿@model CoursePlanner.Models.CourseOccurrence
+
+@{
+    ViewBag.Title = "Course Information";
+}
+
+
+
+<script type="text/javascript">
+    function EditBudget() {
+        document.getElementById('editBudget').className = "btn btn-warning btn-xs hidden";
+        document.getElementById('budgetEditForm').className = "show";
+    }
+
+    function SaveBudget() {
+        document.getElementById('editBudget').className = "btn btn-warning btn-xs show";
+        document.getElementById('budgetEditForm').className = "hidden";
+    }
+</script>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <!-- Profile Image -->
+        <div class="box box-danger">
+            <div class="box-body box-profile">
+                <h3 class="profile-username text-center">@Html.DisplayFor(model => model.Course.CourseName)</h3>
+                <p class="text-muted text-center">@Html.DisplayFor(model => model.Course.CourseCode)</p>
+                <p class="text-center">
+                    @if (Model.Status.ToString() == "Planned")
+                    {
+                        
+                            <span class="label label-warning">Planned</span>
+                       
+                    }
+                    else if (Model.Status.ToString() == "Ongoing")
+                    {
+                        
+
+                            <span class="label label-primary">Ongoing</span>
+                      
+
+
+                    }
+                    else if (Model.Status.ToString() == "Completed")
+                    {
+                        
+
+                            <span class="label label-success">Completed</span>
+                       
+
+
+                    }
+                    else
+                    {
+                       
+
+                            <span>Nothing</span>
+                        
+
+
+                    }
+
+
+
+                </p>
+
+
+
+                <ul class="list-group list-group-unbordered">
+                    @*<li class="list-group-item">
+                            <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
+                        </li>*@
+                    <li class="list-group-item">
+                        <b>Classification</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseClassificiation) <br /></a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Course Type</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseType)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Credits</b> 
+                        
+                       
+                                           @if (Model.Course.CourseCredit.ToString() == "C7_5")
+                                           {
+                                              
+                                                   <a class="pull-right">C7.5</a>
+
+                                           }
+                                           else
+                                           {
+
+                                            <a class="pull-right">@Model.Course.CourseCredit</a>
+                                                   
+                                               
+                                           }
+                        
+                        
+                        
+                    </li>
+                    <li class="list-group-item">
+                        <b> HST Value</b> <a class="pull-right">@Html.DisplayFor(model => model.HST)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Total Number of Students</b> <a class="pull-right">@Html.DisplayFor(model => model.NoOfPassingStudents)</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <b>Course Budget</b> <a class="pull-right">@Html.DisplayFor(model => model.Budget)</a>
+                        <button id="editBudget" class="btn btn-danger btn-xs" onclick="EditBudget()"> Edit Budget </button>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <fieldset hidden id="budgetEditForm">
+                                <input type="text" value="@Html.ValueFor(model => model.Budget)" name="newBudget" />
+                                <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
+                            </fieldset>
+                        }
+                    </li>
+
+
+
+                    <li class="list-group-item">
+                        <b>Term</b> <a class="pull-right">@Html.DisplayFor(model => model.Term)</a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <b>Period</b> <a class="pull-right">@Html.DisplayFor(model => model.Period)</a>
+                    </li>
+
+
+
+                    <li class="list-group-item">
+                        <b>Start Date</b>
+
+                        @if (Model.StartDate != null)
+                        {
+                            <a class="pull-right">
+                                @Model.StartDate.Value.ToString("yyyy/MM/dd")
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="pull-right">
+                                No end date set
+                            </a>
+                        }
+
+                    </li>
+
+                    <li class="list-group-item">
+                        <b>End Date</b> 
+                        @if (Model.EndDate != null)
+                        {
+                            <a class="pull-right">
+                                @Model.EndDate.Value.ToString("yyyy/MM/dd")
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="pull-right">
+                                No end date set
+                            </a>
+                        }
+                    
+                    </li>
+
+
+
+
+                    @*<li class="list-group-item">
+                            <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
+                        </li>*@
+
+
+                    @*<li class="list-group-item">
+                            <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
+                        </li>*@
+
+
+                </ul>
+
+               
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+
+
+
+    <div class="col-md-9  skin-red-light">
+        <div class="nav-tabs-custom  skin-red-light">
+            <ul class="nav nav-tabs skin-red-light">
+
+                <li class="active skin-red-light"><a href="#history" data-toggle="tab">History</a></li>
+                <li><a href="#activity" data-toggle="tab">Teachers</a></li>
+
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="history">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box-body">
+                                <table class="table table-bordered table-hover table-responsive" id="courseoverview">
+                                    <thead>
+                                        <tr>
+
+                                            <th>
+                                                HST Value
+                                            </th>
+                                            <th>
+                                                Course Budget
+                                            </th>
+                                            <th>
+                                                Number of Students
+                                            </th>
+                                            <th>
+                                                Number of Passing Students
+                                            </th>
+                                            <th>
+                                                Passing Percentage 
+                                            </th>
+                                            <th>
+                                               Educational Year
+                                            </th>
+                                            <th>
+                                                Course Responsible
+                                            </th>
+                                            <th>
+                                                Teachers
+                                            </th>
+                                           
+
+                                        </tr>
+                                    </thead>
+                                    @*<tbody>
+
+                                            @foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Course. )
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CourseType)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Credits)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.HSTValue)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.BudgetedNumberOfStudents)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CourseBudget)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Term)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Period)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.StartDate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.EndDate)
+                                                    </td>
+
+                                                </tr>
+                                            }
+                                        </tbody>*@
+
+                                </table>
+                            </div>
+                            <!-- /.box-body -->
+
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
+                    <!--/.row-->
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="activity">
+                </div>
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+@section MyScripts{
+    @*<script>
+        $(document).ready(function () {
+            $('#courseoverview').DataTable()
+        });
+    </script>*@
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<fieldset>
+        <legend>CourseOccurrence</legend>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Year)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Year)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Budget)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Budget)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.NoOfStudents)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.NoOfStudents)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.NoOfPassingStudents)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.NoOfPassingStudents)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.HST)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.HST)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.StartDate)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.StartDate)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.EndDate)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.EndDate)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Course.CourseCode)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Course.CourseCode)
+        </div>
+
+        <div class="display-label">
+             @Html.DisplayNameFor(model => model.Teacher.TeacherName)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Teacher.TeacherName)
+        </div>
+    </fieldset>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id=Model.CourseOccurrenceID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CourseOccurrenceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -774,6 +775,11 @@
     <Content Include="Views\Teacher\Create.cshtml" />
     <Content Include="Views\Teacher\Edit.cshtml" />
     <Content Include="Views\Teacher\Delete.cshtml" />
+    <Content Include="Views\CourseOccurrence\Index.cshtml" />
+    <Content Include="Views\CourseOccurrence\Details.cshtml" />
+    <Content Include="Views\CourseOccurrence\Create.cshtml" />
+    <Content Include="Views\CourseOccurrence\Edit.cshtml" />
+    <Content Include="Views\CourseOccurrence\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
