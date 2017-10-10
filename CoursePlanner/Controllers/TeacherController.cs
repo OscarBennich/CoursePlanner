@@ -41,6 +41,32 @@ namespace CoursePlanner.Controllers
             ViewBag.TeachingHoursAllocatedFall = CalculateTeachingHoursAllocated(teacher, Terms.Fall);
             ViewBag.TeachingHoursAllocatedSpring = CalculateTeachingHoursAllocated(teacher, Terms.Spring);
 
+            ViewBag.TotalHoursAllocatedResearchFall = Convert.ToInt32((baseAnnualWorkingHours/2)*teacher.TotalPercentageFall * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Research && x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).FirstOrDefault());
+            ViewBag.TotalHoursAllocatedAdministrationFall = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageFall * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Administration && x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).FirstOrDefault());
+            ViewBag.TotalHoursAllocatedAssignmentsFall = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageFall * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Assignments && x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).FirstOrDefault());
+            ViewBag.TotalHoursAllocatedOtherFall = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageFall * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Other && x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).FirstOrDefault());
+            
+            int TotalTeachingHoursFall = baseAnnualWorkingHours/2 - ViewBag.TotalHoursAllocatedResearchFall;
+            TotalTeachingHoursFall = TotalTeachingHoursFall - ViewBag.TotalHoursAllocatedAdministrationFall;
+            TotalTeachingHoursFall = TotalTeachingHoursFall - ViewBag.TotalHoursAllocatedAssignmentsFall;
+            TotalTeachingHoursFall = TotalTeachingHoursFall - ViewBag.TotalHoursAllocatedOtherFall;
+
+            ViewBag.TotalTeachingHoursFall = TotalTeachingHoursFall;
+
+
+            ViewBag.TotalHoursAllocatedResearchSpring = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageSpring * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Research && x.TeacherId == teacher.TeacherId && x.Term == Terms.Spring).Select(y => y.Percentage).FirstOrDefault());
+            ViewBag.TotalHoursAllocatedAdministrationSpring = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageSpring * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Administration && x.TeacherId == teacher.TeacherId && x.Term == Terms.Spring).Select(y => y.Percentage).FirstOrDefault());
+            ViewBag.TotalHoursAllocatedAssignmentsSpring = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageSpring * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Assignments && x.TeacherId == teacher.TeacherId && x.Term == Terms.Spring).Select(y => y.Percentage).FirstOrDefault());
+            ViewBag.TotalHoursAllocatedOtherSpring = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageSpring * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Other && x.TeacherId == teacher.TeacherId && x.Term == Terms.Spring).Select(y => y.Percentage).FirstOrDefault());
+
+            int TotalTeachingHoursSpring = baseAnnualWorkingHours/2 - ViewBag.TotalHoursAllocatedResearchSpring;
+            TotalTeachingHoursSpring = TotalTeachingHoursSpring - ViewBag.TotalHoursAllocatedAdministrationSpring;
+            TotalTeachingHoursSpring = TotalTeachingHoursSpring - ViewBag.TotalHoursAllocatedAssignmentsSpring;
+            TotalTeachingHoursSpring = TotalTeachingHoursSpring - ViewBag.TotalHoursAllocatedOtherSpring;
+
+            ViewBag.TotalTeachingHoursSpring = TotalTeachingHoursSpring;
+
+
             List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
             List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
 
@@ -213,20 +239,13 @@ namespace CoursePlanner.Controllers
         {
             int teachingHoursAllocated = 0;
 
-            string academicYear = DateTime.Today.Year + "-" + (DateTime.Today.Year + 1);
-
-            if (DateTime.Today.Month <= 6)
-            {
-                academicYear = (DateTime.Today.Year - 1) + "-" + DateTime.Today.Year;
-            }
-
             if (term.Equals(Terms.Fall)) 
             {
                 try
                 {   
                     // Calculate the sum of all hours allocated for this teacher in all course occurances which match
                     // with the teacherID and where the term matches (Fall in this case)
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall && x.CourseOccurrence.Year == academicYear).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }
@@ -234,7 +253,7 @@ namespace CoursePlanner.Controllers
             {
                 try
                 {
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring && x.CourseOccurrence.Year == academicYear).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }
