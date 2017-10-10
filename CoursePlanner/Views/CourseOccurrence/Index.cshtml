@@ -28,18 +28,13 @@
                 </div>*@
          
             <!-- /.box-header -->
-            <div class="box-body">
-                <div class="dataTables_filter">
-
-                    Choose Term : 
+           @* <div class="box-body">
+               <div class="dataTables_filter">
+                   
                     
-                    <select id='termSelector'>
-                        <option value='C'>All</option>
-                        <option value='Fall'>Fall</option>
-                        <option value='Spring'>Spring</option>
-                    </select>
+                    
                     <p/>
-                </div>
+                </div>*@
                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                     <thead>
                         <tr>
@@ -65,7 +60,11 @@
                             </th>
                             
                             <th>
-                                Term
+                                <select id='termSelector'>
+                                    <option value='C'>Term</option>
+                                    <option value='Fall'>Fall</option>
+                                    <option value='Spring'>Spring</option>
+                                </select>
 
                             </th>
                             <th>
