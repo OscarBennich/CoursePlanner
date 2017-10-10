@@ -66,7 +66,7 @@ namespace CoursePlanner.Controllers
 
             ViewBag.TotalTeachingHoursSpring = TotalTeachingHoursSpring;
 
-            ViewBag.ExpectedPeriodHours = (TotalTeachingHoursFall + TotalTeachingHoursSpring) / 4;
+            ViewBag.ExpectedPeriodHours = (TotalTeachingHoursFall + TotalTeachingHoursSpring) / 8;
 
 
             List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
