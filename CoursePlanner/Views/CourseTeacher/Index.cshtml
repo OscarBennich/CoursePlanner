@@ -26,7 +26,8 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CourseOccurrence.Course.CourseName)
+            @Html.DisplayFor(modelItem => item.CourseOccurrence.Course.CourseName) /
+            @Html.DisplayFor(modelItem => item.CourseOccurrence.Year)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Teacher.TeacherName)

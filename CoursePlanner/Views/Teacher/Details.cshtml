@@ -125,7 +125,7 @@
                                                         @c.Course.CourseCode
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action("Details/" + @c.CourseID, "Course")"><span>@c.Course.CourseName</span></a>
+                                                        <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
                                                     </td>
                                                     <td>
                                                         @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
@@ -177,7 +177,7 @@
                                                         @c.Course.CourseCode
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action("Details/" + @c.CourseID, "Course")"><span>@c.Course.CourseName</span></a>
+                                                        <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
                                                     </td>
                                                     <td>
                                                         @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
