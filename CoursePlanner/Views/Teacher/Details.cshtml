@@ -58,21 +58,27 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="#">
-                                Total available hours for spring
+                                <i class="fa fa-circle-o text-red"></i>Total available hours for fall
                                 <span class="pull-right text-green">@ViewBag.TeachingHoursAvailableFall</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">Allocated hours for fall<span class="pull-right text-yellow">@ViewBag.TeachingHoursAllocatedFall</span></a>
+                            <a href="#">
+                            <i class="fa fa-circle-o text-yellow"></i>
+                                Allocated hours for fall
+                                <span class="pull-right text-yellow">@ViewBag.TeachingHoursAllocatedFall</span>
+                            </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-green"></i>
                                 Total available hours for spring
                                 <span class="pull-right text-green">@ViewBag.TeachingHoursAvailableSpring</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-aqua"></i>
                                 Allocated hours for spring
                                 <span class="pull-right text-yellow">@ViewBag.TeachingHoursAllocatedSpring</span>
                             </a>
@@ -98,29 +104,34 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-red"></i>
                                 Fall teaching hours
                                 <span class="pull-right text-green">@ViewBag.TotalTeachingHoursFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-green"></i>
                                 Research Hours<span class="pull-right text-green">@ViewBag.TotalHoursAllocatedResearchFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-yellow"></i>
                                 Administrative
                                 <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedAdministrationFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-aqua"></i>
                                 Assignments
                                 <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedAssignmentsFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-gray"></i>
                                 Other
                                 <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedOtherFall</span>
                             </a>
@@ -146,29 +157,34 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-red"></i>
                                 Spring teaching hours
                                 <span class="pull-right text-green">@ViewBag.TotalTeachingHoursSpring</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-green"></i>
                                 Research Hours<span class="pull-right text-green">@ViewBag.TotalHoursAllocatedResearchSpring</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-yellow"></i>
                                 Administrative
                                 <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedAdministrationSpring</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-aqua"></i>
                                 Assignments
                                 <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedAssignmentsSpring</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-gray"></i>
                                 Other
                                 <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedOtherSpring</span>
                             </a>
@@ -311,7 +327,16 @@
 
         <div class="box box-danger">
             <div class="box-header with-border">
-                <h3 class="box-title">Yearly Workload Distribution</h3>
+                <h3 class="box-title">Yearly workload distribution</h3>
+                <div class="pull-right">
+
+                    <i class="fa fa-circle-o text-gray"></i>
+                    Current workload
+
+                    <i class="fa fa-circle-o text-green"></i>
+                    Expected workload
+
+                </div>
             </div>
             <div class="box-body">
                 <div class="chart">
@@ -433,7 +458,7 @@
                 {
                     value: @ViewBag.TotalHoursAllocatedOtherFall,
                     color: '#00c0ef',
-                    highlight: '#00c0ef',
+                    highlight: '#D0D7DD',
                     label: 'Other'
                 }
             ]
@@ -502,7 +527,7 @@
                 {
                     value: @ViewBag.TotalHoursAllocatedOtherSpring,
                     color: '#00c0ef',
-                    highlight: '#00c0ef',
+                    highlight: '#D0D7DD',
                     label: 'Other'
                 }
             ]
