@@ -1,8 +1,12 @@
 CoursePlanner/bin/**
 CoursePlanner/obj/**
 
+CoursePlanner/PublishOutput/**
+
 CoursePlanner.Tests/bin/**
 CoursePlanner.Tests/obj/**
 
 .vs/
 *.suo
+*.dll
+*.pdb
