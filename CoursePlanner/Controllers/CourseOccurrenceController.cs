@@ -57,8 +57,52 @@ namespace CoursePlanner.Controllers
 
             List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID, CurrentEduYear).ToList();
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
+
+            ViewBag.TeachersForCourseResponsible = db.Teacher.ToList();
+
+            ViewBag.GetCourseResponsibleName =
+             new Func<int, string>(GetCourseResponsibleNameFind);
+
+            ViewBag.IsCourseResponsibleName =
+              new Func<int, int, string>(IsCourseResponsibleNameFind);
           
             return View(courseoccurrence);
+        }
+
+        public string IsCourseResponsibleNameFind(int teacherId, int courseOccurrenceID)
+        {
+            var courseResponsibleID = (from m in db.CourseOccurrence
+                                       where m.CourseOccurrenceID == courseOccurrenceID
+                                       select m.CourseResponsibleID).Single();
+
+            if (courseResponsibleID == teacherId)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
+            }
+        }
+
+        public string GetCourseResponsibleNameFind(int id)
+        {
+            try
+            {
+                var CourseResponsibleName = (from m in db.Teacher
+                                             where m.TeacherId == id
+                                             select m.TeacherName).Single();
+                return Convert.ToString(CourseResponsibleName);
+            }
+            catch(Exception E)
+            {
+                return "no course responsible";
+            }      
+        }
+
+        private IEnumerable<Teacher> GetTeachers(int courseOccurenceID)
+        {
+            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c =>c.Teacher);
         }
 
         private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID, string year)
@@ -68,11 +112,29 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details(int id, int newBudget)
+        public ActionResult EditBudget(int id, int newBudget)
         {
             //CourseModel coursemodel = db.Courses.Find(id);
             CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
             courseoccurrence.Budget = newBudget;
+            db.Entry(courseoccurrence).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCourseResponsible(int id, string newcourseresponsible)
+        {
+            CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
+
+            var newteacher = (from m in db.Teacher
+                              where m.TeacherName == newcourseresponsible
+                              select m.TeacherId).Single();
+
+            courseoccurrence.CourseResponsibleID = newteacher;
             db.Entry(courseoccurrence).State = EntityState.Modified;
             db.SaveChanges();
 

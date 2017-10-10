@@ -108,11 +108,12 @@
                     <li class="list-group-item">
                         <b>Course Budget</b> <a class="pull-right">@Html.DisplayFor(model => model.Budget)</a>
                         <button id="editBudget" class="btn btn-danger btn-xs" onclick="EditBudget()"> Edit Budget </button>
-                        @using (Html.BeginForm())
+                        @using (Html.BeginForm("EditBudget", "CourseOccurrence"))
                         {
                             @Html.AntiForgeryToken()
                             <fieldset hidden id="budgetEditForm">
-                                <input type="text" value="@Html.ValueFor(model => model.Budget)" name="newBudget" />
+                                <input hidden value="@Model.CourseOccurrenceID" name="id"  />
+                                 <input type="text" value="@Html.ValueFor(model => model.Budget)" name="newBudget" />
                                 <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
                             </fieldset>
                         }
@@ -165,22 +166,74 @@
                     
                     </li>
 
-
-
-
-                    @*<li class="list-group-item">
-                            <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
-                        </li>*@
-
-
-                    @*<li class="list-group-item">
-                            <b>Courses</b> <a class="pull-right">Declarative Problem Solving</a>
-                        </li>*@
-
-
+                    <li class ="list-group-item">
+                        @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
+                        {
+                            <b>Course Reponsible</b>
+                            <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
+                        }
+                        else
+                        {
+                            <p class="center">There is not a course responsible available for this course</p>
+                        }
+                    </li>
+                    <li class="list-group-item">
+                        <b>Assign course reponsible</b>
+                        <button class="btn btn-default pull-right" data-target="#myModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                    </li>
                 </ul>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        @using (Html.BeginForm("EditCourseResponsible", "CourseOccurrence"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="modal-content form-group">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h3 class="modal-title" id="myModalLabel">Assign or change course responsible</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            @if (Model.CourseResponsibleID != null)
+                                            {
+                                                <h4>Current course responsible:</h4>
+                                                <input class="form-control pull-right" style="color: #000; background-color: #fff" type="text" disabled="" placeholder="@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))" />
+                                            }
+                                            else
+                                            {
+                                                <h4>No course reponsible</h4>
+                                            }
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <h4>Select new course responsible:</h4>
 
-               
+                                            <select class="form-control" name="newcourseresponsible" style="width: 100%;">
+                                                @foreach (CoursePlanner.Models.Teacher T in ViewBag.TeachersForCourseResponsible)
+                                                {
+                                                    <option>@T.TeacherName</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>    
+                                                                                                                 
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <input hidden value="@Model.CourseOccurrenceID" name="id" />
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible" />
+                                        </div>
+                                    </div>                               
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
 
             </div>
             <!-- /.box-body -->
@@ -188,8 +241,6 @@
         <!-- /.box -->
     </div>
     <!-- /.col -->
-
-
 
     <div class="col-md-9  skin-red-light">
         <div class="nav-tabs-custom  skin-red-light">
@@ -259,8 +310,7 @@
                                                         @courseOccurance.Year
                                                     </td>
                                                     <td>                     
-                                                       @courseOccurance.CourseResponsibleID 
-                                                       @*courseOccurance.CourseTeacher.Where(x => x.TeacherId == courseOccurance.CourseOccurrenceID).Select(y => y.Teacher.TeacherName)*@                                
+                                                       <a href="@Url.Action("Details/"+@courseOccurance.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(courseOccurance.CourseResponsibleID))</span></a>                             
                                                     </td>
                                                     <td>
                                                         NOT IMPLEMENTED
@@ -289,96 +339,9 @@
 </div>
 <!-- /.row -->
 @section MyScripts{
-    @*<script>
-        $(document).ready(function () {
-            $('#courseoverview').DataTable()
-        });
-    </script>*@
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<fieldset>
-        <legend>CourseOccurrence</legend>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Year)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Year)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Budget)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Budget)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.NoOfStudents)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.NoOfStudents)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.NoOfPassingStudents)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.NoOfPassingStudents)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.HST)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.HST)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.StartDate)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.StartDate)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.EndDate)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.EndDate)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Course.CourseCode)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Course.CourseCode)
-        </div>
-
-        <div class="display-label">
-             @Html.DisplayNameFor(model => model.Teacher.TeacherName)
-        </div>
-        <div class="display-field">
-            @Html.DisplayFor(model => model.Teacher.TeacherName)
-        </div>
-    </fieldset>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id=Model.CourseOccurrenceID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>*@
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+        })</script>
+    }
