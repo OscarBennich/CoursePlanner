@@ -50,11 +50,20 @@ namespace CoursePlanner.Controllers
             }).OrderBy(c => c.Text).ToList();
 
             ViewBag.CourseOccurrenceId = new SelectList(courses, "Value", "Text", cid.ToString());
-            ViewBag.TeacherCourses = GetTeacherCourses(tid).ToList();
+            ViewBag.TeacherId = new SelectList(db.Teacher, "TeacherId", "TeacherName", tid);
+            
+            //ViewBag.TeacherCourses = GetTeacherCourses(tid).ToList();
+
+            string academicYear = GetAcademicYear();
+
+            ViewBag.CoursesForTeacher = db.CourseTeacher.Where(x => x.TeacherId == tid && x.CourseOccurrence.Year == academicYear).OrderBy(x => x.CourseOccurrence.Course.CourseName).ToList();
+            ViewBag.TeachersForCourse = db.CourseTeacher.Where(x => x.CourseOccurrenceId == cid && x.CourseOccurrence.Year == academicYear).OrderBy(x => x.Teacher.TeacherName).ToList();
+
+            ViewBag.SelectedCourseName = db.CourseTeacher.Where(x => x.CourseOccurrenceId == cid).Select(x => x.CourseOccurrence.Course.CourseName + " " + x.CourseOccurrence.Year).FirstOrDefault();
+            ViewBag.SelectedTeacherName = db.CourseTeacher.Where(x => x.TeacherId == tid).Select(x => x.Teacher.TeacherName).FirstOrDefault();
 
             return View();
         }
-
 
         //
         // POST: /CourseTeacher/Create
@@ -74,7 +83,8 @@ namespace CoursePlanner.Controllers
                 {
                     Edit(courseteacher);
                 }
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Create", new { tid = courseteacher.TeacherId, cid = courseteacher.CourseOccurrenceId});
             }
 
             ViewBag.CourseOccurrenceId = new SelectList(db.CourseOccurrence, "CourseOccurrenceID", "Year", courseteacher.CourseOccurrenceId);
