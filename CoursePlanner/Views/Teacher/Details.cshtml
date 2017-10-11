@@ -63,6 +63,13 @@
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-gray"></i>
+                                Allocated hours for fall
+                                <span class="pull-right text-black">@(ViewBag.TeachingHoursAvailableFall-ViewBag.TeachingHoursAllocatedFall)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
                                 <i class="fa fa-circle-o text-green"></i>
                                 Total available hours for spring
                                 <span class="pull-right text-black">@ViewBag.TeachingHoursAvailableSpring</span>
@@ -73,6 +80,13 @@
                                 <i class="fa fa-circle-o text-aqua"></i>
                                 Allocated hours for spring
                                 <span class="pull-right text-black">@ViewBag.TeachingHoursAllocatedSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-blue"></i>
+                                Currently available hours for spring
+                                <span class="pull-right text-black">@(ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring)</span>
                             </a>
                         </li>
                     </ul>
@@ -315,8 +329,6 @@
             <!-- /.tab-content -->
         </div>
         <!-- /.nav-tabs-custom -->
-
-
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">Yearly workload distribution</h3>
@@ -351,273 +363,285 @@
 
 @section PieCharts{
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            //-------------
-            //- PIE CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
-            var pieChart = new Chart(pieChartCanvas)
-            var PieData = [
-                {
-                    value: @ViewBag.TeachingHoursAvailableFall,
-                    color: '#f56954',
-                    highlight: '#f56954',
-                    label: 'Available Hours Fall'
-                },
-                {
-                    value: @ViewBag.TeachingHoursAvailableSpring,
-                    color: '#00a65a',
-                    highlight: '#00a65a',
-                    label: 'Available Hours Spring'
-                },
-                {
-                    value: @ViewBag.TeachingHoursAllocatedFall,
-                    color: '#f39c12',
-                    highlight: '#f39c12',
-                    label: 'Allocated Hours Fall'
-                },
-                {
-                    value: @ViewBag.TeachingHoursAvailableFall,
-                    color: '#00c0ef',
-                    highlight: '#00c0ef',
-                    label: 'Allocated Hours Spring'
-                }
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+        var pieChart = new Chart(pieChartCanvas)
+        var PieData = [
+            {
+                value: @ViewBag.TeachingHoursAvailableFall,
+                color: '#f56954',
+                highlight: '#f56954',
+                label: 'Available Hours Fall'
+            },
+            {
+                value: @ViewBag.TeachingHoursAvailableSpring,
+                color: '#00a65a',
+                highlight: '#00a65a',
+                label: 'Available Hours Spring'
+            },
+            {
+                value: @ViewBag.TeachingHoursAllocatedFall,
+                color: '#f39c12',
+                highlight: '#f39c12',
+                label: 'Allocated Hours Fall'
+            },
+            {
+                value: @ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall,
+                color: '#D0D7DD',
+                highlight: '#D0D7DD',
+                label: 'Currently Available Hours Fall'
+            },
+            {
+                value: @ViewBag.TeachingHoursAllocatedSpring,
+                color: '#00c0ef',
+                highlight: '#00c0ef',
+                label: 'Allocated Hours Spring'
+            },
+            {
+                value: @ViewBag.TeachingHoursAvailableSpring - @ViewBag.TeachingHoursAllocatedSpring,
+                color: '#4D8FAC',
+                highlight: '#4D8FAC',
+                label: 'Currently Available Hours Spring'
+            }
+        ]
+        var pieOptions = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 2,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //String - A legend template
+            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        pieChart.Doughnut(PieData, pieOptions)
+    });
+
+    $(document).ready(function () {
+
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var fallPieChartCanvas = $('#FallPieChart').get(0).getContext('2d')
+        var fallpieChart = new Chart(fallPieChartCanvas)
+        var fallPieData = [
+            {
+                value: @ViewBag.TotalTeachingHoursFall,
+                color: '#f56954',
+                highlight: '#f56954',
+                label: 'Teaching Hours'
+            },
+        {
+            value: @ViewBag.TotalHoursAllocatedResearchFall,
+            color: '#00a65a',
+            highlight: '#00a65a',
+            label: 'Research'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedAdministrationFall,
+            color: '#f39c12',
+            highlight: '#f39c12',
+            label: 'Administration'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
+            color: '#00c0ef',
+            highlight: '#00c0ef',
+            label: 'Assignments'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedOtherFall,
+            color: '#D0D7DD',
+            highlight: '#D0D7DD',
+            label: 'Other'
+        }
+        ]
+        var fallpieOptions = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 2,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //String - A legend template
+            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        fallpieChart.Doughnut(fallPieData, fallpieOptions)
+    });
+
+    $(document).ready(function () {
+
+        //-------------
+        //- PIE CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+        var springPieChartCanvas = $('#SpringPieChart').get(0).getContext('2d')
+        var springpieChart = new Chart(springPieChartCanvas)
+        var springPieData = [
+            {
+                value: @ViewBag.TotalTeachingHoursSpring,
+                color: '#f56954',
+                highlight: '#f56954',
+                label: 'Teaching Hours'
+            },
+            {
+                value: @ViewBag.TotalHoursAllocatedResearchSpring,
+                color: '#00a65a',
+                highlight: '#00a65a',
+                label: 'Research'
+            },
+            {
+                value: @ViewBag.TotalHoursAllocatedAdministrationSpring,
+                color: '#f39c12',
+                highlight: '#f39c12',
+                label: 'Administration'
+            },
+            {
+                value: @ViewBag.TotalHoursAllocatedAssignmentsSpring,
+                color: '#00c0ef',
+                highlight: '#00c0ef',
+                label: 'Assignments'
+            },
+            {
+                value: @ViewBag.TotalHoursAllocatedOtherSpring,
+                color: '#D0D7DD',
+                highlight: '#D0D7DD',
+                label: 'Other'
+            }
+        ]
+        var springpieOptions = {
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke: true,
+            //String - The colour of each segment stroke
+            segmentStrokeColor: '#fff',
+            //Number - The width of each segment stroke
+            segmentStrokeWidth: 2,
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout: 50, // This is 0 for Pie charts
+            //Number - Amount of animation steps
+            animationSteps: 100,
+            //String - Animation easing effect
+            animationEasing: 'easeOutBounce',
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate: true,
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale: false,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true,
+            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //String - A legend template
+            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        }
+        //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        springpieChart.Doughnut(springPieData, springpieOptions)
+    });
+
+    $(document).ready(function () {
+
+        //-------------
+        //- BAR CHART -
+        //-------------
+        var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
+        var periodChart = new Chart(periodChartCanvas)
+        var periodChartData = {
+            labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
+            datasets: [
+              {
+                  label: "Current workload",
+                  fillColor: "rgba(210, 214, 222, 1)",
+                  strokeColor: "rgba(210, 214, 222, 1)",
+                  pointColor: "rgba(210, 214, 222, 1)",
+                  pointStrokeColor: "#c1c7d1",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(220,220,220,1)",
+                  data: [65, 59, 80, 81, 56, 55, 40,50]
+              },
+              {
+                  label: "Expected workload",
+                  fillColor: "rgba(60,141,188,0.9)",
+                  strokeColor: "rgba(60,141,188,0.8)",
+                  pointColor: "#3b8bba",
+                  pointStrokeColor: "rgba(60,141,188,1)",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(60,141,188,1)",
+                  data: [@ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours,@ViewBag.ExpectedPeriodHours]
+              }
             ]
-            var pieOptions = {
-                //Boolean - Whether we should show a stroke on each segment
-                segmentShowStroke: true,
-                //String - The colour of each segment stroke
-                segmentStrokeColor: '#fff',
-                //Number - The width of each segment stroke
-                segmentStrokeWidth: 2,
-                //Number - The percentage of the chart that we cut out of the middle
-                percentageInnerCutout: 50, // This is 0 for Pie charts
-                //Number - Amount of animation steps
-                animationSteps: 100,
-                //String - Animation easing effect
-                animationEasing: 'easeOutBounce',
-                //Boolean - Whether we animate the rotation of the Doughnut
-                animateRotate: true,
-                //Boolean - Whether we animate scaling the Doughnut from the centre
-                animateScale: false,
-                //Boolean - whether to make the chart responsive to window resizing
-                responsive: true,
-                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                maintainAspectRatio: true,
-                //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            pieChart.Doughnut(PieData, pieOptions)
-        });
+        }
+        periodChartData.datasets[1].fillColor = "#00a65a"
+        periodChartData.datasets[1].strokeColor = "#00a65a"
+        periodChartData.datasets[1].pointColor = "#00a65a"
+        var periodChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: false,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each period
+            barShowStroke: true,
+            //Number - Pixel width of the period stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        }
 
-        $(document).ready(function () {
+        periodChartOptions.datasetFill = false
+        periodChart.Bar(periodChartData, periodChartOptions)
+    });
 
-            //-------------
-            //- PIE CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var fallPieChartCanvas = $('#FallPieChart').get(0).getContext('2d')
-            var fallpieChart = new Chart(fallPieChartCanvas)
-            var fallPieData = [
-                {
-                    value: @ViewBag.TotalTeachingHoursFall,
-                    color: '#f56954',
-                    highlight: '#f56954',
-                    label: 'Teaching Hours'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedResearchFall,
-                    color: '#00a65a',
-                    highlight: '#00a65a',
-                    label: 'Research'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedAdministrationFall,
-                    color: '#f39c12',
-                    highlight: '#f39c12',
-                    label: 'Administration'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
-                    color: '#00c0ef',
-                    highlight: '#00c0ef',
-                    label: 'Assignments'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedOtherFall,
-                    color: '#D0D7DD',
-                    highlight: '#D0D7DD',
-                    label: 'Other'
-                }
-            ]
-            var fallpieOptions = {
-                //Boolean - Whether we should show a stroke on each segment
-                segmentShowStroke: true,
-                //String - The colour of each segment stroke
-                segmentStrokeColor: '#fff',
-                //Number - The width of each segment stroke
-                segmentStrokeWidth: 2,
-                //Number - The percentage of the chart that we cut out of the middle
-                percentageInnerCutout: 50, // This is 0 for Pie charts
-                //Number - Amount of animation steps
-                animationSteps: 100,
-                //String - Animation easing effect
-                animationEasing: 'easeOutBounce',
-                //Boolean - Whether we animate the rotation of the Doughnut
-                animateRotate: true,
-                //Boolean - Whether we animate scaling the Doughnut from the centre
-                animateScale: false,
-                //Boolean - whether to make the chart responsive to window resizing
-                responsive: true,
-                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                maintainAspectRatio: true,
-                //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            fallpieChart.Doughnut(fallPieData, fallpieOptions)
-        });
-
-        $(document).ready(function () {
-
-            //-------------
-            //- PIE CHART -
-            //-------------
-            // Get context with jQuery - using jQuery's .get() method.
-            var springPieChartCanvas = $('#SpringPieChart').get(0).getContext('2d')
-            var springpieChart = new Chart(springPieChartCanvas)
-            var springPieData = [
-                {
-                    value: @ViewBag.TotalTeachingHoursSpring,
-                    color: '#f56954',
-                    highlight: '#f56954',
-                    label: 'Teaching Hours'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedResearchSpring,
-                    color: '#00a65a',
-                    highlight: '#00a65a',
-                    label: 'Research'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedAdministrationSpring,
-                    color: '#f39c12',
-                    highlight: '#f39c12',
-                    label: 'Administration'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedAssignmentsSpring,
-                    color: '#00c0ef',
-                    highlight: '#00c0ef',
-                    label: 'Assignments'
-                },
-                {
-                    value: @ViewBag.TotalHoursAllocatedOtherSpring,
-                    color: '#D0D7DD',
-                    highlight: '#D0D7DD',
-                    label: 'Other'
-                }
-            ]
-            var springpieOptions = {
-                //Boolean - Whether we should show a stroke on each segment
-                segmentShowStroke: true,
-                //String - The colour of each segment stroke
-                segmentStrokeColor: '#fff',
-                //Number - The width of each segment stroke
-                segmentStrokeWidth: 2,
-                //Number - The percentage of the chart that we cut out of the middle
-                percentageInnerCutout: 50, // This is 0 for Pie charts
-                //Number - Amount of animation steps
-                animationSteps: 100,
-                //String - Animation easing effect
-                animationEasing: 'easeOutBounce',
-                //Boolean - Whether we animate the rotation of the Doughnut
-                animateRotate: true,
-                //Boolean - Whether we animate scaling the Doughnut from the centre
-                animateScale: false,
-                //Boolean - whether to make the chart responsive to window resizing
-                responsive: true,
-                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-                maintainAspectRatio: true,
-                //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-            }
-            //Create pie or douhnut chart
-            // You can switch between pie and douhnut using the method below.
-            springpieChart.Doughnut(springPieData, springpieOptions)
-        });
-
-        $(document).ready(function () {
-
-            //-------------
-            //- BAR CHART -
-            //-------------
-            var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
-            var periodChart = new Chart(periodChartCanvas)
-            var periodChartData = {
-                labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
-                datasets: [
-                  {
-                      label: "Current workload",
-                      fillColor: "rgba(210, 214, 222, 1)",
-                      strokeColor: "rgba(210, 214, 222, 1)",
-                      pointColor: "rgba(210, 214, 222, 1)",
-                      pointStrokeColor: "#c1c7d1",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(220,220,220,1)",
-                      data: [65, 59, 80, 81, 56, 55, 40,50]
-                  },
-                  {
-                      label: "Expected workload",
-                      fillColor: "rgba(60,141,188,0.9)",
-                      strokeColor: "rgba(60,141,188,0.8)",
-                      pointColor: "#3b8bba",
-                      pointStrokeColor: "rgba(60,141,188,1)",
-                      pointHighlightFill: "#fff",
-                      pointHighlightStroke: "rgba(60,141,188,1)",
-                      data: [@ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours,@ViewBag.ExpectedPeriodHours]
-                  }
-                ]
-            }
-            periodChartData.datasets[1].fillColor = "#00a65a"
-            periodChartData.datasets[1].strokeColor = "#00a65a"
-            periodChartData.datasets[1].pointColor = "#00a65a"
-            var periodChartOptions = {
-                //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                scaleBeginAtZero: true,
-                //Boolean - Whether grid lines are shown across the chart
-                scaleShowGridLines: false,
-                //String - Colour of the grid lines
-                scaleGridLineColor: "rgba(0,0,0,.05)",
-                //Number - Width of the grid lines
-                scaleGridLineWidth: 1,
-                //Boolean - Whether to show horizontal lines (except X axis)
-                scaleShowHorizontalLines: true,
-                //Boolean - Whether to show vertical lines (except Y axis)
-                scaleShowVerticalLines: true,
-                //Boolean - If there is a stroke on each period
-                barShowStroke: true,
-                //Number - Pixel width of the period stroke
-                barStrokeWidth: 2,
-                //Number - Spacing between each of the X value sets
-                barValueSpacing: 5,
-                //Number - Spacing between data sets within X values
-                barDatasetSpacing: 1,
-                //String - A legend template
-                legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-                //Boolean - whether to make the chart responsive
-                responsive: true,
-                maintainAspectRatio: true
-            }
-
-            periodChartOptions.datasetFill = false
-            periodChart.Bar(periodChartData, periodChartOptions)
-        });
-
-    </script>
+</script>
 }

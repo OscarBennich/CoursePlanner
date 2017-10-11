@@ -126,12 +126,12 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditCourseResponsible(int id, string newcourseresponsible)
+        public ActionResult EditCourseResponsible(int id, int newcourseresponsibleId)
         {
             CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
 
             var newteacher = (from m in db.Teacher
-                              where m.TeacherName == newcourseresponsible
+                              where m.TeacherId == newcourseresponsibleId
                               select m.TeacherId).Single();
 
             courseoccurrence.CourseResponsibleID = newteacher;

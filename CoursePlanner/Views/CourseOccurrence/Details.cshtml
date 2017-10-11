@@ -178,8 +178,8 @@
                         }
                     </li>
                     <li class="list-group-item">
-                        <b>Assign course reponsible</b>
-                        <button class="btn btn-default pull-right" data-target="#myModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                        <b>Assign course responsible</b>
+                        <button class="btn btn-danger btn-xs pull-right" data-target="#myModal" data-toggle="modal" type="button"> Change Course Responsible </button>
                     </li>
                 </ul>
                 <!-- Modal -->
@@ -212,10 +212,10 @@
                                         <div class="col-xs-10 col-xs-offset-1">
                                             <h4>Select new course responsible:</h4>
 
-                                            <select class="form-control" name="newcourseresponsible" style="width: 100%;">
+                                            <select class="form-control" name="newcourseresponsibleId" style="width: 100%;">
                                                 @foreach (CoursePlanner.Models.Teacher T in ViewBag.TeachersForCourseResponsible)
                                                 {
-                                                    <option>@T.TeacherName</option>
+                                                    <option value="@T.TeacherId">@T.TeacherName</option>
                                                 }
                                             </select>
                                         </div>
