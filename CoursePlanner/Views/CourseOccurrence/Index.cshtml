@@ -29,15 +29,10 @@
          
             <!-- /.box-header -->
             <div class="box-body">
-                <div class="dataTables_filter">
-
-                    Choose Term : 
+               <div class="dataTables_filter">
+                   
                     
-                    <select id='termSelector'>
-                        <option value='C'>All</option>
-                        <option value='Fall'>Fall</option>
-                        <option value='Spring'>Spring</option>
-                    </select>
+                    
                     <p/>
                 </div>
                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
@@ -65,7 +60,11 @@
                             </th>
                             
                             <th>
-                                Term
+                                <select id='termSelector'>
+                                    <option value='C'>Term</option>
+                                    <option value='Fall'>Fall</option>
+                                    <option value='Spring'>Spring</option>
+                                </select>
 
                             </th>
                             <th>
@@ -73,7 +72,7 @@
 
                             </th>
                             <th>
-                                Head Teacher
+                                Course Responisble
 
                             </th>
                             <th>
@@ -127,7 +126,8 @@
                                 </td>
                                
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
+                                    <a href="@Url.Action("Details/" + @item.CourseResponsibleID, "Teacher")"><span>@Html.DisplayFor(modelItem => item.Teacher.TeacherName)</span></a>
+                                   
                                 </td>
 
 
