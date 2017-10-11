@@ -52,7 +52,7 @@
         <div class="box box-danger">
             <!-- /.box-header -->
             <div class="box-body">
-                @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline" }))
+                @*@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline" }))
                 {
                     <div class="col-md-3 col-xs-6">
                         <fieldset>
@@ -99,7 +99,7 @@
                     <div class="col-md-1 col-xs-1">
                         <button class="btn btn-sm btn-danger" type="submit">Filter</button>
                     </div>
-                }
+                }*@
                 <div id="courseconflicttable">
                     @{Html.RenderPartial("_CourseConflictTable", Model);}
                 </div>
@@ -111,38 +111,3 @@
 </div>
 
 
-@section MyScripts{
-    <script>
-        $(document).ready(function () {
-            $(".clickable-row").click(function () {
-                window.location.href = $(this).data("href");
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("th.filter").click(function () {
-                var term = $(this).text();
-                $("#courseconflicttable").load('@(Url.Action("FilterCourses","Home", null, Request.Url.Scheme))?filter=' + term);
-            });
-        });
-    </script> 
-    <script>
-        $(function () {
-            $('#courseconflictoverview').DataTable({
-                'paging': false,
-                'lengthChange': false,
-                'searching': true,
-                'ordering': false,
-                'info': false,
-                'autoWidth': false,
-                'columnDefs': [
-                    {
-                        'targets': '_all',
-                        'defaultContent': ''
-                    }
-                ]
-            });
-        })
-    </script>
-}

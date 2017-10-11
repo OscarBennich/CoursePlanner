@@ -61,7 +61,7 @@ namespace CoursePlanner
                      "~/Content/plugins/chartjs/Chart.js",
                      "~/Content/plugins/chartjs/Chart.min.js",
                      "~/Content/dist/js/app.min.js",
-                     "~/Content/clickable-row-function.js",
+                     "~/Content/CourseConflictFunctions.js",
                      "~/Content/plugins/select2/select2.full.min.js"
                      ));
 

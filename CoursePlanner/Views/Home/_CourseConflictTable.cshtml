@@ -199,7 +199,7 @@ if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P4.ToString())
 
 <table id="courseconflictoverview" class="table table-bordered table-hover">
     <thead>
-        <tr>
+        <tr id="term-head">
             <th class="wide-row"></th>
             <th class="filter" colspan="4">Fall</th>
             <th class="filter" colspan="4">Spring</th>
@@ -234,3 +234,4 @@ if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P4.ToString())
     </tbody>
 </table>
 
+@Scripts.Render("~/Js")
