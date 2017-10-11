@@ -20,6 +20,14 @@
             white-space: nowrap;
             overflow: hidden;
         }
+
+        .conflictDescription {
+            width: 23%;
+            margin: 1%;
+            padding: 5px;
+            float: left;
+        }
+
         .perioditem {
             width: 100%;
             height: 100%;

@@ -1,0 +1,236 @@
+﻿@using CoursePlanner.Controllers
+@using CoursePlanner.Models
+@model IEnumerable<Course>
+
+<!-- Section with Table Population Code -->
+<!-- #region-->
+
+@helper PopulateTerm(CourseOccurrence currentCourse)
+{
+//Courses starting period 1
+
+if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P1.ToString())
+{
+    var numPeriods = currentCourse.Period.ToString().Length;
+    if (numPeriods == 2)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td>
+                @MakeCourseBox(currentCourse)
+            </td>
+            <td colspan="3"></td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+    if (numPeriods == 4)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td colspan="2">
+                @MakeCourseBox(currentCourse)
+            </td>
+            <td colspan="2"></td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+    if (numPeriods == 6)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td colspan="3">
+                @MakeCourseBox(currentCourse)
+            </td>
+            <td></td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+    if (numPeriods == 8)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td colspan="4">
+                @MakeCourseBox(currentCourse)
+            </td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+}
+
+//Courses starting period 2
+if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P2.ToString())
+{
+    var numPeriods = currentCourse.Period.ToString().Length;
+    if (numPeriods == 2)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td></td>
+            <td>
+                @MakeCourseBox(currentCourse)
+            </td>
+            <td colspan="2"></td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+    if (numPeriods == 4)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td></td>
+            <td colspan="2">
+                @MakeCourseBox(currentCourse)
+            </td>
+            <td></td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+    if (numPeriods == 6)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td></td>
+            <td colspan="3">
+                @MakeCourseBox(currentCourse)
+            </td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+}
+
+//Courses starting period 3
+if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P3.ToString())
+{
+    var numPeriods = currentCourse.Period.ToString().Length;
+    if (numPeriods == 2)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td colspan="2"></td>
+            <td>
+                @MakeCourseBox(currentCourse)
+            </td>
+            <td></td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+    if (numPeriods == 4)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td></td>
+            <td></td>
+            <td colspan="2">
+                @MakeCourseBox(currentCourse)
+            </td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+}
+//Courses starting period 4
+if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P4.ToString())
+{
+    var numPeriods = currentCourse.Period.ToString().Length;
+    if (numPeriods == 2)
+    {
+        if (currentCourse.Term == Terms.Spring)
+        {
+                @FillEmptyTerm()
+        }
+            <td colspan="3"></td>
+            <td>
+                @MakeCourseBox(currentCourse)
+            </td>
+        if (currentCourse.Term == Terms.Fall)
+        {
+                @FillEmptyTerm()
+        }
+    }
+}
+}
+
+@helper MakeCourseBox(CourseOccurrence course)
+{
+    <div class="perioditem normal">@course.Budget.ToString()</div>
+}
+
+@helper FillEmptyTerm()
+{
+    <td colspan="4"></td>
+}
+
+<!-- #endregion -->
+
+<table id="courseconflictoverview" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="wide-row"></th>
+            <th class="filter" colspan="4">Fall</th>
+            <th class="filter" colspan="4">Spring</th>
+        </tr>
+        <tr>
+            <th>Course</th>
+            <th>P1</th>
+            <th>P2</th>
+            <th>P3</th>
+            <th>P4</th>
+            <th>P1</th>
+            <th>P2</th>
+            <th>P3</th>
+            <th>P4</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.CourseOccurrence.Where(x => x.Year == HomeController.CurrentSchoolYear()).ToList().Count > 0)
+            {
+                var currentCourse = item.CourseOccurrence.Where(x => x.Year == HomeController.CurrentSchoolYear()).ToList().First();
+
+                <tr class='clickable-row' data-href='@Url.Action("Details", "Course", new {id = item.CourseId})'>
+                    <td>@Html.DisplayFor(modelItem => item.CourseName)</td>
+
+                    @PopulateTerm(currentCourse)
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

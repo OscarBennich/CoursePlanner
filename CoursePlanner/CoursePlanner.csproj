@@ -765,6 +765,7 @@
     <Content Include="Views\CourseOccurrence\Create.cshtml" />
     <Content Include="Views\CourseOccurrence\Edit.cshtml" />
     <Content Include="Views\CourseOccurrence\Delete.cshtml" />
+    <Content Include="Views\Home\_CourseConflictTable.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
