@@ -165,11 +165,11 @@ namespace CoursePlanner.Controllers
 
         private string GetAcademicYear()
         {
-            string academicYear = DateTime.Today.Year + "-" + (DateTime.Today.Year + 1);
+            string academicYear = DateTime.Today.Year + "/" + (DateTime.Today.Year + 1);
 
             if (DateTime.Today.Month <= 6)
             {
-                academicYear = (DateTime.Today.Year - 1) + "-" + DateTime.Today.Year;
+                academicYear = (DateTime.Today.Year - 1) + "/" + DateTime.Today.Year;
             }
 
             return academicYear;
