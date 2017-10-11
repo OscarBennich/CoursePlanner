@@ -212,5 +212,49 @@ namespace CoursePlanner.Tests.Controllers
              //assert
              Assert.AreEqual(target, result);
          }
+
+         [TestMethod]
+         public void CalculateTeachingHoursAllocatedFallTest()
+         {
+             //arrange
+             var tc = new TeacherController();
+             var teacher = new Teacher()
+             {
+                 TeacherId = 1,
+                 TeacherName = "Sofi",
+                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                 CourseTeacher = new List<CourseTeacher>()
+                 {
+                     new CourseTeacher{
+                         TeacherId= 1,
+                         Hours = 50,
+                         CourseOccurrenceId = 1,
+                         CourseOccurrence = new CourseOccurrence{
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                         }},
+                         new CourseTeacher{
+                         TeacherId= 1,
+                         Hours = 100,
+                         CourseOccurrenceId = 2,
+                         CourseOccurrence = new CourseOccurrence{
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                         }
+                     }
+                 }
+             };
+
+             var target = 50;
+
+
+             //act
+             var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+
+             //assert
+             Assert.AreEqual(target, result);
+         }
+
+        
     }
 }

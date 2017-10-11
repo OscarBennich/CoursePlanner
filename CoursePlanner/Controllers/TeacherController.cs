@@ -216,19 +216,15 @@ namespace CoursePlanner.Controllers
 
             if (term.Equals(Terms.Fall)) 
             {
-                try
-                {   
                     // Calculate the sum of all hours allocated for this teacher in all course occurances which match
                     // with the teacherID and where the term matches (Fall in this case)
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall).Select(y => y.Hours).Sum());
-                }
-                catch { }
+                    teachingHoursAllocated += Convert.ToInt32(teacher.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall).Select(y => y.Hours).Sum());
             }
             else 
             {
                 try
                 {
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(teacher.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }

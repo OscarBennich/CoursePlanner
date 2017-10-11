@@ -11,7 +11,7 @@ namespace CoursePlanner.Controllers
 {
     public class CourseController : Controller
     {
-        private CoursePlannerEntities db = new CoursePlannerEntities();
+        public CoursePlannerEntities db = new CoursePlannerEntities();
 
         //
         // GET: /Course/
