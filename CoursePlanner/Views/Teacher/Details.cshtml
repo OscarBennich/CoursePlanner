@@ -147,14 +147,11 @@
             </div>
             <!-- /.box-body -->
         </div>
-<<<<<<< HEAD
-       
+
         <p>
             <input type="button" class="btn btn-primary btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "Teacher")'" />
        </p>
         <!-- /.box -->
-=======
-
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">Distribution of spring working hours</h3>
@@ -208,7 +205,6 @@
             <!-- /.box-body -->
         </div>
 
->>>>>>> AssigningCourseResponsible
     </div>
     <div class="col-md-8  skin-red-light">
         <div class="nav-tabs-custom  skin-red-light">
@@ -246,7 +242,6 @@
                                         <tbody>
                                             @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesFall)
                                             {
-<<<<<<< HEAD
                                                 <tr>
                                                     <td>
                                                         @c.Course.CourseCode
@@ -259,20 +254,6 @@
                                                     </td>
                                                     <td></td>
                                                 </tr>
-=======
-                                            <tr>
-                                                <td>
-                                                    @c.Course.CourseCode
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseID, "Course")"><span>@c.Course.CourseName</span></a>
-                                                </td>
-                                                <td>
-                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                </td>
-                                                <td></td>
-                                            </tr>
->>>>>>> AssigningCourseResponsible
                                             }
                                         </tbody>
                                     </table>
@@ -378,15 +359,13 @@
     </div>
     <!-- /.col (RIGHT) -->
 </div>
-<<<<<<< HEAD
-=======
+
 <!-- /.row -->
 <a href="@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })"> Allocate Course for Teacher </a>
 <!-- /.box -->
 <p>
     @Html.ActionLink("Back to List", "Index")
 </p>
->>>>>>> AssigningCourseResponsible
 
 @section PieCharts{
     <script>

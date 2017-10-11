@@ -61,7 +61,6 @@ namespace CoursePlanner.Controllers
 
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
 
-<<<<<<< HEAD
             ViewBag.teachersCourse = teachersCourse;
             ViewBag.TeachersHistory = 
                 new Func<int, IEnumerable<Teacher>>(GetTeacherHistory);
@@ -76,7 +75,13 @@ namespace CoursePlanner.Controllers
           
             return View(courseoccurrence);
         }
-		
+
+        private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID, string year)
+        {
+            return db.CourseOccurrence.Where(c => c.CourseID == courseID && c.Year != year).ToList();
+        }
+
+
         private IEnumerable<Teacher> GetTeacherHistory(int courseOccurenceID)
         {
 
@@ -87,6 +92,7 @@ namespace CoursePlanner.Controllers
         {
 
             return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher);
+        }
 
         public string IsCourseResponsibleNameFind(int teacherId, int courseOccurrenceID)
         {
@@ -119,34 +125,6 @@ namespace CoursePlanner.Controllers
             }      
         }
 
-
-
-        public string IsCourseResponsibleNameFind(int teacherId,int courseOccurrenceID)
-        {
-            var courseResponsibleID = (from m in db.CourseOccurrence
-                                       where m.CourseOccurrenceID == courseOccurrenceID
-                                      select m.CourseResponsibleID).Single();
-
-            if (courseResponsibleID == teacherId)
-            {
-                return "Yes";
-            }else{
-                return "No";
-            }
-            
-
-        }
-
-        public string GetCourseResponsibleNameFind(int id)
-        {
-            var CourseResponsibleName = (from m in db.Teacher
-                                         where m.TeacherId == id
-                                         select m.TeacherName).Single();
-
-
-            return Convert.ToString(CourseResponsibleName);
-
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
