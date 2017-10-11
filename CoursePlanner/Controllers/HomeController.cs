@@ -8,7 +8,7 @@ using WebGrease.Css.Extensions;
 
 namespace CoursePlanner.Controllers
 {
-    [Authorize] 
+    [Authorize]
     public class HomeController : Controller
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
@@ -34,7 +34,7 @@ namespace CoursePlanner.Controllers
                 fall = DateTime.Today.Year;
             else
             {
-                fall = DateTime.Today.Year-1;
+                fall = DateTime.Today.Year - 1;
             }
 
             int spring;
@@ -45,7 +45,7 @@ namespace CoursePlanner.Controllers
                 spring = DateTime.Today.Year + 1;
             }
 
-            return fall + "/" +  spring;
+            return fall + "/" + spring;
 
         }
 

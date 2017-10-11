@@ -28,15 +28,15 @@ namespace CoursePlanner.Controllers
             string currentEduYear;
             int currentMonth = DateTime.Now.Month;
             int currentYear = DateTime.Now.Year;
-            if (currentMonth >= 8)
+            if (currentMonth > 6)
             {
-                int nextYear =currentYear+1;
-                 currentEduYear = currentYear.ToString() + "-" + nextYear.ToString();
+                int nextYear = currentYear + 1;
+                currentEduYear = currentYear.ToString() + "/" + nextYear.ToString();
             }
             else
             {
                 int previousYear = currentYear - 1;
-                 currentEduYear = previousYear.ToString() + "-" + currentYear.ToString();
+                currentEduYear = previousYear.ToString() + "/" + currentYear.ToString();
             }
 
             return currentEduYear;
@@ -57,7 +57,7 @@ namespace CoursePlanner.Controllers
 
             List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID, CurrentEduYear).ToList();
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
-          
+
             return View(courseoccurrence);
         }
 

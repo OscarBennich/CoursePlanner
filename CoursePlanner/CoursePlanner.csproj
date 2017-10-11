@@ -311,6 +311,7 @@
     <Content Include="Content\dist\img\user6-128x128.jpg" />
     <Content Include="Content\dist\img\user7-128x128.jpg" />
     <Content Include="Content\dist\img\user8-128x128.jpg" />
+    <Content Include="Content\dist\img\uu-logo.png" />
     <Content Include="Content\dist\js\app.js" />
     <Content Include="Content\dist\js\app.min.js" />
     <Content Include="Content\dist\js\demo.js" />
@@ -791,7 +792,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55004</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55055/</IISUrl>
+          <IISUrl>http://localhost:55066/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
