@@ -188,6 +188,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseOccurrenceController.cs" />
+    <Compile Include="Controllers\CourseTeacherController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -766,6 +767,11 @@
     <Content Include="Views\CourseOccurrence\Create.cshtml" />
     <Content Include="Views\CourseOccurrence\Edit.cshtml" />
     <Content Include="Views\CourseOccurrence\Delete.cshtml" />
+    <Content Include="Views\CourseTeacher\Create.cshtml" />
+    <Content Include="Views\CourseTeacher\Delete.cshtml" />
+    <Content Include="Views\CourseTeacher\Details.cshtml" />
+    <Content Include="Views\CourseTeacher\Edit.cshtml" />
+    <Content Include="Views\CourseTeacher\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
