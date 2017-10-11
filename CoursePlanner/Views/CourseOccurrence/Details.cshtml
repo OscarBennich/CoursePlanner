@@ -287,6 +287,11 @@
     </div>
     <!-- /.col -->
 </div>
+<p>
+    <a href="@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })"> Allocate Teacher to Course </a>
+    <br />
+    @Html.ActionLink("Back to List", "Index")
+</p>
 <!-- /.row -->
 @section MyScripts{
     @*<script>

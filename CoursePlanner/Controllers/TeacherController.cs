@@ -201,7 +201,7 @@ namespace CoursePlanner.Controllers
         private double CalculateTeachingHoursAvailable(Teacher teacher, int baseAnnualWorkingHours, Terms term) //should split into terms, testing for now
         {   
             int teachingHoursAvailable = 0;
-            double totalReductionPercentage = 1;
+            double totalReductionPercentage = 0;
 
             if(term.Equals(Terms.Fall)) 
             {   
@@ -232,7 +232,7 @@ namespace CoursePlanner.Controllers
             // Finally we apply the total reduction to the base value for the term
             // For example a base of 200 hours for this term for a professor would result in 
             // 200 * 0,6 = 120 hours
-            return teachingHoursAvailable = Convert.ToInt32(teachingHoursAvailable * totalReductionPercentage);
+            return teachingHoursAvailable = Convert.ToInt32(teachingHoursAvailable * (1- totalReductionPercentage));
         }
 
         private int CalculateTeachingHoursAllocated(Teacher teacher, Terms term)
