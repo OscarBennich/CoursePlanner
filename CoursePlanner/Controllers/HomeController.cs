@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using CoursePlanner.Models;
 using WebGrease.Css.Extensions;
 
@@ -13,9 +15,55 @@ namespace CoursePlanner.Controllers
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View(db.Course.ToList());
+        }
+
+        [HttpGet]
+        public ActionResult FilterCourses(string filter)
+        {
+            var courses = db.Course.ToList();
+            List<Course> model;
+            switch (filter)
+            {
+                case "Fall":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Term == Terms.Fall)).ToList();
+                    break;
+                case "Spring":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Term == Terms.Spring)).ToList();
+                    break;
+                case "Fall-P1":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P1" && co.Term == Terms.Fall)).ToList();
+                    break;
+                case "Fall-P2":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P2" && co.Term == Terms.Fall)).ToList();
+                    break;
+                case "Fall-P3":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P3" && co.Term == Terms.Fall)).ToList();
+                    break;
+                case "Fall-P4":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P4" && co.Term == Terms.Fall)).ToList();
+                    break;
+                case "Spring-P1":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P1" && co.Term == Terms.Spring)).ToList();
+                    break;
+                case "Spring-P2":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P2" && co.Term == Terms.Spring)).ToList();
+                    break;
+                case "Spring-P3":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P3" && co.Term == Terms.Spring)).ToList();
+                    break;
+                case "Spring-P4":
+                    model = courses.Where(c => c.CourseOccurrence.Any(co => co.Period.ToString().Substring(0, 2) == "P4" && co.Term == Terms.Spring)).ToList();
+                    break;
+                default:
+                    model = courses;
+                    break;
+            }
+
+            return PartialView("_CourseConflictTable", model);
         }
 
         [HttpPost]
@@ -26,202 +74,33 @@ namespace CoursePlanner.Controllers
             return View(db.Course.ToList());
         }
 
-        public static string CurrentSchoolYear()
+        private List<Course> GetCourseListSorted()
         {
-            int fall;
+            var model = db.Course.Where(c => c.CourseOccurrence.Any(co => co.Year.Equals(GetCurrentEduYear()))).ToList();
+            model = db.Course.OrderBy(c => c.CourseOccurrence.Min(co => co.Term))
+                .ThenBy(c => c.CourseOccurrence.Min(co => co.Period))
+                .ThenBy(co => co.CourseName).ToList();
 
-            if (DateTime.Today.Month > 6 && DateTime.Today.Month <= 12)
-                fall = DateTime.Today.Year;
-            else
-            {
-                fall = DateTime.Today.Year - 1;
-            }
-
-            int spring;
-            if (DateTime.Today.Month >= 1 && DateTime.Today.Month <= 6)
-                spring = DateTime.Today.Year;
-            else
-            {
-                spring = DateTime.Today.Year + 1;
-            }
-
-            return fall + "/" + spring;
-
+            return model;
         }
 
-        private void initializeData()
+        public static string GetCurrentEduYear()
         {
-            var courses = new List<Course>
+            string currentEduYear;
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+            if (currentMonth > 6)
             {
-                new Course
-                {
-                    CourseClassificiation = CourseClassifications.Master,
-                    CourseCode = "2IS200",
-                    CourseCredit = CourseCredits.C15,
-                    CourseName = "Agile Methods",
-                    CourseLevel = CourseLevels.Advanced,
-                    CourseType = CourseTypes.Campus,
-                    CourseOccurrence = new List<CourseOccurrence>()
-                    {
-                        new CourseOccurrence()
-                        {
-                            Budget = 400,
-                            Year = "2017/2018",
-                            Term = Terms.Fall,
-                            Period = Periods.P1P2
-                        },
-                        new CourseOccurrence()
-                        {
-                            Budget = 400,
-                            Year = "2016/2017",
-                            Term = Terms.Fall,
-                            Period = Periods.P1P2
-                        }
-                    }
-                },
-                new Course
-                {
-                    CourseClassificiation = CourseClassifications.Master,
-                    CourseCode = "2IS207",
-                    CourseCredit = CourseCredits.C7_5,
-                    CourseName = "Artificial Intelligence",
-                    CourseLevel = CourseLevels.Advanced,
-                    CourseType = CourseTypes.Campus,
-                    CourseOccurrence = new List<CourseOccurrence>()
-                    {
-                        new CourseOccurrence()
-                        {
-                            Budget = 400,
-                            Year = "2017/2018",
-                            Term = Terms.Fall,
-                            Period = Periods.P3
-                        },
-                        new CourseOccurrence()
-                        {
-                            Budget = 400,
-                            Year = "2016/2017",
-                            Term = Terms.Fall,
-                            Period = Periods.P3
-                        }
-                    }
-                },
-                new Course
-                {
-                    CourseClassificiation = CourseClassifications.Bachelor,
-                    CourseCode = "2IS210",
-                    CourseCredit = CourseCredits.C7_5,
-                    CourseName = "Object oriented programming 2",
-                    CourseLevel = CourseLevels.Intermediate,
-                    CourseType = CourseTypes.Campus,
-                    CourseOccurrence = new List<CourseOccurrence>()
-                    {
-                        new CourseOccurrence()
-                        {
-                            Budget = 700,
-                            Year = "2017/2018",
-                            Term = Terms.Fall,
-                            Period = Periods.P2
-                        },
-                        new CourseOccurrence()
-                        {
-                            Budget = 700,
-                            Year = "2016/2017",
-                            Term = Terms.Fall,
-                            Period = Periods.P2
-                        }
-                    }
+                int nextYear = currentYear + 1;
+                currentEduYear = currentYear.ToString() + "/" + nextYear.ToString();
+            }
+            else
+            {
+                int previousYear = currentYear - 1;
+                currentEduYear = previousYear.ToString() + "/" + currentYear.ToString();
+            }
 
-                },
-                new Course
-                {
-                    CourseClassificiation = CourseClassifications.Bachelor,
-                    CourseCode = "2IS212",
-                    CourseCredit = CourseCredits.C7_5,
-                    CourseName = "Databases",
-                    CourseLevel = CourseLevels.Basic,
-                    CourseType = CourseTypes.Campus,
-                    CourseOccurrence = new List<CourseOccurrence>()
-                    {
-                        new CourseOccurrence()
-                        {
-                            Budget = 500,
-                            Year = "2017/2018",
-                            Term = Terms.Fall,
-                            Period = Periods.P4
-                        },
-                        new CourseOccurrence()
-                        {
-                            Budget = 500,
-                            Year = "2016/2017",
-                            Term = Terms.Fall,
-                            Period = Periods.P4
-                        }
-                    }
-
-                },
-                new Course
-                {
-                    CourseClassificiation = CourseClassifications.Bachelor,
-                    CourseCode = "2IS215",
-                    CourseCredit = CourseCredits.C7_5,
-                    CourseName = "Algorithms and datastrutures",
-                    CourseLevel = CourseLevels.Basic,
-                    CourseType = CourseTypes.Campus,
-                    CourseOccurrence = new List<CourseOccurrence>()
-                    {
-                        new CourseOccurrence()
-                        {
-                            Budget = 500,
-                            Year = "2017/2018",
-                            Term = Terms.Spring,
-                            Period = Periods.P3
-                        },
-                        new CourseOccurrence()
-                        {
-                            Budget = 500,
-                            Year = "2016/2017",
-                            Term = Terms.Spring,
-                            Period = Periods.P3
-                        }
-                    }
-
-                },
-                new Course
-                {
-                    CourseClassificiation = CourseClassifications.Master,
-                    CourseCode = "2IS220",
-                    CourseCredit = CourseCredits.C30,
-                    CourseName = "Master thesis",
-                    CourseLevel = CourseLevels.Advanced,
-                    CourseType = CourseTypes.Campus,
-                    CourseOccurrence = new List<CourseOccurrence>()
-                    {
-                        new CourseOccurrence()
-                        {
-                            Budget = 1000,
-                            Year = "2017/2018",
-                            Term = Terms.Spring,
-                            Period = Periods.P1P2P3P4
-                        },
-                        new CourseOccurrence()
-                        {
-                            Budget = 1000,
-                            Year = "2016/2017",
-                            Term = Terms.Spring,
-                            Period = Periods.P1P2P3P4
-                        }
-                    }
-
-                }
-
-            };
-
-            courses.ForEach(course => db.Course.Add(course));
-            db.SaveChanges();
+            return currentEduYear;
         }
-
-
-
-
     }
 }

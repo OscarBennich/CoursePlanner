@@ -46,7 +46,7 @@ namespace CoursePlanner
                       "~/Content/dist/css/skins/skin-red-light.min.css",
                       "~/Content/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css",
                       "~/Content/plugins/datatables/dataTables.bootstrap.css",
-                      "~/Content/TermCourseOverview.css"
+                      "~/Content/CourseConflictCSS.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/Js").Include(
@@ -61,7 +61,7 @@ namespace CoursePlanner
                      "~/Content/plugins/chartjs/Chart.js",
                      "~/Content/plugins/chartjs/Chart.min.js",
                      "~/Content/dist/js/app.min.js",
-                     "~/Content/clickable-row-function.js",
+                     "~/Content/CourseConflictJS.js",
                      "~/Content/plugins/select2/select2.full.min.js"
                      ));
 
