@@ -32,6 +32,30 @@ namespace CoursePlanner.Controllers
                 return HttpNotFound();
             }
 
+            List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
+            List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
+
+            //List<CourseOccurrence> sum = courseOccurencesFall.Concat(courseOccurencesSpring).ToList();
+
+            //int p1 = ReturnPeriodHours(sum, teacher, Periods.P1, Terms.Fall);
+            //int p2 = ReturnPeriodHours(sum, teacher, Periods.P2, Terms.Fall);
+            //int p3 = ReturnPeriodHours(sum, teacher, Periods.P3, Terms.Fall);
+            //int p4 = ReturnPeriodHours(sum, teacher, Periods.P4, Terms.Fall);
+            //int p5 = ReturnPeriodHours(sum, teacher, Periods.P1, Terms.Spring);
+            //int p6 = ReturnPeriodHours(sum, teacher, Periods.P2, Terms.Spring);
+            //int p7 = ReturnPeriodHours(sum, teacher, Periods.P3, Terms.Spring);
+            //int p8 = ReturnPeriodHours(sum, teacher, Periods.P4, Terms.Spring);
+
+            //ViewBag.Period1 = p1;
+            //ViewBag.Period2 = p2;
+            //ViewBag.Period3 = p3;
+            //ViewBag.Period4 = p4;
+            //ViewBag.Period5 = p5;
+            //ViewBag.Period6 = p6;
+            //ViewBag.Period7 = p7;
+            //ViewBag.Period8 = p8;
+
+
             int baseAnnualWorkingHours = GetBaseAnnualHours(teacher.TeacherDateOfBirth);
             ViewBag.BaseAnnualWorkingHours = baseAnnualWorkingHours;
 
@@ -66,9 +90,8 @@ namespace CoursePlanner.Controllers
 
             ViewBag.TotalTeachingHoursSpring = TotalTeachingHoursSpring;
 
-
-            List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
-            List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
+            ViewBag.ExpectedPeriodHours = (TotalTeachingHoursFall + TotalTeachingHoursSpring) / 8;
+         
 
             ViewBag.CourseOccurencesFall = courseOccurencesFall;
             ViewBag.CourseOccurencesSpring = courseOccurencesSpring;
@@ -271,6 +294,158 @@ namespace CoursePlanner.Controllers
             }
 
             return db.CourseTeacher.Where(c => c.TeacherId == teacherID && c.CourseOccurrence.Term == term && c.CourseOccurrence.Year == academicYear).Select(c => c.CourseOccurrence);
+        }
+
+        private int ReturnPeriodHours(IEnumerable<CourseOccurrence> GetTeacherCourses, Teacher teacher, Periods period, Terms term)
+        {
+            int output = 0;
+
+            foreach (CourseOccurrence currentCourse in GetTeacherCourses)
+            {
+
+                var CourseHourData = db.CourseTeacher.Where(c => c.TeacherId == teacher.TeacherId && c.CourseOccurrenceId == currentCourse.CourseOccurrenceID && currentCourse.Term == term && currentCourse.Period == period).FirstOrDefault();
+
+                if (CourseHourData != null)
+                {
+                    if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P1.ToString())
+                    {
+                        var numPeriods = currentCourse.Period.ToString().Length;
+                        if (numPeriods == 2)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+                        }
+                        if (numPeriods == 4)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 2;
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 2;
+                            }
+                        }
+                        if (numPeriods == 6)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 3;
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 3;
+                            }
+                        }
+                        if (numPeriods == 8)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 4;
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 4;
+                            }
+                        }
+                    }
+                    if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P2.ToString())
+                    {
+                        var numPeriods = currentCourse.Period.ToString().Length;
+                        if (numPeriods == 2)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+                        }
+                        if (numPeriods == 4)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 2;
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 2;
+                            }
+                        }
+                        if (numPeriods == 6)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 3;
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 3;
+                            }
+                        }
+                    }
+                    if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P3.ToString())
+                    {
+                        var numPeriods = currentCourse.Period.ToString().Length;
+                        if (numPeriods == 2)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+                        }
+                        if (numPeriods == 4)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 2;
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += (Convert.ToInt32(CourseHourData.Hours)) / 2;
+                            }
+                        }
+                    }
+                    if (currentCourse.Period.ToString().Substring(0, 2) == Periods.P4.ToString())
+                    {
+                        var numPeriods = currentCourse.Period.ToString().Length;
+                        if (numPeriods == 2)
+                        {
+                            if (currentCourse.Term == Terms.Spring)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+
+                            if (currentCourse.Term == Terms.Fall)
+                            {
+                                output += Convert.ToInt32(CourseHourData.Hours);
+                            }
+                        }
+                    }
+                }
+            }         
+            return output;
         }
     }
 }

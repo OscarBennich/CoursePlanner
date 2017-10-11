@@ -17,9 +17,9 @@
                     </li>
                     @if (Model.FixedContractEndDate != null)
                     {
-                        <li class="list-group-item">
-                            <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
-                        </li>
+                    <li class="list-group-item">
+                        <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
+                    </li>
                     }
                     <li class="list-group-item">
                         <b>Total percentage fall</b> <a class="pull-right">@Convert.ToDouble(Model.TotalPercentageFall.Value * 100)%</a>
@@ -41,40 +41,52 @@
             </div>
             <div class="box-body">
                 <div class="row">
-                        <div class="chart-responsive">
-                            <canvas id="pieChart" style="height:250px"></canvas>
-                        </div>
-                    @*<div class="col-sm-4">
-                        <ul class="chart-legend clearfix">
-                            <li><i class="fa fa-circle-o text-red"></i> Available Hours Fall</li>
-                            <li><i class="fa fa-circle-o text-green"></i> Available Hours Spring</li>
-                            <li><i class="fa fa-circle-o text-yellow"></i> Allocated Hours Fall</li>
-                            <li><i class="fa fa-circle-o text-aqua"></i> Allocated Hours Spring</li>
-                        </ul>
-                    </div>*@
+                    <div class="chart-responsive">
+                        <canvas id="pieChart" style="height:250px"></canvas>
+                    </div>
                 </div><br />
 
                 <div class="box-footer no-padding">
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="#">
-                                Total available hours for spring
-                                <span class="pull-right text-green">@ViewBag.TeachingHoursAvailableFall</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">Allocated hours for fall<span class="pull-right text-yellow">@ViewBag.TeachingHoursAllocatedFall</span></a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Total available hours for spring
-                                <span class="pull-right text-green">@ViewBag.TeachingHoursAvailableSpring</span>
+                                <i class="fa fa-circle-o text-red"></i>Total available hours for fall
+                                <span class="pull-right text-black">@ViewBag.TeachingHoursAvailableFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                            <i class="fa fa-circle-o text-yellow"></i>
+                                Allocated hours for fall
+                                <span class="pull-right text-black">@ViewBag.TeachingHoursAllocatedFall</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-gray"></i>
+                                Allocated hours for fall
+                                <span class="pull-right text-black">@(ViewBag.TeachingHoursAvailableFall-ViewBag.TeachingHoursAllocatedFall)</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-green"></i>
+                                Total available hours for spring
+                                <span class="pull-right text-black">@ViewBag.TeachingHoursAvailableSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-aqua"></i>
                                 Allocated hours for spring
-                                <span class="pull-right text-yellow">@ViewBag.TeachingHoursAllocatedSpring</span>
+                                <span class="pull-right text-black">@ViewBag.TeachingHoursAllocatedSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-blue"></i>
+                                Currently available hours for spring
+                                <span class="pull-right text-black">@(ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring)</span>
                             </a>
                         </li>
                     </ul>
@@ -89,40 +101,45 @@
             </div>
             <div class="box-body">
                 <div class="row">
-                        <div class="chart-responsive">
-                            <canvas id="FallPieChart" style="height:250px"></canvas>
-                        </div>               
+                    <div class="chart-responsive">
+                        <canvas id="FallPieChart" style="height:250px"></canvas>
+                    </div>
                 </div><br />
 
                 <div class="box-footer">
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-red"></i>
                                 Fall teaching hours
-                                <span class="pull-right text-green">@ViewBag.TotalTeachingHoursFall</span>
+                                <span class="pull-right text-black">@ViewBag.TotalTeachingHoursFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                Research Hours<span class="pull-right text-green">@ViewBag.TotalHoursAllocatedResearchFall</span>
+                                <i class="fa fa-circle-o text-green"></i>
+                                Research Hours<span class="pull-right text-black">@ViewBag.TotalHoursAllocatedResearchFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-yellow"></i>
                                 Administrative
-                                <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedAdministrationFall</span>
+                                <span class="pull-right text-black">@ViewBag.TotalHoursAllocatedAdministrationFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-aqua"></i>
                                 Assignments
-                                <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedAssignmentsFall</span>
+                                <span class="pull-right text-black">@ViewBag.TotalHoursAllocatedAssignmentsFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
+                                <i class="fa fa-circle-o text-gray"></i>
                                 Other
-                                <span class="pull-right text-green">@ViewBag.TotalHoursAllocatedOtherFall</span>
+                                <span class="pull-right text-black">@ViewBag.TotalHoursAllocatedOtherFall</span>
                             </a>
                         </li>
                     </ul>
@@ -130,11 +147,68 @@
             </div>
             <!-- /.box-body -->
         </div>
+<<<<<<< HEAD
        
         <p>
             <input type="button" class="btn btn-primary btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "Teacher")'" />
        </p>
         <!-- /.box -->
+=======
+
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Distribution of spring working hours</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="chart-responsive">
+                        <canvas id="SpringPieChart" style="height:250px"></canvas>
+                    </div>
+                </div><br />
+
+                <div class="box-footer">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-red"></i>
+                                Spring teaching hours
+                                <span class="pull-right text-black">@ViewBag.TotalTeachingHoursSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-green"></i>
+                                Research Hours<span class="pull-right text-black">@ViewBag.TotalHoursAllocatedResearchSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-yellow"></i>
+                                Administrative
+                                <span class="pull-right text-black">@ViewBag.TotalHoursAllocatedAdministrationSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-aqua"></i>
+                                Assignments
+                                <span class="pull-right text-black">@ViewBag.TotalHoursAllocatedAssignmentsSpring</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-gray"></i>
+                                Other
+                                <span class="pull-right text-black">@ViewBag.TotalHoursAllocatedOtherSpring</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+
+>>>>>>> AssigningCourseResponsible
     </div>
     <div class="col-md-8  skin-red-light">
         <div class="nav-tabs-custom  skin-red-light">
@@ -172,6 +246,7 @@
                                         <tbody>
                                             @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesFall)
                                             {
+<<<<<<< HEAD
                                                 <tr>
                                                     <td>
                                                         @c.Course.CourseCode
@@ -184,6 +259,20 @@
                                                     </td>
                                                     <td></td>
                                                 </tr>
+=======
+                                            <tr>
+                                                <td>
+                                                    @c.Course.CourseCode
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseID, "Course")"><span>@c.Course.CourseName</span></a>
+                                                </td>
+                                                <td>
+                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                </td>
+                                                <td></td>
+                                            </tr>
+>>>>>>> AssigningCourseResponsible
                                             }
                                         </tbody>
                                     </table>
@@ -223,24 +312,24 @@
                                         <tbody>
                                             @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesSpring)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @c.Course.CourseCode
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action("Details/" + @c.CourseID, "Course")"><span>@c.Course.CourseName</span></a>
-                                                    </td>
-                                                    <td>
-                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
-                                                            <span>
-                                                                @c.CourseTeacher.Where(x => x.CourseOccurrence.CourseResponsibleID == c.CourseResponsibleID).Select(y => y.Teacher.TeacherName).FirstOrDefault()
-                                                            </span>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td>
+                                                    @c.Course.CourseCode
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                </td>
+                                                <td>
+                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
+                                                        <span>
+                                                            @c.CourseTeacher.Where(x => x.CourseOccurrence.CourseResponsibleID == c.CourseResponsibleID).Select(y => y.Teacher.TeacherName).FirstOrDefault()
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -264,8 +353,40 @@
             <!-- /.tab-content -->
         </div>
         <!-- /.nav-tabs-custom -->
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Yearly workload distribution</h3>
+                <div class="pull-right">
+
+                    <i class="fa fa-circle-o text-gray"></i>
+                    Current workload
+
+                    <i class="fa fa-circle-o text-green"></i>
+                    Expected workload
+
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="chart">
+                    <canvas id="PeriodChart" style="height:250px"></canvas>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
     </div>
+    <!-- /.col (RIGHT) -->
 </div>
+<<<<<<< HEAD
+=======
+<!-- /.row -->
+<a href="@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })"> Allocate Course for Teacher </a>
+<!-- /.box -->
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+>>>>>>> AssigningCourseResponsible
 
 @section PieCharts{
     <script>
@@ -276,6 +397,20 @@
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+
+        var allocatedFall = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
+        var allocatedSpring = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
+        if(allocatedFall < 0)
+        {
+            allocatedFall = 0
+        }
+
+        if(allocatedSpring < 0)
+        {
+            allocatedSpring = 0
+        }
+
+
         var pieChart = new Chart(pieChartCanvas)
         var PieData = [
             {
@@ -285,22 +420,34 @@
                 label: 'Available Hours Fall'
             },
             {
-                value: @ViewBag.TeachingHoursAvailableSpring,
-                color: '#00a65a',
-                highlight: '#00a65a',
-                label: 'Available Hours Spring'
-            },
-            {
                 value: @ViewBag.TeachingHoursAllocatedFall,
                 color: '#f39c12',
                 highlight: '#f39c12',
                 label: 'Allocated Hours Fall'
             },
             {
-                value: @ViewBag.TeachingHoursAvailableFall,
+                value: allocatedFall,
+                color: '#D0D7DD',
+                highlight: '#D0D7DD',
+                label: 'Currently Available Hours Fall'
+            },
+            {
+                value: @ViewBag.TeachingHoursAvailableSpring,
+                color: '#00a65a',
+                highlight: '#00a65a',
+                label: 'Available Hours Spring'
+            },
+            {
+                value: @ViewBag.TeachingHoursAllocatedSpring,
                 color: '#00c0ef',
                 highlight: '#00c0ef',
                 label: 'Allocated Hours Spring'
+            },
+            {
+                value: allocatedSpring,
+                color: '#4D8FAC',
+                highlight: '#4D8FAC',
+                label: 'Currently Available Hours Spring'
             }
         ]
         var pieOptions = {
@@ -341,36 +488,36 @@
         var fallPieChartCanvas = $('#FallPieChart').get(0).getContext('2d')
         var fallpieChart = new Chart(fallPieChartCanvas)
         var fallPieData = [
-            {
-                value: @ViewBag.TotalTeachingHoursFall,
-                color: '#f56954',
-                highlight: '#f56954',
-                label: 'Teaching Hours'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedResearchFall,
-                color: '#00a65a',
-                highlight: '#00a65a',
-                label: 'Research'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedAdministrationFall,
-                color: '#f39c12',
-                highlight: '#f39c12',
-                label: 'Administration'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
-                label: 'Assignments'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedOtherFall,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
-                label: 'Other'
-            }
+        {
+            value: @ViewBag.TotalTeachingHoursFall,
+            color: '#f56954',
+            highlight: '#f56954',
+            label: 'Teaching Hours'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedResearchFall,
+            color: '#00a65a',
+            highlight: '#00a65a',
+            label: 'Research'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedAdministrationFall,
+            color: '#f39c12',
+            highlight: '#f39c12',
+            label: 'Administration'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
+            color: '#00c0ef',
+            highlight: '#00c0ef',
+            label: 'Assignments'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedOtherFall,
+            color: '#D0D7DD',
+            highlight: '#D0D7DD',
+            label: 'Other'
+        }
         ]
         var fallpieOptions = {
             //Boolean - Whether we should show a stroke on each segment
@@ -436,8 +583,8 @@
             },
             {
                 value: @ViewBag.TotalHoursAllocatedOtherSpring,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
+                color: '#D0D7DD',
+                highlight: '#D0D7DD',
                 label: 'Other'
             }
         ]
@@ -468,6 +615,73 @@
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
         springpieChart.Doughnut(springPieData, springpieOptions)
+    });
+
+    $(document).ready(function () {
+
+        //-------------
+        //- BAR CHART -
+        //-------------
+        var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
+        var periodChart = new Chart(periodChartCanvas)
+        var periodChartData = {
+            labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
+            datasets: [
+              {
+                  label: "Current workload",
+                  fillColor: "rgba(210, 214, 222, 1)",
+                  strokeColor: "rgba(210, 214, 222, 1)",
+                  pointColor: "rgba(210, 214, 222, 1)",
+                  pointStrokeColor: "#c1c7d1",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(220,220,220,1)",
+                  data: [50,34,56,78,24,78,55,50]
+              },
+              {
+                  label: "Expected workload",
+                  fillColor: "rgba(60,141,188,0.9)",
+                  strokeColor: "rgba(60,141,188,0.8)",
+                  pointColor: "#3b8bba",
+                  pointStrokeColor: "rgba(60,141,188,1)",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(60,141,188,1)",
+                  data: [@ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours,@ViewBag.ExpectedPeriodHours]
+              }
+            ]
+        }
+        periodChartData.datasets[1].fillColor = "#00a65a"
+        periodChartData.datasets[1].strokeColor = "#00a65a"
+        periodChartData.datasets[1].pointColor = "#00a65a"
+        var periodChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: false,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each period
+            barShowStroke: true,
+            //Number - Pixel width of the period stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true
+        }
+
+        periodChartOptions.datasetFill = false
+        periodChart.Bar(periodChartData, periodChartOptions)
     });
 
 </script>

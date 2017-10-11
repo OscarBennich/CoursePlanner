@@ -61,6 +61,7 @@ namespace CoursePlanner.Controllers
 
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
 
+<<<<<<< HEAD
             ViewBag.teachersCourse = teachersCourse;
             ViewBag.TeachersHistory = 
                 new Func<int, IEnumerable<Teacher>>(GetTeacherHistory);
@@ -70,10 +71,12 @@ namespace CoursePlanner.Controllers
 
             ViewBag.IsCourseResponsibleName =
               new Func<int, int,string>(IsCourseResponsibleNameFind);
+            ViewBag.TeachersForCourseResponsible = db.Teacher.ToList();
+
           
             return View(courseoccurrence);
         }
-
+		
         private IEnumerable<Teacher> GetTeacherHistory(int courseOccurenceID)
         {
 
@@ -84,11 +87,36 @@ namespace CoursePlanner.Controllers
         {
 
             return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher);
+
+        public string IsCourseResponsibleNameFind(int teacherId, int courseOccurrenceID)
+        {
+            var courseResponsibleID = (from m in db.CourseOccurrence
+                                       where m.CourseOccurrenceID == courseOccurrenceID
+                                       select m.CourseResponsibleID).Single();
+
+            if (courseResponsibleID == teacherId)
+            {
+                return "Yes";
+            }
+            else
+            {
+                return "No";
+            }
         }
 
-        private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID, string year)
+        public string GetCourseResponsibleNameFind(int id)
         {
-            return db.CourseOccurrence.Where(c => c.CourseID == courseID && c.Year != year).ToList();
+            try
+            {
+                var CourseResponsibleName = (from m in db.Teacher
+                                             where m.TeacherId == id
+                                             select m.TeacherName).Single();
+                return Convert.ToString(CourseResponsibleName);
+            }
+            catch(Exception E)
+            {
+                return "no course responsible";
+            }      
         }
 
 
@@ -122,11 +150,29 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Details(int id, int newBudget)
+        public ActionResult EditBudget(int id, int newBudget)
         {
             //CourseModel coursemodel = db.Courses.Find(id);
             CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
             courseoccurrence.Budget = newBudget;
+            db.Entry(courseoccurrence).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCourseResponsible(int id, int newcourseresponsibleId)
+        {
+            CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
+
+            var newteacher = (from m in db.Teacher
+                              where m.TeacherId == newcourseresponsibleId
+                              select m.TeacherId).Single();
+
+            courseoccurrence.CourseResponsibleID = newteacher;
             db.Entry(courseoccurrence).State = EntityState.Modified;
             db.SaveChanges();
 
