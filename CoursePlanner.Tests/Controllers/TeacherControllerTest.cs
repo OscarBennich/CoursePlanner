@@ -213,8 +213,112 @@ namespace CoursePlanner.Tests.Controllers
              Assert.AreEqual(target, result);
          }
 
+
          [TestMethod]
-         public void CalculateTeachingHoursAllocatedFallTest()
+         public void CalculateTeachingHoursAvailableWithOneReductionSpringTest()
+         {
+             //arrange
+             var tc = new TeacherController();
+             var teacher = new Teacher()
+             {
+                 TeacherId = 1,
+                 TeacherName = "Sofi",
+                 TotalPercentageSpring = 1,
+                 TotalPercentageFall = 1,
+                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                 TeacherReduction = new List<TeacherReduction>()
+                 {
+                     new TeacherReduction {
+                     TeacherId = 1,
+                     Term = Terms.Spring,
+                     Percentage = 0.5
+                     }
+                 }
+             };
+             var baseHours = TeacherController.GetBaseAnnualHours(new DateTime(1950, 01, 01));
+             var target = (baseHours / 2) * (1 - 0.5);
+
+
+             //act
+             var result = tc.CalculateTeachingHoursAvailable(teacher, Terms.Spring);
+
+             //assert
+             Assert.AreEqual(target, result);
+         }
+
+         [TestMethod]
+         public void CalculateTeachingHoursAvailableWithTwoReductionsSpringTest()
+         {
+             //arrange
+             var tc = new TeacherController();
+             var teacher = new Teacher()
+             {
+                 TeacherId = 1,
+                 TeacherName = "Sofi",
+                 TotalPercentageSpring = 1,
+                 TotalPercentageFall = 1,
+                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                 TeacherReduction = new List<TeacherReduction>()
+                 {
+                     new TeacherReduction {
+                     TeacherId = 1,
+                     Term = Terms.Spring,
+                     Percentage = 0.5
+                     },
+                     new TeacherReduction {
+                     TeacherId = 1,
+                     Term = Terms.Spring,
+                     Percentage = 0.2
+                     }
+                 }
+             };
+             var baseHours = TeacherController.GetBaseAnnualHours(new DateTime(1950, 01, 01));
+             var target = Convert.ToInt32(Math.Round((baseHours / 2) * (1 - 0.7), MidpointRounding.AwayFromZero));
+
+
+             //act
+             var result = tc.CalculateTeachingHoursAvailable(teacher, Terms.Spring);
+
+             //assert
+             Assert.AreEqual(target, result);
+         }
+         [TestMethod]
+         public void CalculateTeachingHoursAllocatedOneOccurrenceFallTest()
+         {
+             //arrange
+             var tc = new TeacherController();
+             var teacher = new Teacher()
+             {
+                 TeacherId = 1,
+                 TeacherName = "Sofi",
+                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                 CourseTeacher = new List<CourseTeacher>()
+                 {
+                     new CourseTeacher{
+                         TeacherId= 1,
+                         Hours = 50,
+                         CourseOccurrenceId = 1,
+                         CourseOccurrence = new CourseOccurrence{
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                         }},
+                         
+                     
+                 }
+             };
+
+             var target = 50;
+
+
+             //act
+             var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+
+             //assert
+             Assert.AreEqual(target, result);
+         }
+
+         [TestMethod]
+         public void CalculateTeachingHoursAllocatedTwoOccurrencesFallTest()
          {
              //arrange
              var tc = new TeacherController();
@@ -245,7 +349,7 @@ namespace CoursePlanner.Tests.Controllers
                  }
              };
 
-             var target = 50;
+             var target = 150;
 
 
              //act
@@ -255,6 +359,81 @@ namespace CoursePlanner.Tests.Controllers
              Assert.AreEqual(target, result);
          }
 
-        
+         [TestMethod]
+         public void CalculateTeachingHoursAllocatedOneOccurrenceSpringTest()
+         {
+             //arrange
+             var tc = new TeacherController();
+             var teacher = new Teacher()
+             {
+                 TeacherId = 1,
+                 TeacherName = "Sofi",
+                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                 CourseTeacher = new List<CourseTeacher>()
+                 {
+                     new CourseTeacher{
+                         TeacherId= 1,
+                         Hours = 150,
+                         CourseOccurrenceId = 1,
+                         CourseOccurrence = new CourseOccurrence{
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                         }},
+                 }
+             };
+
+             var target = 150;
+
+
+             //act
+             var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+
+             //assert
+             Assert.AreEqual(target, result);
+         }
+         [TestMethod]
+         public void CalculateTeachingHoursAllocatedTwoOccurrencesSpringTest()
+         {
+             //arrange
+             var tc = new TeacherController();
+             var teacher = new Teacher()
+             {
+                 TeacherId = 1,
+                 TeacherName = "Sofi",
+                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                 CourseTeacher = new List<CourseTeacher>()
+                 {
+                     new CourseTeacher{
+                         TeacherId= 1,
+                         Hours = 150,
+                         CourseOccurrenceId = 1,
+                         CourseOccurrence = new CourseOccurrence{
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                         }},
+                         new CourseTeacher{
+                         TeacherId= 1,
+                         Hours = 100,
+                         CourseOccurrenceId = 2,
+                         CourseOccurrence = new CourseOccurrence{
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                         }
+                     }
+                 }
+             };
+
+             var target = 250;
+
+
+             //act
+             var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+
+             //assert
+             Assert.AreEqual(target, result);
+         }
+
+         
     }
+
 }
