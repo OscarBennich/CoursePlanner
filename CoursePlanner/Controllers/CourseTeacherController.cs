@@ -51,16 +51,18 @@ namespace CoursePlanner.Controllers
 
             ViewBag.CourseOccurrenceId = new SelectList(courses, "Value", "Text", cid.ToString());
             ViewBag.TeacherId = new SelectList(db.Teacher, "TeacherId", "TeacherName", tid);
-            
-            //ViewBag.TeacherCourses = GetTeacherCourses(tid).ToList();
 
             string academicYear = GetAcademicYear();
 
             ViewBag.CoursesForTeacher = db.CourseTeacher.Where(x => x.TeacherId == tid && x.CourseOccurrence.Year == academicYear).OrderBy(x => x.CourseOccurrence.Course.CourseName).ToList();
             ViewBag.TeachersForCourse = db.CourseTeacher.Where(x => x.CourseOccurrenceId == cid && x.CourseOccurrence.Year == academicYear).OrderBy(x => x.Teacher.TeacherName).ToList();
 
-            ViewBag.SelectedCourseName = db.CourseTeacher.Where(x => x.CourseOccurrenceId == cid).Select(x => x.CourseOccurrence.Course.CourseName + " " + x.CourseOccurrence.Year).FirstOrDefault();
-            ViewBag.SelectedTeacherName = db.CourseTeacher.Where(x => x.TeacherId == tid).Select(x => x.Teacher.TeacherName).FirstOrDefault();
+
+            ViewBag.SelectedCourseName = db.CourseOccurrence.Where(x => x.CourseOccurrenceID == cid).Select(x => x.Course.CourseName + " " + x.Year).FirstOrDefault();
+            ViewBag.SelectedTeacherName = db.CourseOccurrence.Where(x => x.Teacher.TeacherId == tid).Select(x => x.Teacher.TeacherName).FirstOrDefault();
+
+            //ViewBag.SelectedCourseName = db.CourseTeacher.Where(x => x.CourseOccurrenceId == cid).Select(x => x.CourseOccurrence.Course.CourseName + " " + x.CourseOccurrence.Year).FirstOrDefault();
+            //ViewBag.SelectedTeacherName = db.CourseTeacher.Where(x => x.TeacherId == tid).Select(x => x.Teacher.TeacherName).FirstOrDefault();
 
             return View();
         }
