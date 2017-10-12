@@ -271,7 +271,6 @@
     <Content Include="Content\bootstrap\js\bootstrap.js" />
     <Content Include="Content\bootstrap\js\bootstrap.min.js" />
     <Content Include="Content\bootstrap\js\npm.js" />
-    <Content Include="Content\clickable-row-function.js" />
     <Content Include="Content\CourseConflictCSS.css" />
     <Content Include="Content\CourseConflictJS.js" />
     <Content Include="Content\dist\css\AdminLTE.css" />
@@ -519,7 +518,6 @@
     <Content Include="Content\plugins\jQuery\jquery-2.2.3.min.js" />
     <Content Include="Content\plugins\slimScroll\jquery.slimscroll.js" />
     <Content Include="Content\plugins\slimScroll\jquery.slimscroll.min.js" />
-    <Content Include="Content\TermCourseOverview.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
