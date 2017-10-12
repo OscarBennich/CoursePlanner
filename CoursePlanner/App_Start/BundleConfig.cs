@@ -61,9 +61,13 @@ namespace CoursePlanner
                      "~/Content/plugins/chartjs/Chart.js",
                      "~/Content/plugins/chartjs/Chart.min.js",
                      "~/Content/dist/js/app.min.js",
-                     "~/Content/CourseConflictJS.js",
                      "~/Content/plugins/select2/select2.full.min.js"
                      ));
+
+            bundles.Add(new ScriptBundle("~/CourseConflictJs").Include(
+                     "~/Content/CourseConflictJS.js"
+                ));
+
 
 
 
