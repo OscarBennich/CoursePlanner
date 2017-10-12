@@ -19,7 +19,6 @@
                 <div class="box-body">
 
                     <fieldset>
-
                         <div class="editor-label">
                             @Html.LabelFor(model => model.CourseOccurrenceId, "Course")
                         </div>
@@ -27,26 +26,6 @@
 
                             @Html.DropDownList("CourseOccurrenceId")
                             @Html.ValidationMessageFor(model => model.CourseOccurrenceId)
-
-
-                            @*, new { @class = "form-control select2" }
-
-                                <div class="form-group">
-                                    <label>Courses</label>
-                                    <select class="form-control" style="width: 100%;" multiple>
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
-                                    </select>
-
-                                </div>*@
-
-
-
                         </div>
                         <br />
                         <div class="editor-label">
@@ -81,7 +60,7 @@
                     <h4>
                         @ViewBag.SelectedTeacherName
                     </h4>
-                    <table class="table table-bordered table-hover" id="courseoverview">
+                    <table class="table table-bordered table-hover" id="teacherOverview">
                         <thead>
                             <tr>
                                 <th>
@@ -116,7 +95,7 @@
                     <h4>
                         @ViewBag.SelectedCourseName
                     </h4>                
-                    <table class="table table-bordered table-hover" id="courseoverview">
+                    <table class="table table-bordered table-hover" id="courseOverview">
                         <thead>
                             <tr>
                                 <th>
@@ -132,7 +111,7 @@
                             {
                                 <tr>
                                     <td>
-                                        <a href="@Url.Action("Details/" + @c.TeacherId, "CourseOccurrence")"><span>@c.Teacher.TeacherName</span></a>
+                                        <a href="@Url.Action("Details/" + @c.TeacherId, "Teacher")"><span>@c.Teacher.TeacherName</span></a>
                                     </td>
                                     <td>
                                         @c.Hours
@@ -146,19 +125,19 @@
         </div>
     </div>
 }
-@*<div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
     <script>
         $(document).ready(function () {
+            $("#CourseOccurrenceId").change(function () {
+                window.location.href = 'Create?cid=' + $(this).val() + '&tid=' + $("#TeacherId").val();
+            });
 
-            //Initialize Select2 Elements for courses allocation
-            //$(".select2").select2();
-
+            $("#TeacherId").change(function () {
+                window.location.href = 'Create?tid=' + $(this).val() + '&cid=' + $("#CourseOccurrenceId").val();    
+            });
         });
     </script>
 }
