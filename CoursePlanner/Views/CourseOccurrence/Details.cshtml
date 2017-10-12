@@ -375,7 +375,12 @@
                                                     @courseOccurance.NoOfPassingStudents
                                                 </td>
                                                 <td>
-                                                    @((courseOccurance.NoOfPassingStudents * 100) / courseOccurance.NoOfStudents)%
+
+                                                    @if(courseOccurance.NoOfStudents != 0){
+                                                        
+                                                        <p>@((courseOccurance.NoOfPassingStudents * 100) / courseOccurance.NoOfStudents)%</p>
+                                                    }
+                                                    
                                                 </td>
                                                 <td>
                                                     @courseOccurance.Year
