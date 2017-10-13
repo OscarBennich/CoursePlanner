@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CoursePlanner.Models.CourseOccurrence>
+﻿@using CoursePlanner.Models
+@model IEnumerable<CoursePlanner.Models.CourseOccurrence>
 
 @{
     ViewBag.Title = "Course List for : " + ViewBag.CurrentEduYear;
@@ -131,26 +132,31 @@
                                 </td>
 
 
-                                @if (item.Status.ToString() == "Planned")
+                                @if (item.Status == Statuses.WaitingForApproval)
                                 {
                                     <td>
-                                        <span class="label label-warning">Planned</span>
+                                        <span class="label label-warning">Waiting for Approval</span>
                                     </td>
                                 }
-                                else if (item.Status.ToString() == "Ongoing")
+                                else if (item.Status == Statuses.Planning)
                                 {
                                     <td>
 
-                                        <span class="label label-primary">Ongoing</span>
+                                        <span class="label label-danger">Planning</span>
                                     </td>
-
-
                                 }
-                                else if (item.Status.ToString() == "Completed")
+                                else if (item.Status == Statuses.Completed)
                                 {
                                     <td>
 
-                                        <span class="label label-success">Completed</span>
+                                        <span class="label label-primary">Completed</span>
+                                    </td>
+                                }
+                                else if (item.Status == Statuses.Approved)
+                                {
+                                    <td>
+
+                                        <span class="label label-success">Approved</span>
                                     </td>
 
 
