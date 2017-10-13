@@ -27,6 +27,12 @@
                             <th>
                                 Contract End Date
                             </th>
+                            <th>
+                                Allocated Hours Fall
+                            </th>
+                            <th>
+                                Allocated Hours Spring
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +59,12 @@
                                {
                                    <td>No end date set</td>
                                }
+                                <td>
+                                    @ViewBag.TeachingHoursAvailableFall(Convert.ToInt32(item.TeacherId))
+                                </td>
                             </tr>
                         }
+                     
 
                     </tbody>
                 </table>

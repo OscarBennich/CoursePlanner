@@ -18,8 +18,58 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.TeachingHoursAvailableFall =
+             new Func<int, int>(TeachingHoursAvailableFallFind);
+
+
+            
+            
+            
             return View(db.Teacher.ToList());
+
+
         }
+
+        public int TeachingHoursAvailableFallFind(int teacherId)
+        {
+            Teacher teacher = db.Teacher.Find(teacherId); List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
+            List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
+
+            List<CourseOccurrence> sum = courseOccurencesFall.Concat(courseOccurencesSpring).ToList();
+
+            int p1 = ReturnPeriodHours(sum, teacher, Periods.P1, Terms.Fall);
+            int p2 = ReturnPeriodHours(sum, teacher, Periods.P2, Terms.Fall);
+            int p3 = ReturnPeriodHours(sum, teacher, Periods.P3, Terms.Fall);
+            int p4 = ReturnPeriodHours(sum, teacher, Periods.P4, Terms.Fall);
+            int p5 = ReturnPeriodHours(sum, teacher, Periods.P1, Terms.Spring);
+            int p6 = ReturnPeriodHours(sum, teacher, Periods.P2, Terms.Spring);
+            int p7 = ReturnPeriodHours(sum, teacher, Periods.P3, Terms.Spring);
+            int p8 = ReturnPeriodHours(sum, teacher, Periods.P4, Terms.Spring);
+
+            ViewBag.Period1 = p1;
+            ViewBag.Period2 = p2;
+            ViewBag.Period3 = p3;
+            ViewBag.Period4 = p4;
+            ViewBag.Period5 = p5;
+            ViewBag.Period6 = p6;
+            ViewBag.Period7 = p7;
+            ViewBag.Period8 = p8;
+
+            ViewBag.TeachingHoursAllocatedFall = p1 + p2 + p3 + p4;
+            ViewBag.TeachingHoursAllocatedSpring = p5 + p6 + p7 + p8;
+
+
+            int baseAnnualWorkingHours = GetBaseAnnualHours(teacher.TeacherDateOfBirth);
+            ViewBag.BaseAnnualWorkingHours = baseAnnualWorkingHours;
+
+            ViewBag.TeachingHoursAvailableFall = CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Fall);
+            //ViewBag.TeachingHoursAvailableSpring = CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Spring);
+
+            return Convert.ToInt32(ViewBag.TeachingHoursAvailableFall);
+        }
+
+
+
 
         //
         // GET: /Teacher/Details/5
