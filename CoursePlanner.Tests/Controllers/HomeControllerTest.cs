@@ -12,8 +12,13 @@ namespace CoursePlanner.Tests.Controllers
     [TestClass]
     public class HomeControllerTest
     {
+        [TestMethod]
+        public void GetCurrentEduYearTest()
+        {
+            var year = HomeController.GetCurrentEduYear();
+            Assert.AreEqual("2017/2018", year);
+        }
         
-        
-       }
-   }
+    }
+}
 

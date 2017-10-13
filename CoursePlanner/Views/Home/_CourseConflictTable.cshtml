@@ -188,8 +188,12 @@
 {
     var budget = course.Budget;
     var balance = budget - (course.CourseTeacher.ToList().Where(ct => ct.CourseOccurrenceId == course.CourseOccurrenceID).Sum(ct => ct.Hours));
-    if (balance > -50 && balance < 50)
-    { 
+    if (course.Status == Statuses.Ongoing)
+    {
+        <div class="perioditem faded">@balance</div>
+    }
+    else if (balance > -50 && balance < 50)
+    {
         <div class="perioditem normal">@balance</div>
     }
     else if (balance > -100 && balance < 100)
@@ -213,20 +217,20 @@
 <table id="courseconflictoverview" class="table table-bordered table-hover table-condensed">
     <thead>
         <tr id="term-head">
-            <th class="filter wide-row" data-filter="reload">Reload table  <i class="glyphicon glyphicon-refresh"></i></th>
-            <th class="filter" data-filter="Fall" colspan="4">Fall</th>
-            <th class="filter" data-filter="Spring" colspan="4">Spring</th>
+            <th class="filter wide-row" data-filter="reload">Reload table  <i class="fa fa-refresh"></i></th>
+            <th class="filter" data-filter="Fall" colspan="4">Fall <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Spring" colspan="4">Spring <i class="fa fa-filter"></i></th>
         </tr>
         <tr>
             <th>Course</th>
-            <th class="filter" data-filter="Fall-P1"   >P1</th>
-            <th class="filter" data-filter="Fall-P2"   >P2</th>
-            <th class="filter" data-filter="Fall-P3"   >P3</th>
-            <th class="filter" data-filter="Fall-P4"   >P4</th>
-            <th class="filter" data-filter="Spring-P1" >P1</th>
-            <th class="filter" data-filter="Spring-P2" >P2</th>
-            <th class="filter" data-filter="Spring-P3" >P3</th>
-            <th class="filter" data-filter="Spring-P4" >P4</th>
+            <th class="filter" data-filter="Fall-P1">P1 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Fall-P2">P2 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Fall-P3">P3 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Fall-P4">P4 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Spring-P1">P1 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Spring-P2">P2 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Spring-P3">P3 <i class="fa fa-filter"></i></th>
+            <th class="filter" data-filter="Spring-P4">P4 <i class="fa fa-filter"></i></th>
         </tr>
     </thead>
     <tbody>
