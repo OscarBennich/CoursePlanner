@@ -28,7 +28,14 @@
                                 Contract End Date
                             </th>
                             <th>
+                               Total Available Hours Fall
+                            </th>
+                            <th>
+                                
                                 Allocated Hours Fall
+                            </th>
+                            <th>
+                                Total Available Hours Spring
                             </th>
                             <th>
                                 Allocated Hours Spring
@@ -60,7 +67,16 @@
                                    <td>No end date set</td>
                                }
                                 <td>
-                                    @ViewBag.TeachingHoursAvailableFall(Convert.ToInt32(item.TeacherId))
+                                    AvailableHoursForFall- To be implemented
+                                </td>
+                                <td>
+                                   @ViewBag.TeachingHoursAllocatedFall(Convert.ToInt32(item.TeacherId))
+                                </td>
+                                <td>
+                                    AvailableHoursForSpring -To be implemented
+                                </td>
+                                <td>
+                                    @ViewBag.TeachingHoursAllocatedSpring(Convert.ToInt32(item.TeacherId))
                                 </td>
                             </tr>
                         }

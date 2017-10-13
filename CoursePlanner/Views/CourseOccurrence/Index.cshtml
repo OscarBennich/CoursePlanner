@@ -4,11 +4,9 @@
     ViewBag.Title = "Course List for : " + ViewBag.CurrentEduYear;
 }
 <style>
-
-     h1{
-        visibility : hidden;
+    h1 {
+        visibility: hidden;
     }
-
 </style>
 <p>
     <button type="button" class="btn btn-danger btn-lg">Course List For Current Year : <span class="badge">@ViewBag.CurrentEduYear</span></button>
@@ -16,8 +14,8 @@
 
 
 @*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
 
 
 <div class="row">
@@ -26,28 +24,23 @@
             @*<div class="box-header">
                     <h2 class="box-title">Course Overview</h2>
                 </div>*@
-         
+
             <!-- /.box-header -->
             <div class="box-body">
-               <div class="dataTables_filter">
-                   
-                    
-                    
-                    <p/>
+                <div class="dataTables_filter">
+
+
+
+                    <p />
                 </div>
                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                     <thead>
                         <tr>
                             <th>
-                                Course Code
-                            </th>
-                            <th>
                                 Course Name
                             </th>
 
-                            <th>
-                                Credits
-                            </th>
+
                             <th>
                                 Course Budget(Hrs)
 
@@ -55,10 +48,10 @@
 
 
                             <th>
-                                No. Of Students 
+                                No. Of Students
 
                             </th>
-                            
+
                             <th>
                                 <select id='termSelector'>
                                     <option value='C'>Term</option>
@@ -79,94 +72,94 @@
                                 Status
 
                             </th>
+                            <th>
+                                Allocated Hours Fall
+                            </th>
+                            <th>
+                                Allocated Hours Spring
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
                             if (item.Year == ViewBag.CurrentEduYear)
-                            { 
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Course.CourseCode)
-                                </td>
-                              
-
-                                <td>
-                                    @Html.ActionLink(item.Course.CourseName, "Details", new { id = item.CourseOccurrenceID })
+                            {
+                                <tr>
                                     
-                                </td>
 
-                                @if (item.Course.CourseCredit.ToString() == "C7_5")
-                                {
                                     <td>
-                                        C7.5
+                                        @Html.ActionLink(item.Course.CourseName, "Details", new { id = item.CourseOccurrenceID })
+
                                     </td>
-                                }
-                                else { 
-                               <td>
-                                    @Html.DisplayFor(modelItem => item.Course.CourseCredit)
-                                </td>
-                                }
 
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Budget)
-                                </td>
-
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NoOfStudents)
-                                </td>
-                               
-                                <td>
-                                    @item.Term.ToString()
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Period)
-                                </td>
-                               
-                                <td>
-                                    <a href="@Url.Action("Details/" + @item.CourseResponsibleID, "Teacher")"><span>@Html.DisplayFor(modelItem => item.Teacher.TeacherName)</span></a>
-                                   
-                                </td>
-
-
-                                @if (item.Status.ToString() == "Planned")
-                                {
+                                  
                                     <td>
-                                        <span class="label label-warning">Planned</span>
-                                    </td>
-                                }
-                                else if (item.Status.ToString() == "Ongoing")
-                                {
-                                    <td>
-
-                                        <span class="label label-primary">Ongoing</span>
+                                        @Html.DisplayFor(modelItem => item.Budget)
                                     </td>
 
 
-                                }
-                                else if (item.Status.ToString() == "Completed")
-                                {
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfStudents)
+                                    </td>
 
-                                        <span class="label label-success">Completed</span>
+                                    <td>
+                                        @item.Term.ToString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Period)
+                                    </td>
+
+                                    <td>
+                                        <a href="@Url.Action("Details/" + @item.CourseResponsibleID, "Teacher")"><span>@Html.DisplayFor(modelItem => item.Teacher.TeacherName)</span></a>
+
                                     </td>
 
 
-                                }
-                                else 
-                                {
+                                    @if (item.Status.ToString() == "Planned")
+                                    {
+                                        <td>
+                                            <span class="label label-warning">Planned</span>
+                                        </td>
+                                    }
+                                    else if (item.Status.ToString() == "Ongoing")
+                                    {
+                                        <td>
+
+                                            <span class="label label-primary">Ongoing</span>
+                                        </td>
+
+
+                                    }
+                                    else if (item.Status.ToString() == "Completed")
+                                    {
+                                        <td>
+
+                                            <span class="label label-success">Completed</span>
+                                        </td>
+
+
+                                    }
+                                    else
+                                    {
+                                        <td>
+
+                                            No information
+                                        </td>
+
+
+                                    }
+
                                     <td>
 
-                                        No information
+                                        NOT IMPLEMENTED
+                                    </td>
+                                    <td>
+
+                                        NOT IMPLEMENTED
                                     </td>
 
-
-                                }
-
-                               
-                            </tr>
+                                </tr>
                             }
                         }
                     </tbody>
@@ -186,22 +179,22 @@
             $('#courseoverview').DataTable()
         });
 
-        
 
- 
+
+
 
 
         $(document).ready(function ($) {
-           
+
 
             $('#termSelector').change(function () {
                 var selection = $(this).val();
                 $('table').hide();
                 if (!(selection == "Fall" || selection == 'Spring')) {
                     $.each($('#courseoverview tbody tr'), function (index, item) {
-                        $(item)[$(item).is(':contains('+ selection + ')') ? 'show' : 'hide']();
+                        $(item)[$(item).is(':contains(' + selection + ')') ? 'show' : 'hide']();
                     });
-                    
+
                 }
                 $('table')[selection ? 'show' : 'hide']();
 
@@ -210,7 +203,7 @@
                         $(item)[$(item).is(':contains(' + selection + ')') ? 'show' : 'hide']();
                     });
                 }
-              
+
 
             });
         });
@@ -233,94 +226,94 @@
 
 
 @*<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Year)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Budget)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoOfStudents)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoOfPassingStudents)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HST)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.CourseCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Teacher.TeacherName)
-        </th>
-        <th></th>
-    </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Year)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Budget)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfStudents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfPassingStudents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HST)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.CourseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Teacher.TeacherName)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Year)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Budget)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoOfStudents)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NoOfPassingStudents)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HST)
-        </td>
-       
-
-            @if (item.StartDate != null)
-            {
+    @foreach (var item in Model) {
+        <tr>
             <td>
-                @item.StartDate.Value.ToString("yyyy/MM/dd")
+                @Html.DisplayFor(modelItem => item.Year)
             </td>
-            }
-            else
-            {
-                <td>No end date set</td>
-            }
-
-        
-      
-            @if (item.EndDate != null)
-            {
             <td>
-                @item.EndDate.Value.ToString("yyyy/MM/dd")
+                @Html.DisplayFor(modelItem => item.Budget)
             </td>
-            }
-            else
-            {
-                <td>No end date set</td>
-            }
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfStudents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfPassingStudents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HST)
+            </td>
 
-         
-   
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.CourseCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CourseOccurrenceID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CourseOccurrenceID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CourseOccurrenceID })
-        </td>
-    </tr>
-}
 
-</table>*@
+                @if (item.StartDate != null)
+                {
+                <td>
+                    @item.StartDate.Value.ToString("yyyy/MM/dd")
+                </td>
+                }
+                else
+                {
+                    <td>No end date set</td>
+                }
+
+
+
+                @if (item.EndDate != null)
+                {
+                <td>
+                    @item.EndDate.Value.ToString("yyyy/MM/dd")
+                </td>
+                }
+                else
+                {
+                    <td>No end date set</td>
+                }
+
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Teacher.TeacherName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.CourseOccurrenceID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.CourseOccurrenceID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.CourseOccurrenceID })
+            </td>
+        </tr>
+    }
+
+    </table>*@
