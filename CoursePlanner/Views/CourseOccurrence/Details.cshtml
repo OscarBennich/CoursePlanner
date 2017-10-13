@@ -1,4 +1,5 @@
-﻿@model CoursePlanner.Models.CourseOccurrence
+﻿@using CoursePlanner.Models
+@model CoursePlanner.Models.CourseOccurrence
 
 @{
     ViewBag.Title = "Course Information";
@@ -51,34 +52,22 @@
 
                         <span class="label label-success">Completed</span>
 
-
-
                     }
                     else
                     {
-
-
                         <span>Nothing</span>
-
-
-
                     }
-
-
-
                 </p>
-
-
 
                 <ul class="list-group list-group-unbordered">
                     @*<li class="list-group-item">
                             <b>@Html.DisplayNameFor(model => model.Dob)</b> <a class="pull-right">@Html.DisplayFor(model => model.Dob)</a>
                         </li>*@
                     <li class="list-group-item">
-                        <b>Classification</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseClassificiation) <br /></a>
+                        <b>Classification</b> <p class="pull-right">@Html.DisplayFor(model => model.Course.CourseClassificiation) <br /></p>
                     </li>
                     <li class="list-group-item">
-                        <b>Course Type</b> <a class="pull-right">@Html.DisplayFor(model => model.Course.CourseType)</a>
+                        <b>Course Type</b> <p class="pull-right">@Html.DisplayFor(model => model.Course.CourseType)</p>
                     </li>
                     <li class="list-group-item">
                         <b>Credits</b>
@@ -87,13 +76,13 @@
                         @if (Model.Course.CourseCredit.ToString() == "C7_5")
                         {
 
-                            <a class="pull-right">C7.5</a>
+                            <p class="pull-right">C7.5</p>
 
                         }
                         else
                         {
 
-                            <a class="pull-right">@Model.Course.CourseCredit</a>
+                            <p class="pull-right">@Model.Course.CourseCredit</p>
 
 
                         }
@@ -102,14 +91,14 @@
 
                     </li>
                     <li class="list-group-item">
-                        <b> HST Value</b> <a class="pull-right">@Html.DisplayFor(model => model.HST)</a>
+                        <b> HST Value</b> <p class="pull-right">@Html.DisplayFor(model => model.HST)</p>
                     </li>
                     <li class="list-group-item">
-                        <b>Total Number of Students</b> <a class="pull-right">@Html.DisplayFor(model => model.NoOfPassingStudents)</a>
+                        <b>Total Number of Students</b> <p class="pull-right">@Html.DisplayFor(model => model.NoOfStudents)</p>
                     </li>
 
                     <li class="list-group-item">
-                        <b>Course Budget</b> <a class="pull-right">@Html.DisplayFor(model => model.Budget)</a>
+                        <b>Course Budget</b> <p class="pull-right">@Html.DisplayFor(model => model.Budget)</p>
                         <button id="editBudget" class="btn btn-danger btn-xs" onclick="EditBudget()"> Edit Budget </button>
                         @using (Html.BeginForm("EditBudget", "CourseOccurrence"))
                         {
@@ -125,11 +114,11 @@
 
 
                     <li class="list-group-item">
-                        <b>Term</b> <a class="pull-right">@Html.DisplayFor(model => model.Term)</a>
+                        <b>Term</b> <p class="pull-right">@Html.DisplayFor(model => model.Term)</p>
                     </li>
 
                     <li class="list-group-item">
-                        <b>Period</b> <a class="pull-right">@Html.DisplayFor(model => model.Period)</a>
+                        <b>Period</b> <p class="pull-right">@Html.DisplayFor(model => model.Period)</p>
                     </li>
 
 
@@ -139,15 +128,15 @@
 
                         @if (Model.StartDate != null)
                         {
-                            <a class="pull-right">
+                            <p class="pull-right">
                                 @Model.StartDate.Value.ToString("yyyy/MM/dd")
-                            </a>
+                            </p>
                         }
                         else
                         {
-                            <a class="pull-right">
+                            <p class="pull-right">
                                 No end date set
-                            </a>
+                            </p>
                         }
 
                     </li>
@@ -156,15 +145,15 @@
                         <b>End Date</b>
                         @if (Model.EndDate != null)
                         {
-                            <a class="pull-right">
+                            <p class="pull-right">
                                 @Model.EndDate.Value.ToString("yyyy/MM/dd")
-                            </a>
+                            </p>
                         }
                         else
                         {
-                            <a class="pull-right">
+                            <p class="pull-right">
                                 No end date set
-                            </a>
+                            </p>
                         }
 
                     </li>
@@ -173,7 +162,7 @@
                         @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
                         {
                             <b>Course Reponsible</b>
-                            <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
+                            <p class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></p>
                         }
                         else
                         {
@@ -182,12 +171,12 @@
                     </li>
                     <li class="list-group-item">
                         <b style="font-size: 1.5em;">&nbsp;</b>
-                        <button class="btn btn-danger btn-sm pull-right" data-target="#myModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                        <button class="btn btn-danger btn-sm pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
                     </li>
                 </ul>
 
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="crModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         @using (Html.BeginForm("EditCourseResponsible", "CourseOccurrence"))
                         {
@@ -239,6 +228,61 @@
                     </div>
                 </div>
 
+                <!-- Modal -->
+                <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        @using (Html.BeginForm("Delete", "CourseTeacher"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="modal-content form-group">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h3 class="modal-title" id="myModalLabel">Remove teacher from course</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <input readonly hidden id="teachertobedeletedid" name="tid" />
+                                            <input readonly hidden name="cid" value="@Model.CourseOccurrenceID" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+
+                                            <div id="courseresponsiblebeingdeleted" class="alert alert-warning alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                <p><i class="icon fa fa-warning"></i>The teacher you are trying to remove is the current course responsible.</p>
+                                            </div>
+
+                                            <h4>Are you sure you want to remove this teacher from the course?</h4>
+                                            <div class="row">
+                                                <ul class="list-group list-group-unbordered">
+
+                                                    <li class="list-group-item">
+                                                        <b>Teacher</b> <p class="pull-right"> <p class="pull-right" id="teacherName"><br /></p>
+                                                    </li>
+                                                    <li class="list-group-item">
+                                                        <b>Hours</b> <p class="pull-right" id="teacherHours"></p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="row">
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <input class="btn btn-block btn-danger" type="submit" value="Remove" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
             </div>
             <!-- /.box-body -->
         </div>
@@ -258,9 +302,9 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box-body">
-                                
+
                                 <button class="btn btn-danger " type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })'"> Allocate teacher to courses </button>
-                                <br/><b>&nbsp;</b>
+                                <br /><b>&nbsp;</b>
                                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                                     <thead>
                                         <tr>
@@ -271,44 +315,28 @@
                                                 Teacher Position
                                             </th>
                                             <th>
-                                                Course Responsible?
+                                                Allocated Hours
                                             </th>
+                                            @*<th>
+                                                    Course Responsible?
+                                                </th>*@
                                         </tr>
                                     </thead>
                                     <tbody>
 
 
-                                        @foreach (CoursePlanner.Models.Teacher teacher in (List<CoursePlanner.Models.Teacher>)ViewBag.teachersCourse)
+                                        @foreach (CoursePlanner.Models.CourseTeacher courseTeacher in (List<CoursePlanner.Models.CourseTeacher>)ViewBag.teachersCourse)
                                         {
                                             <tr>
                                                 <td>
-
-
-                                                    <a href="@Url.Action("Details/" + @teacher.TeacherId, "Teacher")"><span>@teacher.TeacherName</span></a>
-
+                                                    <a href="@Url.Action("Details/" + @courseTeacher.TeacherId, "Teacher")"><span>@courseTeacher.Teacher.TeacherName</span></a>
                                                 </td>
                                                 <td>
-
-                                                    @teacher.TeacherPosition
+                                                    @courseTeacher.Teacher.TeacherPosition
                                                 </td>
                                                 <td>
-
-                                                    @* @Html.ViewBag.IsCourseResponsibleName(Convert.ToInt32(teacher.TeacherId),Convert.ToInt32(@Model.CourseOccurrenceID))*@
-                                                    @if (ViewBag.IsCourseResponsibleName(Convert.ToInt32(teacher.TeacherId), Convert.ToInt32(@Model.CourseOccurrenceID)) == "Yes")
-                                                    {
-
-                                                        <span class="label label-success "> Yes </span>
-
-                                                    }
-                                                    else if (ViewBag.IsCourseResponsibleName(Convert.ToInt32(teacher.TeacherId), Convert.ToInt32(@Model.CourseOccurrenceID)) == "No")
-                                                    {
-
-
-                                                        <span class="label label-danger"> No </span>
-
-
-
-                                                    }
+                                                    @courseTeacher.Hours
+                                                    <button class="btn btn-danger RemoveTeacherButton pull-right" data-target="#removeModal" data-todo='{"id":@courseTeacher.TeacherId,"tname":"@courseTeacher.Teacher.TeacherName","thours":"@courseTeacher.Hours"}' data-toggle="modal" type="button"> Remove </button>
                                                 </td>
                                             </tr>
                                         }
@@ -376,11 +404,12 @@
                                                 </td>
                                                 <td>
 
-                                                    @if(courseOccurance.NoOfStudents != 0){
-                                                        
+                                                    @if (courseOccurance.NoOfStudents != 0)
+                                                    {
+
                                                         <p>@((courseOccurance.NoOfPassingStudents * 100) / courseOccurance.NoOfStudents)%</p>
                                                     }
-                                                    
+
                                                 </td>
                                                 <td>
                                                     @courseOccurance.Year
@@ -430,9 +459,33 @@
 <!-- /.row -->
 @section MyScripts{
     <script>
-        $(function () {
+        $(document).ready(function () {
             //Initialize Select2 Elements
             $(".select2").select2();
-        })</script>
+            }
+        )
+
+        $(document).on("click", ".RemoveTeacherButton", function () {
+
+            var teacherToBeDeleted = $(this).data('todo').tname
+            var hoursToBeDeleted = $(this).data('todo').thours
+            var removeID = $(this).data('todo').id
+
+            $(".modal-body #teachertobedeletedid").val(removeID)
+            $(".modal-body #teacherName").text(teacherToBeDeleted)
+            $(".modal-body #teacherHours").text(hoursToBeDeleted)
+
+            var courseResponsibleID = @Model.CourseResponsibleID;
+
+            if(removeID == courseResponsibleID)
+            {
+                $("#courseresponsiblebeingdeleted").show()
+            }
+            else
+            {
+                $("#courseresponsiblebeingdeleted").hide()
+            }
+        })
+    </script>
 }
 

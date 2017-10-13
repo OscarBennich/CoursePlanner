@@ -56,8 +56,8 @@ namespace CoursePlanner.Controllers
             string CurrentEduYear = GetCurrentEducationalYear();
 
             List<CourseOccurrence> courseOccurencesHistory = GetCoursesHistory(courseoccurrence.CourseID, CurrentEduYear).ToList();
-            
-            List<Teacher> teachersCourse = GetTeachers(courseoccurrence.CourseOccurrenceID).ToList();
+
+            List<CourseTeacher> teachersCourse = GetTeachers(courseoccurrence.CourseOccurrenceID).ToList();
 
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
 
@@ -88,10 +88,10 @@ namespace CoursePlanner.Controllers
             return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher).ToList();
         }
 
-        private IEnumerable<Teacher> GetTeachers(int courseOccurenceID)
+        private IEnumerable<CourseTeacher> GetTeachers(int courseOccurenceID)
         {
 
-            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Select(c => c.Teacher);
+            return db.CourseTeacher.Where(c => c.CourseOccurrenceId == courseOccurenceID).Include(c => c.Teacher);
         }
 
         public string IsCourseResponsibleNameFind(int teacherId, int courseOccurrenceID)
@@ -155,6 +155,21 @@ namespace CoursePlanner.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int cid, int tid)
+        {
+            CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
+            if (courseteacher == null)
+            {
+                return HttpNotFound();
+            }
+            db.CourseTeacher.Remove(courseteacher);
+            db.SaveChanges();
+            return RedirectToAction("Details/" + courseteacher.CourseOccurrenceId);
+
         }
 
         //

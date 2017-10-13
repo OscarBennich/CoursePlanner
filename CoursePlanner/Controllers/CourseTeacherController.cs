@@ -130,7 +130,7 @@ namespace CoursePlanner.Controllers
         //
         // GET: /CourseTeacher/Delete/5
 
-        public ActionResult Delete(int cid = 0, int tid = 0)
+        public ActionResult Delete(int cid, int tid)
         {
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
             if (courseteacher == null)
@@ -145,8 +145,9 @@ namespace CoursePlanner.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int cid = 0, int tid = 0)
+        public ActionResult DeleteConfirmed(int cid, int tid)
         {
+            
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
             db.CourseTeacher.Remove(courseteacher);
             db.SaveChanges();
