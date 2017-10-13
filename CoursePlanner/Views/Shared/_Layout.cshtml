@@ -192,12 +192,15 @@
                     <li>
                         <a href="@Url.Action("Index", "Teacher")"><i class="fa fa-users"></i> <span>Teachers</span></a>
                     </li>
+                    @if (User.IsInRole("Study Director")) { 
                     <li>
                         <a href="@Url.Action("Create", "CourseTeacher")"><i class="fa fa-calendar-check-o"></i> <span>Allocate Teaching Hours</span></a>
                     </li>
                     <li>
                         <a href="@Url.Action("RoleIndex", "Account")"><i class="fa fa-user-secret"></i> <span>Manage User Roles</span></a>
                     </li>
+                    }
+
                 </ul>
             </section>
             <!-- /.sidebar -->

@@ -33,9 +33,15 @@
                     <li class="list-group-item">
                         <b>Base annual working hours</b> <a class="pull-right">@ViewBag.BaseAnnualWorkingHours</a>
                     </li>
+                    @if (User.IsInRole("Study Director"))
+                    {
                     <li class="list-group-item">
-                        <b style="font-size: 1.5em;">&nbsp;</b> <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })'"> Allocate teacher to courses </button>
-                    </li>
+                        <b style="font-size: 1.5em;">&nbsp;</b> 
+                  
+                        <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })'"> Allocate teacher to courses </button>
+                                 
+                  </li>
+                   }
                 </ul>
             </div>
             <!-- /.box-body -->
