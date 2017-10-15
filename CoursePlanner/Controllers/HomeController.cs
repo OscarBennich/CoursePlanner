@@ -11,7 +11,7 @@ using WebGrease.Css.Extensions;
 namespace CoursePlanner.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 

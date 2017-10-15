@@ -15,8 +15,9 @@ namespace CoursePlanner.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
+        private CoursePlannerEntities db = new CoursePlannerEntities();
         //
         // GET: /Account/Login
 
@@ -100,9 +101,11 @@ namespace CoursePlanner.Controllers
         [Authorize(Roles = "Study Director")]
         public ActionResult RoleCreate()
         {
+           
+
             return View();
         }
-
+      
 
         [HttpPost]
         [Authorize(Roles = "Study Director")]

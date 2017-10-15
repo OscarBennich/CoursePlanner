@@ -11,7 +11,7 @@ using System.Data.Objects.SqlClient;
 
 namespace CoursePlanner.Controllers
 {
-    public class CourseTeacherController : Controller
+    public class CourseTeacherController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 
