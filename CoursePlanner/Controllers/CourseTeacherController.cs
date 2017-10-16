@@ -11,13 +11,14 @@ using System.Data.Objects.SqlClient;
 
 namespace CoursePlanner.Controllers
 {
-    public class CourseTeacherController : Controller
+    public class CourseTeacherController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 
         //
         // GET: /CourseTeacher/
 
+        [Authorize(Roles = "Study Director")]
         public ActionResult Index()
         {
             var courseteacher = db.CourseTeacher.Include(c => c.CourseOccurrence).Include(c => c.Teacher);
@@ -27,6 +28,7 @@ namespace CoursePlanner.Controllers
         //
         // GET: /CourseTeacher/Details/5/1
 
+         [Authorize(Roles = "Study Director")]
         public ActionResult Details(int cid = 0, int tid = 0)
         {
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
@@ -40,7 +42,7 @@ namespace CoursePlanner.Controllers
 
         //
         // GET: /CourseTeacher/Create
-
+         [Authorize(Roles = "Study Director")]
         public ActionResult Create(int cid = 0, int tid = 0)
         {
             var courses = db.CourseOccurrence.Where(c => c.Status != Statuses.Completed).Select(c => new SelectListItem
@@ -69,7 +71,7 @@ namespace CoursePlanner.Controllers
 
         //
         // POST: /CourseTeacher/Create
-
+         [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseTeacher courseteacher)
@@ -97,6 +99,7 @@ namespace CoursePlanner.Controllers
         //
         // GET: /CourseTeacher/Edit/5
 
+         [Authorize(Roles = "Study Director")]
         public ActionResult Edit(int cid = 0, int tid = 0)
         {
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
@@ -111,7 +114,7 @@ namespace CoursePlanner.Controllers
 
         //
         // POST: /CourseTeacher/Edit/5
-
+         [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CourseTeacher courseteacher)
@@ -129,8 +132,8 @@ namespace CoursePlanner.Controllers
 
         //
         // GET: /CourseTeacher/Delete/5
-
-        public ActionResult Delete(int cid, int tid)
+        [Authorize(Roles = "Study Director")]
+        public ActionResult Delete(int cid = 0, int tid = 0)
         {
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
             if (courseteacher == null)
@@ -143,6 +146,7 @@ namespace CoursePlanner.Controllers
         //
         // POST: /CourseTeacher/Delete/5
 
+        [Authorize(Roles = "Study Director")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int cid, int tid)

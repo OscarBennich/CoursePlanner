@@ -9,7 +9,7 @@ using CoursePlanner.Models;
 
 namespace CoursePlanner.Controllers
 {
-    public class CourseOccurrenceController : Controller
+    public class CourseOccurrenceController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 

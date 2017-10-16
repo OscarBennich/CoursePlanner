@@ -15,8 +15,9 @@ namespace CoursePlanner.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
+        private CoursePlannerEntities db = new CoursePlannerEntities();
         //
         // GET: /Account/Login
 
@@ -97,15 +98,17 @@ namespace CoursePlanner.Controllers
         //
         //Role Create
 
-
+        [Authorize(Roles = "Study Director")]
         public ActionResult RoleCreate()
         {
+           
+
             return View();
         }
-
+      
 
         [HttpPost]
-        //[Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [ValidateAntiForgeryToken]
         public ActionResult RoleCreate(string RoleName)
         {
@@ -117,7 +120,7 @@ namespace CoursePlanner.Controllers
         }
 
 
-        //[Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         public ActionResult RoleIndex()
         {
             var roles = Roles.GetAllRoles();
@@ -125,7 +128,7 @@ namespace CoursePlanner.Controllers
         }
 
 
-       
+         [Authorize(Roles = "Study Director")]       
         public ActionResult RoleDelete(string RoleName)
         {
 
@@ -140,7 +143,7 @@ namespace CoursePlanner.Controllers
         /// Create a new role to the user
         /// </summary>
         /// <returns></returns>
-        //[Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         public ActionResult ManageUserRoles()
         {
             SelectList roleList = new SelectList(Roles.GetAllRoles());
@@ -163,7 +166,7 @@ namespace CoursePlanner.Controllers
         /// <param name="RoleName"></param>
         /// <param name="UserName"></param>
         /// <returns></returns>
-       // [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ManageUserRoles(string RoleName, string UserName)
@@ -190,7 +193,7 @@ namespace CoursePlanner.Controllers
         /// </summary>
         /// <param name="UserName"></param>
         /// <returns></returns>
-        // [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GetRoles(string UserName)
@@ -205,7 +208,7 @@ namespace CoursePlanner.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteRoleForUser(string UserName, string RoleName)
         {
