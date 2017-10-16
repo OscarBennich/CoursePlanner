@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CoursePlanner.Models;
+using System.Data.Entity.Infrastructure;
+using System.Data.Objects.SqlClient;
 
 namespace CoursePlanner.Controllers
 {
@@ -275,7 +277,7 @@ namespace CoursePlanner.Controllers
             {
                 return HttpNotFound();
             }
-            return View(courseoccurrence);
+            return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
         }
 
         //
@@ -288,7 +290,7 @@ namespace CoursePlanner.Controllers
             CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(id);
             db.CourseOccurrence.Remove(courseoccurrence);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
         }
 
         protected override void Dispose(bool disposing)
@@ -297,7 +299,56 @@ namespace CoursePlanner.Controllers
             base.Dispose(disposing);
         }
 
+        [Authorize(Roles = "Study Director")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AllocateTeacherHours(int cid, int tid, int hours)
+        {
+            var courseteacher = new CourseTeacher();
+            courseteacher.CourseOccurrenceId = cid;
+            courseteacher.TeacherId = tid;
+            courseteacher.Hours = hours;
 
-       
+            if (ModelState.IsValid)
+            {
+                db.CourseTeacher.Add(courseteacher);
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (DbUpdateException ex)
+                {
+                    EditExistingHours(courseteacher);
+                }
+            }
+            return RedirectToAction("Details/" + courseteacher.CourseOccurrenceId);
+        }
+
+        //
+        // POST: /CourseTeacher/Edit/5
+        [Authorize(Roles = "Study Director")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditExistingHours(CourseTeacher courseteacher)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(courseteacher).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details/" + courseteacher.CourseOccurrenceId);
+        }
+
+        private string GetAcademicYear()
+        {
+            string academicYear = DateTime.Today.Year + "/" + (DateTime.Today.Year + 1);
+
+            if (DateTime.Today.Month <= 6)
+            {
+                academicYear = (DateTime.Today.Year - 1) + "/" + DateTime.Today.Year;
+            }
+
+            return academicYear;
+        }     
     }
 }
