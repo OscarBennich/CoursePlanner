@@ -166,135 +166,194 @@
                         @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
                         {
                             <b>Course Reponsible</b>
-                            <p class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></p>
+                            <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
                         }
                         else
                         {
                             <p class="center">There is not a course responsible available for this course</p>
                         }
                     </li>
-                    <li class="list-group-item">
-                        <b style="font-size: 1.5em;">&nbsp;</b>
-                      @if (User.IsInRole("Study Director")) {
-                        <button class="btn btn-danger btn-sm pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
-                      }
-                    </li>
+                    @if (User.IsInRole("Study Director"))
+                    {
+                        <li class="list-group-item">
+                            <b style="font-size: 1.5em;">&nbsp;</b>
+                            <button class="btn btn-danger btn-sm pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                        </li>
+                        <li class="list-group-item">
+                            <b style="font-size: 1.5em;">&nbsp;</b>
+                            <button class="btn btn-danger btn-sm pull-right" data-target="#AllocateModal" data-toggle="modal" type="button">Allocate course hours</button>
+                        </li>
+                    }
                 </ul>
-                 
-                <!-- Modal -->
-                <div class="modal fade" id="crModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        @using (Html.BeginForm("EditCourseResponsible", "CourseOccurrence"))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="modal-content form-group">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h3 class="modal-title" id="myModalLabel">Assign or change course responsible</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            @if (Model.CourseResponsibleID != null)
-                                            {
-                                                <h4>Current course responsible:</h4>
-                                                <input class="form-control pull-right" style="color: #000; background-color: #fff" type="text" disabled="" placeholder="@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))" />
-                                            }
-                                            else
-                                            {
-                                                <h4>No course reponsible</h4>
-                                            }
-                                        </div>
+
+                @if (User.IsInRole("Study Director"))
+                {
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="crModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            @using (Html.BeginForm("EditCourseResponsible", "CourseOccurrence"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="modal-content form-group">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h3 class="modal-title" id="myModalLabel">Assign or change course responsible</h3>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <h4>Select new course responsible:</h4>
-
-                                            <select class="form-control" name="newcourseresponsibleId" style="width: 100%;">
-                                                @foreach (CoursePlanner.Models.Teacher T in ViewBag.TeachersForCourseResponsible)
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                @if (Model.CourseResponsibleID != null)
                                                 {
-                                                    <option value="@T.TeacherId">@T.TeacherName</option>
+                                                    <h4>Current course responsible:</h4>
+                                                    <input class="form-control pull-right" style="color: #000; background-color: #fff" type="text" disabled="" placeholder="@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))" />
                                                 }
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-                                        <input hidden value="@Model.CourseOccurrenceID" name="id" />
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                 
-
-                <!-- Modal -->
-                <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        @using (Html.BeginForm("Delete", "CourseTeacher"))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="modal-content form-group">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h3 class="modal-title" id="myModalLabel">Remove teacher from course</h3>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <input readonly hidden id="teachertobedeletedid" name="tid" />
-                                            <input readonly hidden name="cid" value="@Model.CourseOccurrenceID" />
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-
-                                            <div id="courseresponsiblebeingdeleted" class="alert alert-warning alert-dismissible">
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                <p><i class="icon fa fa-warning"></i>The teacher you are trying to remove is the current course responsible.</p>
+                                                else
+                                                {
+                                                    <h4>No course reponsible</h4>
+                                                }
                                             </div>
+                                        </div>
 
-                                            <h4>Are you sure you want to remove this teacher from the course?</h4>
-                                            <div class="row">
-                                                <ul class="list-group list-group-unbordered">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <h4>Select new course responsible:</h4>
 
-                                                    <li class="list-group-item">
-                                                        <b>Teacher</b> <p class="pull-right"> <p class="pull-right" id="teacherName"><br /></p>
-                                                    </li>
-                                                    <li class="list-group-item">
-                                                        <b>Hours</b> <p class="pull-right" id="teacherHours"></p>
-                                                    </li>
-                                                </ul>
+                                                <select class="form-control" name="newcourseresponsibleId" style="width: 100%;">
+                                                    @foreach (CoursePlanner.Models.Teacher T in ViewBag.TeachersForCourseResponsible)
+                                                    {
+                                                        <option value="@T.TeacherId">@T.TeacherName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <input hidden value="@Model.CourseOccurrenceID" name="id" />
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible" />
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="modal-footer">
-                                    <div class="row">
-                                        <div class="col-xs-10 col-xs-offset-1">
-                                            <input class="btn btn-block btn-danger" type="submit" value="Remove" />
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="AllocateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            @using (Html.BeginForm("AllocateTeacherHours", "CourseOccurrence"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="modal-content form-group">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h3 class="modal-title" id="myModalLabel">Allocate course hours</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <h4>Course:</h4>
+                                                <input class="form-control pull-right" style="color: #000; background-color: #fff" type="text" disabled="" placeholder="@Model.Course.CourseName" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <h4>Select teacher:</h4>
+
+                                                <select class="form-control" name="tid" style="width: 100%;">
+                                                    @foreach (CoursePlanner.Models.Teacher T in ViewBag.TeachersForCourseResponsible)
+                                                    {
+                                                        <option value="@T.TeacherId">@T.TeacherName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <h4>Set hours:</h4>
+
+                                                <input class="form-control pull-right" style="color: #000; background-color: #fff" type="text" name="hours" id="number" type="number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <input hidden value="@Model.CourseOccurrenceID" name="cid" />
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <input class="btn btn-block btn-danger" type="submit" value="Allocate hours" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
+                        </div>
                     </div>
-                </div>
 
+                     <!-- Modal -->
+                    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            @using (Html.BeginForm("DeleteCourseTeacher", "CourseOccurrence"))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="modal-content form-group">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h3 class="modal-title" id="myModalLabel">Remove teacher from course</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <input readonly hidden id="teachertobedeletedid" name="tid" />
+                                                <input readonly hidden name="cid" value="@Model.CourseOccurrenceID" />
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+
+                                                <div id="courseresponsiblebeingdeleted" class="alert alert-warning alert-dismissible">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                    <p><i class="icon fa fa-warning"></i>The teacher you are trying to remove is the current course responsible.</p>
+                                                </div>
+
+                                                <h4>Are you sure you want to remove this teacher from the course?</h4>
+                                                <div class="row">
+                                                    <ul class="list-group list-group-unbordered">
+
+                                                        <li class="list-group-item">
+                                                            <b>Teacher</b> <p class="pull-right"> <p class="pull-right" id="teacherName"><br /></p>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <b>Hours</b> <p class="pull-right" id="teacherHours"></p>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <input class="btn btn-block btn-danger" type="submit" value="Remove" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }                               
             </div>
             <!-- /.box-body -->
         </div>
         <!-- /.box -->
-
     </div>
     <!-- /.col -->
 
@@ -309,16 +368,10 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box-body">
-<<<<<<< HEAD
-
-                                <button class="btn btn-danger " type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })'"> Allocate teacher to courses </button>
-                                <br /><b>&nbsp;</b>
-=======
                                 @if (User.IsInRole("Study Director")) {
                                 <button class="btn btn-danger " type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })'"> Allocate teacher to courses </button>
                                 }
-                                    <br/><b>&nbsp;</b>
->>>>>>> Role_Distribution_and_Linking_User_Profile_and_Teacher_Profile_Page
+                                <br/><b>&nbsp;</b>
                                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                                     <thead>
                                         <tr>
