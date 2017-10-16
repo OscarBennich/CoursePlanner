@@ -163,25 +163,7 @@
 
                     </li>
 
-                    <li class="list-group-item">
-                        @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
-                        {
-                            <b>Course Reponsible</b>
-                            <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
-                        }
-                        else
-                        {
-                            <p class="center">There is not a course responsible available for this course</p>
-                        }
-                    </li>
-                    @if (User.IsInRole("Study Director"))
-                    {
-                        <li class="list-group-item">
-                            <b style="font-size: 1.5em;">&nbsp;</b>
-                            <button class="btn btn-danger btn-sm pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
-                        </li>
-
-                    }
+                   
                 </ul>
 
                 @if (User.IsInRole("Study Director"))
@@ -372,6 +354,40 @@
                                     <button class="btn btn-danger " data-target="#AllocateModal" data-toggle="modal" type="button">Allocate teacher to courses</button>
                                 }
                                 <br /><b>&nbsp;</b>
+                                <div class="panel box box-danger">
+                                    <div class="box-header with-border">
+                                        <h4 class="box-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="" aria-expanded="true">
+                                                Course Responisble
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse in" aria-expanded="true" style="">
+                                        <div class="box-body">
+                                            @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
+                                            {
+                                                <b>Course Reponsible</b>
+                                                <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
+                                            }
+                                            else
+                                            {
+                                                <p class="center">There is not a course responsible available for this course</p>
+                                            }
+
+                                            @if (User.IsInRole("Study Director"))
+                                            {
+
+                                                @*<b style="font-size: 1.5em;">&nbsp;</b>*@
+                                                <p>
+                                                    <button class="btn btn-danger center-block" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                                                </p>
+
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                             
                                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                                     <thead>
                                         <tr>
