@@ -298,7 +298,7 @@
                      <!-- Modal -->
                     <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
-                            @using (Html.BeginForm("Delete", "CourseTeacher"))
+                            @using (Html.BeginForm("DeleteCourseTeacher", "CourseOccurrence"))
                             {
                                 @Html.AntiForgeryToken()
                                 <div class="modal-content form-group">

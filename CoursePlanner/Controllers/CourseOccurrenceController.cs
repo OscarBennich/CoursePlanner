@@ -293,6 +293,18 @@ namespace CoursePlanner.Controllers
             return RedirectToAction("Details/" + courseoccurrence.CourseOccurrenceID);
         }
 
+        [Authorize(Roles = "Study Director")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCourseTeacher(int cid, int tid)
+        {
+
+            CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
+            db.CourseTeacher.Remove(courseteacher);
+            db.SaveChanges();
+            return RedirectToAction("Details/" + courseteacher.CourseOccurrenceId);
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
@@ -337,6 +349,7 @@ namespace CoursePlanner.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("Details/" + courseteacher.CourseOccurrenceId);
+            
         }
 
         private string GetAcademicYear()
