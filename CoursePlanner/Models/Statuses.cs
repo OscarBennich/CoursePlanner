@@ -13,9 +13,9 @@ namespace CoursePlanner.Models
     
     public enum Statuses : int
     {
-        Planned = 0,
-        Ongoing = 1,
-        Completed = 2,
-        Started = 3
+        Planning = 0,
+        WaitingForApproval = 1,
+        Approved = 2,
+        Completed = 3
     }
 }

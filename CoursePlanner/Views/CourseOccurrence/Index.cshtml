@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CoursePlanner.Models.CourseOccurrence>
+﻿@using CoursePlanner.Models
+@model IEnumerable<CoursePlanner.Models.CourseOccurrence>
 
 @{
     ViewBag.Title = "Course List for : " + ViewBag.CurrentEduYear;
@@ -7,196 +8,194 @@
     h1 {
         visibility: hidden;
     }
-  
 </style>
 
-    <p>
-        <button type="button" class="btn btn-danger btn-lg">Course List For Current Year : <span class="badge">@ViewBag.CurrentEduYear    </span></button>
-    </p>
+<p>
+    <button type="button" class="btn btn-danger btn-lg">Course List For Current Year : <span class="badge">@ViewBag.CurrentEduYear    </span></button>
+</p>
 
 
-   
 
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="box box-danger">
-                @*<div class="box-header">
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-danger">
+            @*<div class="box-header">
                     <h2 class="box-title">Course Overview</h2>
                 </div>*@
 
-                <!-- /.box-header -->
-                <div class="box-body">
-                
-                    <table class="table table-bordered table-hover" id="courseoverview">
-                        <thead>
-                            <tr>
-                               
-                                <th>
-                                    Course Name
-                                </th>
-                              
+            <!-- /.box-header -->
+            <div class="box-body">
 
-                                <th>
-                                    Budgeted Hours
+                <table class="table table-bordered table-hover" id="courseoverview">
+                    <thead>
+                        <tr>
 
-                                </th>
-
-                                <th>
-                                    Allocated Hours
-                                </th>
+                            <th>
+                                Course Name
+                            </th>
 
 
-                                <th>
-                                    No. Of Students
+                            <th>
+                                Budgeted Hours
 
-                                </th>
+                            </th>
 
-                                <th>
-
-                                    Term
-
-                                </th>
-                                <th>
-                                    Period
-
-                                </th>
-                                <th>
-                                    Course Responisble
-
-                                </th>
-                                <th>
-                                    Status
-
-                                </th>
+                            <th>
+                                Allocated Hours
+                            </th>
 
 
-                            </tr>
-                        </thead>
-                      
-                        <tbody>
-                            @foreach (var item in Model)
+                            <th>
+                                No. Of Students
+
+                            </th>
+
+                            <th>
+                                Term
+
+                            </th>
+                            <th>
+                                Period
+
+                            </th>
+                            <th>
+                                Course Responisble
+
+                            </th>
+                            <th>
+                                Status
+
+                            </th>
+
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
                         {
                             if (item.Year == ViewBag.CurrentEduYear)
                             {
-                                    <tr>
-                                        
-
-                                        <td>
-                                            @Html.ActionLink(item.Course.CourseName, "Details", new { id = item.CourseOccurrenceID })
-
-                                        </td>
-                                        
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Budget)
-                                        </td>
-                                        <td>
-
-                                            @ViewBag.CourseAllocatedHours(Convert.ToInt32(item.CourseOccurrenceID))
-
-                                        </td>
-
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NoOfStudents)
-                                        </td>
-
-                                        <td>
-                                            @item.Term.ToString()
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Period)
-                                        </td>
-
-                                        <td>
-                                            <a href="@Url.Action("Details/" + @item.CourseResponsibleID, "Teacher")    "><span>@Html.DisplayFor(modelItem => item.Teacher.TeacherName)    </span></a>
-
-                                        </td>
+                                <tr>
 
 
-                                        @if (item.Status.ToString() == "Planned")
+                                    <td>
+                                        @Html.ActionLink(item.Course.CourseName, "Details", new { id = item.CourseOccurrenceID })
+
+                                    </td>
+
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Budget)
+                                    </td>
+                                    <td>
+
+                                        @ViewBag.CourseAllocatedHours(Convert.ToInt32(item.CourseOccurrenceID))
+
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NoOfStudents)
+                                    </td>
+
+                                    <td>
+                                        @item.Term.ToString()
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Period)
+                                    </td>
+
+                                    <td>
+                                        <a href="@Url.Action("Details/" + @item.CourseResponsibleID, "Teacher")    "><span>@Html.DisplayFor(modelItem => item.Teacher.TeacherName)    </span></a>
+
+                                    </td>
+
+                                    @if (item.Status == Statuses.WaitingForApproval)
                                     {
-                                            <td>
-                                                <span class="label label-warning">Planned</span>
-                                            </td>
+                                        <td>
+                                            <span class="label label-warning">Waiting for Approval</span>
+                                        </td>
                                     }
-                                    else if (item.Status.ToString() == "Ongoing")
+                                    else if (item.Status == Statuses.Planning)
                                     {
-                                            <td>
+                                        <td>
 
-                                                <span class="label label-primary">Ongoing</span>
-                                            </td>
-
-
+                                            <span class="label label-danger">Planning</span>
+                                        </td>
                                     }
-                                    else if (item.Status.ToString() == "Completed")
+                                    else if (item.Status == Statuses.Completed)
                                     {
-                                            <td>
+                                        <td>
 
-                                                <span class="label label-success">Completed</span>
-                                            </td>
+                                            <span class="label label-primary">Completed</span>
+                                        </td>
+                                    }
+                                    else if (item.Status == Statuses.Approved)
+                                    {
+                                        <td>
 
-
+                                            <span class="label label-success">Approved</span>
+                                        </td>
                                     }
                                     else
                                     {
-                                            <td>
+                                        <td>
 
-                                                No information
-                                            </td>
-
-
+                                            No information
+                                        </td>
                                     }
 
 
 
 
-                                    </tr>
+                                </tr>
                             }
                         }
-                        </tbody>
-                    </table>
-                </div>
-                <!-- /.box-body -->
+                    </tbody>
+                </table>
             </div>
-            <!-- /.box -->
+            <!-- /.box-body -->
         </div>
-        <!--/.col-xs-12-->
+        <!-- /.box -->
     </div>
+    <!--/.col-xs-12-->
+</div>
 
 
-    @section MyScripts{
-        <script>
-            $(document).ready(function () {
-                $('#courseoverview').DataTable()
-            });
+@section MyScripts{
+    <script>
+        $(document).ready(function () {
+            $('#courseoverview').DataTable()
+        });
 
-            //$(document).ready(function () {
-            //    var datatableInstance = $('#courseoverview').DataTable({
-            //        data: data,
-            //        columns: [
-            //        { 'data': 'CourseCode' },
-            //        { 'data': 'CourseName' },
-            //        { 'data': 'Credits' },
-            //        { 'data': 'BudgetedHours' },
-            //        { 'data': 'AllocatedHours' },
-            //        { 'data': 'NoOfStudents' },
-            //        { 'data': 'Term' },
-            //        { 'data': 'Period' },
-            //        { 'data': 'CourseResponsible' },
-            //        { 'data': 'Status' }
-            //        ]
-            //    });
+        //$(document).ready(function () {
+        //    var datatableInstance = $('#courseoverview').DataTable({
+        //        data: data,
+        //        columns: [
+        //        { 'data': 'CourseCode' },
+        //        { 'data': 'CourseName' },
+        //        { 'data': 'Credits' },
+        //        { 'data': 'BudgetedHours' },
+        //        { 'data': 'AllocatedHours' },
+        //        { 'data': 'NoOfStudents' },
+        //        { 'data': 'Term' },
+        //        { 'data': 'Period' },
+        //        { 'data': 'CourseResponsible' },
+        //        { 'data': 'Status' }
+        //        ]
+        //    });
 
-            //    $('.showHideColumn').on('click', function (e) {
-            //        e.preventDefault();
+        //    $('.showHideColumn').on('click', function (e) {
+        //        e.preventDefault();
 
-            //        var tableColumn =datatableInstance.column($(this).attr('data-columnindex'));
-            //        tableColumn.visible(!tableColumn.visible());
-            //    });
-            //});
+        //        var tableColumn =datatableInstance.column($(this).attr('data-columnindex'));
+        //        tableColumn.visible(!tableColumn.visible());
+        //    });
+        //});
 
-</script>
+    </script>
 }
 
 
