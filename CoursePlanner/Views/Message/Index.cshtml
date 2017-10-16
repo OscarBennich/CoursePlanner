@@ -1,0 +1,82 @@
+﻿@model IEnumerable<CoursePlanner.Models.Message>
+
+@{
+    ViewBag.Title = "Message Inbox";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-danger">
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-hover" id="teacherlist">
+                    <thead>
+                        <tr>
+                            <th>
+                                Message Seen
+                            </th>
+                            <th>
+                                Sender Name
+                            </th>
+                            <th>
+                                Message Sent
+                            </th>
+                            <th>
+                                Course 
+                            </th>
+                            <th>
+                                Message
+                            </th>
+                            <th>
+                                Details
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if(item.MessageReadDate != null)
+                                    {
+                                        <text> ✓ </text>
+                                    }                                          
+                                </td>
+                                <td>
+                                    @item.TeacherSender.TeacherName
+                                </td>
+                                <td>                                
+                                    @item.MessageSendDate
+                                </td>
+                                <td>
+                                    @item.CourseOccurrence.Course.CourseName
+                                </td>
+                                <td>
+                                    @item.MessageText
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { id = item.MessageID })
+                                </td>
+                            </tr>
+                        }                     
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+    <!--/.col-xs-12-->
+</div>
+<!--/.row-->
+@section MyScripts{
+    <script>
+        $(document).ready(function () {
+            $('#teacherlist').DataTable()
+        });
+    </script>
+}

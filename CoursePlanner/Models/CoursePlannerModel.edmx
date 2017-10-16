@@ -44,6 +44,21 @@
           <Property Name="TeacherId" Type="int" Nullable="false" />
           <Property Name="Hours" Type="int" />
         </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageText" Type="nvarchar(max)" />
+          <Property Name="SenderID" Type="int" Nullable="false" />
+          <Property Name="RecieverID" Type="int" Nullable="false" />
+          <Property Name="MessageSendDate" Type="date" Nullable="false" />
+          <Property Name="MessageReadDate" Type="date" />
+          <Property Name="MessageType" Type="int" />
+          <Property Name="CourseOccurrenceID" Type="int" />
+          <Property Name="ApproveChanges" Type="bit" />
+          <Property Name="ResponseMessageID" Type="int" />
+        </EntityType>
         <EntityType Name="Teacher">
           <Key>
             <PropertyRef Name="TeacherId" />
@@ -116,6 +131,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Message_CourseOccurrence">
+          <End Role="CourseOccurrence" Type="Self.CourseOccurrence" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseOccurrence">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="Message1" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="MessageID" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="ResponseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Teacher_Reciever">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="RecieverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Teacher_Sender">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeacherReduction_Teacher">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
           <End Role="TeacherReduction" Type="Self.TeacherReduction" Multiplicity="*" />
@@ -132,6 +195,7 @@
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseOccurrence" EntityType="Self.CourseOccurrence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseTeacher" EntityType="Self.CourseTeacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherReduction" EntityType="Self.TeacherReduction" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CourseOccurrence_Course" Association="Self.FK_CourseOccurrence_Course">
@@ -149,6 +213,22 @@
           <AssociationSet Name="FK_CourseTeacher_Teacher" Association="Self.FK_CourseTeacher_Teacher">
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="CourseTeacher" EntitySet="CourseTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_CourseOccurrence" Association="Self.FK_Message_CourseOccurrence">
+            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message" Association="Self.FK_Message_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Teacher_Reciever" Association="Self.FK_Message_Teacher_Reciever">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Teacher_Sender" Association="Self.FK_Message_Teacher_Sender">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Message" EntitySet="Message" />
           </AssociationSet>
           <AssociationSet Name="FK_TeacherReduction_Teacher" Association="Self.FK_TeacherReduction_Teacher">
             <End Role="Teacher" EntitySet="Teacher" />
@@ -179,6 +259,7 @@
           <NavigationProperty Name="CourseTeacher" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseOccurrence" ToRole="CourseTeacher" />
           <NavigationProperty Name="Course" Relationship="Model.FK_CourseOccurrence_Course" FromRole="CourseOccurrence" ToRole="Course" />
           <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="CourseOccurrence" ToRole="Teacher" />
+          <NavigationProperty Name="Message" Relationship="Model.FK_Message_CourseOccurrence" FromRole="CourseOccurrence" ToRole="Message" />
         </EntityType>
         <EntityType Name="CourseTeacher">
           <Key>
@@ -240,7 +321,24 @@
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="TeacherReduction" EntitySet="TeacherReduction" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Message" EntityType="Model.Message" />
+          <AssociationSet Name="FK_Message_CourseOccurrence" Association="Model.FK_Message_CourseOccurrence">
+            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Message" Association="Model.FK_Message_Message">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="Message1" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Teacher_Reciever" Association="Model.FK_Message_Teacher_Reciever">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_Teacher_Sender" Association="Model.FK_Message_Teacher_Sender">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -341,7 +439,9 @@
           <NavigationProperty Name="CourseOccurrence" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="Teacher" ToRole="CourseOccurrence" />
           <NavigationProperty Name="CourseTeacher" Relationship="Model.FK_CourseTeacher_Teacher" FromRole="Teacher" ToRole="CourseTeacher" />
           <NavigationProperty Name="TeacherReduction" Relationship="Model.FK_TeacherReduction_Teacher" FromRole="Teacher" ToRole="TeacherReduction" />
-        </EntityType>
+          <NavigationProperty Name="Message" Relationship="Model.FK_Message_Teacher_Reciever" FromRole="Teacher" ToRole="Message" />
+          <NavigationProperty Name="Message1" Relationship="Model.FK_Message_Teacher_Sender" FromRole="Teacher" ToRole="Message" />
+          </EntityType>
         <Association Name="FK_CourseOccurrence_Teacher">
           <End Type="Model.Teacher" Role="Teacher" Multiplicity="0..1" />
           <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="*" />
@@ -378,7 +478,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EnumType Name="MessageType">
+          <Member Name="ResponseMessage" />
+          <Member Name="TextMessage" />
+        </EnumType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SenderID" Type="Int32" Nullable="false" />
+          <Property Name="RecieverID" Type="Int32" Nullable="false" />
+          <Property Name="MessageSendDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MessageReadDate" Type="DateTime" Precision="0" />
+          <Property Name="MessageType" Type="Model.MessageType" />
+          <Property Name="CourseOccurrenceID" Type="Int32" />
+          <Property Name="ApproveChanges" Type="Boolean" />
+          <Property Name="ResponseMessageID" Type="Int32" />
+          <NavigationProperty Name="CourseOccurrence" Relationship="Model.FK_Message_CourseOccurrence" FromRole="Message" ToRole="CourseOccurrence" />
+          <NavigationProperty Name="MessageToResponse" Relationship="Model.FK_Message_Message" FromRole="Message" ToRole="Message1" />
+          <NavigationProperty Name="ResponseToMessage" Relationship="Model.FK_Message_Message" FromRole="Message1" ToRole="Message" />
+          <NavigationProperty Name="TeacherReciever" Relationship="Model.FK_Message_Teacher_Reciever" FromRole="Message" ToRole="Teacher" />
+          <NavigationProperty Name="TeacherSender" Relationship="Model.FK_Message_Teacher_Sender" FromRole="Message" ToRole="Teacher" />
+        </EntityType>
+        <Association Name="FK_Message_CourseOccurrence">
+          <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="0..1" />
+          <End Type="Model.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseOccurrence">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Message">
+          <End Type="Model.Message" Role="Message" Multiplicity="0..1" />
+          <End Type="Model.Message" Role="Message1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="MessageID" />
+            </Principal>
+            <Dependent Role="Message1">
+              <PropertyRef Name="ResponseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Teacher_Reciever">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Model.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="RecieverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_Teacher_Sender">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Model.Message" Role="Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -448,6 +620,22 @@
                 <ScalarProperty Name="TeacherDateOfBirth" ColumnName="TeacherDateOfBirth" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="Model.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="ResponseMessageID" ColumnName="ResponseMessageID" />
+                <ScalarProperty Name="ApproveChanges" ColumnName="ApproveChanges" />
+                <ScalarProperty Name="CourseOccurrenceID" ColumnName="CourseOccurrenceID" />
+                <ScalarProperty Name="MessageType" ColumnName="MessageType" />
+                <ScalarProperty Name="MessageReadDate" ColumnName="MessageReadDate" />
+                <ScalarProperty Name="MessageSendDate" ColumnName="MessageSendDate" />
+                <ScalarProperty Name="RecieverID" ColumnName="RecieverID" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

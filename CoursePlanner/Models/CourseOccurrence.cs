@@ -17,6 +17,7 @@ namespace CoursePlanner.Models
         public CourseOccurrence()
         {
             this.CourseTeacher = new HashSet<CourseTeacher>();
+            this.Message = new HashSet<Message>();
         }
     
         public int CourseOccurrenceID { get; set; }
@@ -36,5 +37,6 @@ namespace CoursePlanner.Models
         public virtual ICollection<CourseTeacher> CourseTeacher { get; set; }
         public virtual Course Course { get; set; }
         public virtual Teacher Teacher { get; set; }
+        public virtual ICollection<Message> Message { get; set; }
     }
 }

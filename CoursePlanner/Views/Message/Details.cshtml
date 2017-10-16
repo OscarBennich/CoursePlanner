@@ -1,0 +1,73 @@
+﻿@model CoursePlanner.Models.Message
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Message</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MessageText)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MessageText)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherSender.TeacherName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherSender.TeacherName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherReciever.TeacherName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherReciever.TeacherName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MessageSendDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MessageSendDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MessageReadDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MessageReadDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseOccurrence.Year)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseOccurrence.Year)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ApproveChanges)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApproveChanges)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ResponseToMessage.MessageText)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ResponseToMessage.MessageText)
+    </div>
+    <button>
+        RESPOND
+    </button>
+</fieldset>
+<p>      
+    @Html.ActionLink("Back to List", "Index")
+</p>

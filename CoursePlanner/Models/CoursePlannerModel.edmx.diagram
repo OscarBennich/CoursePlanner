@@ -15,7 +15,12 @@
         <AssociationConnector Association="Model.FK_CourseOccurrence_Teacher" />
         <AssociationConnector Association="Model.FK_CourseTeacher_Teacher" />
         <AssociationConnector Association="Model.FK_TeacherReduction_Teacher" />
-      </Diagram>
+        <EntityTypeShape EntityType="Model.Message" Width="3.5" PointX="11.5" PointY="3.625" />
+        <AssociationConnector Association="Model.FK_Message_CourseOccurrence" />
+        <AssociationConnector Association="Model.FK_Message_Message" />
+        <AssociationConnector Association="Model.FK_Message_Teacher_Reciever" />
+        <AssociationConnector Association="Model.FK_Message_Teacher_Sender" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

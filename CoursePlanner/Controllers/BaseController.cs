@@ -23,10 +23,9 @@ namespace CoursePlanner.Controllers
          ViewBag.TeacherId = GetTeacherId();
          base.OnActionExecuting(filterContext);
      }
-     private int GetTeacherId()
+     
+     public int GetTeacherId()
      {
-
-         
          int teacherId = (from m in db.Teacher
                           where m.TeacherName.ToUpper().StartsWith(User.Identity.Name.ToUpper())
                           select m.TeacherId).FirstOrDefault();

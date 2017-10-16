@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CourseOccurrenceController.cs" />
     <Compile Include="Controllers\CourseTeacherController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -234,6 +235,12 @@
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CourseTypes.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Message.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MessageType.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Periods.cs">
@@ -774,6 +781,11 @@
     <Content Include="Views\CourseTeacher\Edit.cshtml" />
     <Content Include="Views\CourseTeacher\Index.cshtml" />
     <Content Include="Views\Home\_CourseConflictTable.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\Message\Edit.cshtml" />
+    <Content Include="Views\Message\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

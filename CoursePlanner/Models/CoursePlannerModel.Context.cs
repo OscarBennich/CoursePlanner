@@ -30,5 +30,6 @@ namespace CoursePlanner.Models
         public DbSet<TeacherReduction> TeacherReduction { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
+        public DbSet<Message> Message { get; set; }
     }
 }
