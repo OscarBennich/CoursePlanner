@@ -20,7 +20,38 @@ namespace CoursePlanner.Controllers
         {
             var courseoccurrence = db.CourseOccurrence.Include(c => c.Course).Include(c => c.Teacher);
             ViewBag.CurrentEduYear = GetCurrentEducationalYear();
+
+            ViewBag.CourseAllocatedHours =
+             new Func<int, int>(CourseAllocatedHoursFind);
+
             return View(courseoccurrence.ToList());
+        }
+
+        private int CourseAllocatedHoursFind(int courseOccurrenceId)
+        {
+            CourseOccurrence courseOccurrence = db.CourseOccurrence.Find(courseOccurrenceId);
+            int CourseHoursTotalAllocated = CalculateCourseHoursAllocated(courseOccurrence);
+
+            return CourseHoursTotalAllocated; 
+        }
+
+        private int CalculateCourseHoursAllocated(CourseOccurrence courseOccurrence)
+        {
+            int CourseHoursTotalAllocated = 0;
+        
+
+            
+                try
+                {
+
+                    CourseHoursTotalAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.CourseOccurrenceId == courseOccurrence.CourseOccurrenceID).Select(y => y.Hours).Sum());
+                }
+                catch { }
+
+
+
+
+                return CourseHoursTotalAllocated;
         }
 
         private string GetCurrentEducationalYear()
