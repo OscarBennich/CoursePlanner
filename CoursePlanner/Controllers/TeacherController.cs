@@ -18,12 +18,21 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Index()
         {
+            
+            
+            
             ViewBag.TeachingHoursAllocatedFall =
              new Func<int, int>(TeachingHoursAllocatedFallFind);
+
+            ViewBag.TeachingHoursAvailableFall =
+           new Func<int, int>(TeachingHoursAvailableFallFind);
 
 
             ViewBag.TeachingHoursAllocatedSpring =
                 new Func<int, int>(TeachingHoursAllocatedSpringFind);
+
+            ViewBag.TeachingHoursAvailableSpring =
+                new Func<int, int>(TeachingHoursAvailableSpringFind);
             
             
             return View(db.Teacher.ToList());
@@ -33,53 +42,45 @@ namespace CoursePlanner.Controllers
 
         public int TeachingHoursAllocatedFallFind(int teacherId)
         {
-            Teacher teacher = db.Teacher.Find(teacherId); 
-            List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
-            List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
-
-            List<CourseOccurrence> sum = courseOccurencesFall.Concat(courseOccurencesSpring).ToList();
-
-            int p1 = ReturnPeriodHours(sum, teacher, Periods.P1, Terms.Fall);
-            int p2 = ReturnPeriodHours(sum, teacher, Periods.P2, Terms.Fall);
-            int p3 = ReturnPeriodHours(sum, teacher, Periods.P3, Terms.Fall);
-            int p4 = ReturnPeriodHours(sum, teacher, Periods.P4, Terms.Fall);
-           
-
-           
-
-            int TeachingHoursAllocatedFall = p1 + p2 + p3 + p4;
-            return Convert.ToInt32(TeachingHoursAllocatedFall);
-
-
-            
+            Teacher teacher = db.Teacher.Find(teacherId);
+            int TeachingHoursAllocatedFall= CalculateTeachingHoursAllocated(teacher,Terms.Fall);
+          
+            return TeachingHoursAllocatedFall;    
         }
 
         public int TeachingHoursAllocatedSpringFind(int teacherId)
         {
-             Teacher teacher = db.Teacher.Find(teacherId); 
-            List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
-            List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
-
-            List<CourseOccurrence> sum = courseOccurencesFall.Concat(courseOccurencesSpring).ToList();
-
-      
-            int p5 = ReturnPeriodHours(sum, teacher, Periods.P1, Terms.Spring);
-            int p6 = ReturnPeriodHours(sum, teacher, Periods.P2, Terms.Spring);
-            int p7 = ReturnPeriodHours(sum, teacher, Periods.P3, Terms.Spring);
-            int p8 = ReturnPeriodHours(sum, teacher, Periods.P4, Terms.Spring);
-
-           
-         
-
-         
-            int TeachingHoursAllocatedSpring = p5 + p6 + p7 + p8;
-
-            //return Convert.ToInt32(TeachingHoursAllocatedSpring);
-
+            Teacher teacher = db.Teacher.Find(teacherId);
+            int TeachingHoursAllocatedSpring = CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+        
             return TeachingHoursAllocatedSpring;
         
         }
-        
+        public int TeachingHoursAvailableFallFind(int teacherId)
+        {
+            Teacher teacher = db.Teacher.Find(teacherId);
+
+            int baseAnnualWorkingHours = GetBaseAnnualHours(teacher.TeacherDateOfBirth);
+
+
+            int TeachingHoursAvailableFall = Convert.ToInt32(CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Fall));
+           
+
+            return TeachingHoursAvailableFall;
+        }
+
+        public int TeachingHoursAvailableSpringFind(int teacherId)
+        {
+            Teacher teacher = db.Teacher.Find(teacherId);
+            int baseAnnualWorkingHours = GetBaseAnnualHours(teacher.TeacherDateOfBirth);
+
+
+            int TeachingHoursAvailableSpring = Convert.ToInt32(CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Spring));
+
+
+            return TeachingHoursAvailableSpring;
+
+        }
 
 
 
@@ -332,6 +333,7 @@ namespace CoursePlanner.Controllers
         private int CalculateTeachingHoursAllocated(Teacher teacher, Terms term)
         {
             int teachingHoursAllocated = 0;
+            var currentYear = GetCurrentEducationalYear();
 
             if (term.Equals(Terms.Fall)) 
             {
@@ -339,7 +341,7 @@ namespace CoursePlanner.Controllers
                 {   
                     // Calculate the sum of all hours allocated for this teacher in all course occurances which match
                     // with the teacherID and where the term matches (Fall in this case)
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall && x.CourseOccurrence.Year == currentYear).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }
@@ -347,7 +349,7 @@ namespace CoursePlanner.Controllers
             {
                 try
                 {
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring && x.CourseOccurrence.Year == currentYear).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }
@@ -457,6 +459,24 @@ namespace CoursePlanner.Controllers
             {
                 return "No";
             }
+        }
+        private string GetCurrentEducationalYear()
+        {
+            string currentEduYear;
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+            if (currentMonth > 6)
+            {
+                int nextYear = currentYear + 1;
+                currentEduYear = currentYear.ToString() + "/" + nextYear.ToString();
+            }
+            else
+            {
+                int previousYear = currentYear - 1;
+                currentEduYear = previousYear.ToString() + "/" + currentYear.ToString();
+            }
+
+            return currentEduYear;
         }
 
         public string GetCourseResponsibleNameFind(int id)
