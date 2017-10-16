@@ -118,18 +118,19 @@ namespace CoursePlanner.Controllers
             ViewBag.Period7 = p7;
             ViewBag.Period8 = p8;
 
-            ViewBag.TeachingHoursAllocatedFall = p1 + p2 + p3 + p4;
-            ViewBag.TeachingHoursAllocatedSpring = p5 + p6 + p7 + p8;
+            //ViewBag.TeachingHoursAllocatedFall = new Func<int, int>(TeachingHoursAllocatedFallFind);
+            //ViewBag.TeachingHoursAllocatedSpring = new Func<int, int>(TeachingHoursAllocatedSpringFind);
+
 
 
             int baseAnnualWorkingHours = GetBaseAnnualHours(teacher.TeacherDateOfBirth);
             ViewBag.BaseAnnualWorkingHours = baseAnnualWorkingHours;
 
-            ViewBag.TeachingHoursAvailableFall = CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Fall);
-            ViewBag.TeachingHoursAvailableSpring = CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Spring);
+            ViewBag.TeachingHoursAvailableFall = Convert.ToInt32(CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Fall));
+            ViewBag.TeachingHoursAvailableSpring = Convert.ToInt32(CalculateTeachingHoursAvailable(teacher, baseAnnualWorkingHours, Terms.Spring));
 
-            //ViewBag.TeachingHoursAllocatedFall = CalculateTeachingHoursAllocated(teacher, Terms.Fall);
-            //ViewBag.TeachingHoursAllocatedSpring = CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+            ViewBag.TeachingHoursAllocatedFall = CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+            ViewBag.TeachingHoursAllocatedSpring = CalculateTeachingHoursAllocated(teacher, Terms.Spring);
 
             ViewBag.TotalHoursAllocatedResearchFall = Convert.ToInt32((baseAnnualWorkingHours/2)*teacher.TotalPercentageFall * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Research && x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).FirstOrDefault());
             ViewBag.TotalHoursAllocatedAdministrationFall = Convert.ToInt32((baseAnnualWorkingHours / 2) * teacher.TotalPercentageFall * teacher.TeacherReduction.Where(x => x.ReductionType == ReductionTypes.Administration && x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).FirstOrDefault());
