@@ -303,6 +303,7 @@
             <ul class="nav nav-tabs skin-red-light">
                 <li class="active skin-red-light"><a href="#teachers" data-toggle="tab">Teachers</a></li>
                 <li><a href="#history" data-toggle="tab">History</a></li>
+
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="teachers">
@@ -458,6 +459,7 @@
                     </div>
                     <!--/.row-->
                 </div>
+
                 <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
@@ -470,6 +472,21 @@
 <!-- /.row -->
 
 <br />
+
+
+@using (Html.BeginForm("CreateRequestApprovalMessage", "CourseOccurrence"))
+{
+    @Html.AntiForgeryToken()
+    <fieldset id="createRequestApprovalMessageForm">
+        <input hidden value="@Model.CourseOccurrenceID" name="courseId" />
+        <input hidden value="33" name="senderId" />
+        <input hidden value="1" name="receiverId" />
+        <input type="text" value="" name="messageText" />
+        <input class="btn btn-success btn-xs" value="Request Approval" type="submit" />
+    </fieldset>
+}
+
+
 <!-- /.row -->
 @section MyScripts{
     <script>

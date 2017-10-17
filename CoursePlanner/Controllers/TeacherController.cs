@@ -95,6 +95,8 @@ namespace CoursePlanner.Controllers
                 return HttpNotFound();
             }
 
+            var publicComments = db.Comment.Where(x => x.BaseMessage.RecieverID == teacher.TeacherId && x.IsPublic == true).FirstOrDefault();
+
             List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
             List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
 
@@ -493,6 +495,32 @@ namespace CoursePlanner.Controllers
             {
                 return "no course responsible";
             }
+        }
+
+
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateComment(int senderId, int receiverId, string messageText, string publicComment)
+        {
+            BaseMessage baseMessage = new BaseMessage();
+            baseMessage.SenderID = senderId;
+            baseMessage.RecieverID = receiverId;
+            baseMessage.MessageText = messageText;
+            baseMessage.MessageSendDate = DateTime.Now;
+
+            Comment comment = new Comment();
+            comment.BaseMessage = baseMessage;
+            comment.IsPublic = Convert.ToBoolean(publicComment);
+
+            db.Comment.Add(comment);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details/" + receiverId);
         }
     }
 }

@@ -12,28 +12,26 @@ namespace CoursePlanner.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Message
+    public partial class BaseMessage
     {
-        public Message()
+        public BaseMessage()
         {
-            this.MessageToResponse = new HashSet<Message>();
+            this.RequestApprovalMessage = new HashSet<RequestApprovalMessage>();
+            this.ResponseApprovalMessage = new HashSet<ResponseApprovalMessage>();
+            this.Comment = new HashSet<Comment>();
         }
     
-        public int MessageID { get; set; }
-        public string MessageText { get; set; }
+        public int BaseMessageID { get; set; }
         public int SenderID { get; set; }
         public int RecieverID { get; set; }
+        public string MessageText { get; set; }
         public System.DateTime MessageSendDate { get; set; }
         public Nullable<System.DateTime> MessageReadDate { get; set; }
-        public Nullable<MessageType> MessageType { get; set; }
-        public Nullable<int> CourseOccurrenceID { get; set; }
-        public Nullable<bool> ApproveChanges { get; set; }
-        public Nullable<int> ResponseMessageID { get; set; }
     
-        public virtual CourseOccurrence CourseOccurrence { get; set; }
-        public virtual ICollection<Message> MessageToResponse { get; set; }
-        public virtual Message ResponseToMessage { get; set; }
         public virtual Teacher TeacherReciever { get; set; }
         public virtual Teacher TeacherSender { get; set; }
+        public virtual ICollection<RequestApprovalMessage> RequestApprovalMessage { get; set; }
+        public virtual ICollection<ResponseApprovalMessage> ResponseApprovalMessage { get; set; }
+        public virtual ICollection<Comment> Comment { get; set; }
     }
 }

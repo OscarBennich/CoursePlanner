@@ -54,6 +54,7 @@
                 <li><a href="#spring" data-toggle="tab">Spring Term</a></li>
                 <li><a href="#year" data-toggle="tab">Hours During Year</a></li>
                 <li><a href="#history" data-toggle="tab">History</a></li>
+                <li><a href="#comments" data-toggle="tab">Comments</a></li>
 
             </ul>
             <div class="tab-content">
@@ -187,6 +188,32 @@
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="history">
 
+                </div>
+
+
+                <div class="tab-pane" id="comments">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box-body">
+                                @using (Html.BeginForm("CreateComment", "Teacher"))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <fieldset id="createCommentForm">
+                                        <input hidden value="@Model.TeacherId" name="receiverId" />
+                                        <input hidden value="33" name="senderId" />
+                                        <input type="text" value="" name="messageText" />
+                                        <input type="radio" value="true" name="publicComment" />
+                                        <input type="radio" value="false" name="publicComment" />
+                                        <input class="btn btn-success btn-xs" value="Comment" type="submit" />
+                                    </fieldset>
+                                }
+                            </div>
+                            <!-- /.box-body -->
+
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
+                    <!--/.row-->
                 </div>
             </div>
             <!-- /.tab-content -->

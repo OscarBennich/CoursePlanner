@@ -15,11 +15,17 @@
         <AssociationConnector Association="Model.FK_CourseOccurrence_Teacher" />
         <AssociationConnector Association="Model.FK_CourseTeacher_Teacher" />
         <AssociationConnector Association="Model.FK_TeacherReduction_Teacher" />
-        <EntityTypeShape EntityType="Model.Message" Width="3.5" PointX="11.5" PointY="3.625" />
-        <AssociationConnector Association="Model.FK_Message_CourseOccurrence" />
-        <AssociationConnector Association="Model.FK_Message_Message" />
-        <AssociationConnector Association="Model.FK_Message_Teacher_Reciever" />
-        <AssociationConnector Association="Model.FK_Message_Teacher_Sender" />
+        <EntityTypeShape EntityType="Model.BaseMessage" Width="3" PointX="4.5" PointY="13.5" />
+        <EntityTypeShape EntityType="Model.RequestApprovalMessage" Width="1.5" PointX="7.75" PointY="9.25" />
+        <AssociationConnector Association="Model.FK_BaseMessage_Teacher_Reciever" />
+        <AssociationConnector Association="Model.FK_BaseMessage_Teacher_Sender" />
+        <AssociationConnector Association="Model.FK_RequestApprovalMessage_BaseMessage" />
+        <AssociationConnector Association="Model.FK_RequestApprovalMessage_CourseOccurrence" />
+        <EntityTypeShape EntityType="Model.ResponseApprovalMessage" Width="1.5" PointX="10" PointY="11.75" />
+        <AssociationConnector Association="Model.FK_ResponseApprovalMessage_BaseMessage" />
+        <AssociationConnector Association="Model.FK_ResponseApprovalMessage_RequestApprovalMessage" />
+        <EntityTypeShape EntityType="Model.Comment" Width="1.5" PointX="8.25" PointY="15.125" />
+        <AssociationConnector Association="Model.FK_Comment_BaseMessage" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
