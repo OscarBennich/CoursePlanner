@@ -72,7 +72,7 @@ namespace CoursePlanner.Controllers
 
         //
         // POST: /CourseTeacher/Create
-         [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseTeacher courseteacher)
@@ -82,6 +82,10 @@ namespace CoursePlanner.Controllers
                 db.CourseTeacher.Add(courseteacher);
                 try
                 {
+                    // ADDED NOW (2017-10-17)
+                    CourseOccurrence courseOccurance = db.CourseOccurrence.Where(c => c.CourseOccurrenceID == courseteacher.CourseOccurrenceId).FirstOrDefault();
+                    courseOccurance.Changes = CourseChangeType.NewCourseTeacher;
+
                     db.SaveChanges();
                 }
                 catch (DbUpdateException ex)
@@ -100,7 +104,7 @@ namespace CoursePlanner.Controllers
         //
         // GET: /CourseTeacher/Edit/5
 
-         [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         public ActionResult Edit(int cid = 0, int tid = 0)
         {
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
@@ -115,13 +119,17 @@ namespace CoursePlanner.Controllers
 
         //
         // POST: /CourseTeacher/Edit/5
-         [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CourseTeacher courseteacher)
         {
             if (ModelState.IsValid)
             {
+                // ADDED NOW (2017-10-17)
+                CourseOccurrence courseOccurance = db.CourseOccurrence.Where(c => c.CourseOccurrenceID == courseteacher.CourseOccurrenceId).FirstOrDefault();
+                courseOccurance.Changes = CourseChangeType.ChangedTeacherHours;
+
                 db.Entry(courseteacher).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

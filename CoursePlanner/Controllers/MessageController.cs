@@ -88,7 +88,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Create()
         {
-            var courses = db.CourseOccurrence.Where(c => c.Status != Statuses.Completed).Select(c => new SelectListItem
+            var courses = db.CourseOccurrence.Where(c => c.Status == Statuses.Planned && c.Changes != null).Select(c => new SelectListItem
             {
                 Value = SqlFunctions.StringConvert((double)c.CourseOccurrenceID).Trim(),
                 Text = c.Course.CourseName + " " + c.Year,

@@ -32,6 +32,7 @@
           <Property Name="StartDate" Type="date" />
           <Property Name="EndDate" Type="date" />
           <Property Name="Status" Type="int" />
+          <Property Name="Changes" Type="int" />
           <Property Name="CourseID" Type="int" Nullable="false" />
           <Property Name="CourseResponsibleID" Type="int" />
         </EntityType>
@@ -243,23 +244,24 @@
           <Key>
             <PropertyRef Name="CourseOccurrenceID" />
           </Key>
-          <Property Name="CourseOccurrenceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Year" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Term" Type="Model.Terms" Nullable="false" />
+          <Property Name="CourseOccurrenceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Year" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Term" Nullable="false" Type="Model.Terms" />
           <Property Name="Period" Type="Model.Periods" />
           <Property Name="Budget" Type="Int32" />
           <Property Name="NoOfStudents" Type="Int32" />
           <Property Name="NoOfPassingStudents" Type="Int32" />
           <Property Name="HST" Type="Double" />
-          <Property Name="StartDate" Type="DateTime" Precision="0" />
-          <Property Name="EndDate" Type="DateTime" Precision="0" />
+          <Property Name="StartDate" Precision="0" Type="DateTime" />
+          <Property Name="EndDate" Precision="0" Type="DateTime" />
           <Property Name="Status" Type="Model.Statuses" />
-          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="CourseID" Nullable="false" Type="Int32" />
           <Property Name="CourseResponsibleID" Type="Int32" />
           <NavigationProperty Name="CourseTeacher" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseOccurrence" ToRole="CourseTeacher" />
           <NavigationProperty Name="Course" Relationship="Model.FK_CourseOccurrence_Course" FromRole="CourseOccurrence" ToRole="Course" />
           <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="CourseOccurrence" ToRole="Teacher" />
           <NavigationProperty Name="Message" Relationship="Model.FK_Message_CourseOccurrence" FromRole="CourseOccurrence" ToRole="Message" />
+          <Property Name="Changes" Type="Model.CourseChangeType" />
         </EntityType>
         <EntityType Name="CourseTeacher">
           <Key>
@@ -284,8 +286,8 @@
           <NavigationProperty Name="Teacher" Relationship="Model.FK_TeacherReduction_Teacher" FromRole="TeacherReduction" ToRole="Teacher" />
         </EntityType>
         <Association Name="FK_CourseTeacher_Course">
-          <End Role="CourseOccurrence" Type="Self.CourseOccurrence" Multiplicity="1" />
-          <End Role="CourseTeacher" Type="Self.CourseTeacher" Multiplicity="*" />
+          <End Type="Self.CourseOccurrence" Multiplicity="1" Role="CourseOccurrence" />
+          <End Type="Self.CourseTeacher" Multiplicity="*" Role="CourseTeacher" />
           <ReferentialConstraint>
             <Principal Role="CourseOccurrence">
               <PropertyRef Name="CourseOccurrenceID" />
@@ -300,18 +302,18 @@
           <EntitySet Name="CourseTeacher" EntityType="Self.CourseTeacher" />
           <EntitySet Name="TeacherReduction" EntityType="Self.TeacherReduction" />
           <AssociationSet Name="FK_CourseTeacher_Course" Association="Self.FK_CourseTeacher_Course">
-            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
-            <End Role="CourseTeacher" EntitySet="CourseTeacher" />
+            <End EntitySet="CourseOccurrence" Role="CourseOccurrence" />
+            <End EntitySet="CourseTeacher" Role="CourseTeacher" />
           </AssociationSet>
           <EntitySet Name="Course" EntityType="Model.Course" />
           <AssociationSet Name="FK_CourseOccurrence_Course" Association="Model.FK_CourseOccurrence_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+            <End EntitySet="Course" Role="Course" />
+            <End EntitySet="CourseOccurrence" Role="CourseOccurrence" />
           </AssociationSet>
           <EntitySet Name="Teacher" EntityType="Model.Teacher" />
           <AssociationSet Name="FK_CourseOccurrence_Teacher" Association="Model.FK_CourseOccurrence_Teacher">
-            <End Role="Teacher" EntitySet="Teacher" />
-            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+            <End EntitySet="Teacher" Role="Teacher" />
+            <End EntitySet="CourseOccurrence" Role="CourseOccurrence" />
           </AssociationSet>
           <AssociationSet Name="FK_CourseTeacher_Teacher" Association="Model.FK_CourseTeacher_Teacher">
             <End Role="Teacher" EntitySet="Teacher" />
@@ -323,8 +325,8 @@
           </AssociationSet>
           <EntitySet Name="Message" EntityType="Model.Message" />
           <AssociationSet Name="FK_Message_CourseOccurrence" Association="Model.FK_Message_CourseOccurrence">
-            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
-            <End Role="Message" EntitySet="Message" />
+            <End EntitySet="CourseOccurrence" Role="CourseOccurrence" />
+            <End EntitySet="Message" Role="Message" />
           </AssociationSet>
           <AssociationSet Name="FK_Message_Message" Association="Model.FK_Message_Message">
             <End Role="Message" EntitySet="Message" />
@@ -353,8 +355,8 @@
           <NavigationProperty Name="CourseOccurrence" Relationship="Model.FK_CourseOccurrence_Course" FromRole="Course" ToRole="CourseOccurrence" />
         </EntityType>
         <Association Name="FK_CourseOccurrence_Course">
-          <End Type="Model.Course" Role="Course" Multiplicity="1" />
-          <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="*" />
+          <End Type="Model.Course" Multiplicity="1" Role="Course" />
+          <End Type="Model.CourseOccurrence" Multiplicity="*" Role="CourseOccurrence" />
           <ReferentialConstraint>
             <Principal Role="Course">
               <PropertyRef Name="CourseId" />
@@ -443,8 +445,8 @@
           <NavigationProperty Name="Message1" Relationship="Model.FK_Message_Teacher_Sender" FromRole="Teacher" ToRole="Message" />
           </EntityType>
         <Association Name="FK_CourseOccurrence_Teacher">
-          <End Type="Model.Teacher" Role="Teacher" Multiplicity="0..1" />
-          <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="*" />
+          <End Type="Model.Teacher" Multiplicity="0..1" Role="Teacher" />
+          <End Type="Model.CourseOccurrence" Multiplicity="*" Role="CourseOccurrence" />
           <ReferentialConstraint>
             <Principal Role="Teacher">
               <PropertyRef Name="TeacherId" />
@@ -503,8 +505,8 @@
           <NavigationProperty Name="TeacherSender" Relationship="Model.FK_Message_Teacher_Sender" FromRole="Message" ToRole="Teacher" />
         </EntityType>
         <Association Name="FK_Message_CourseOccurrence">
-          <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="0..1" />
-          <End Type="Model.Message" Role="Message" Multiplicity="*" />
+          <End Type="Model.CourseOccurrence" Multiplicity="0..1" Role="CourseOccurrence" />
+          <End Type="Model.Message" Multiplicity="*" Role="Message" />
           <ReferentialConstraint>
             <Principal Role="CourseOccurrence">
               <PropertyRef Name="CourseOccurrenceID" />
@@ -550,6 +552,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="CourseChangeType">
+        <Member Name="ChangedTeacherHours" />
+          <Member Name="NewCourseTeacher" />
+          <Member Name="NewCourseResponsible" />
+        </EnumType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -559,6 +566,7 @@
           <EntitySetMapping Name="CourseOccurrence">
             <EntityTypeMapping TypeName="Model.CourseOccurrence">
               <MappingFragment StoreEntitySet="CourseOccurrence">
+                <ScalarProperty Name="Changes" ColumnName="Changes" />
                 <ScalarProperty Name="CourseOccurrenceID" ColumnName="CourseOccurrenceID" />
                 <ScalarProperty Name="Year" ColumnName="Year" />
                 <ScalarProperty Name="Term" ColumnName="Term" />

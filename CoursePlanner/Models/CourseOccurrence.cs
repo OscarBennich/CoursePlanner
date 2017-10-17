@@ -33,6 +33,7 @@ namespace CoursePlanner.Models
         public Nullable<Statuses> Status { get; set; }
         public int CourseID { get; set; }
         public Nullable<int> CourseResponsibleID { get; set; }
+        public Nullable<CourseChangeType> Changes { get; set; }
     
         public virtual ICollection<CourseTeacher> CourseTeacher { get; set; }
         public virtual Course Course { get; set; }

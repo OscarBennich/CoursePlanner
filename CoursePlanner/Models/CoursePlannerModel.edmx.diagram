@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3e33e631e079431494a550c342fa5416" Name="Diagram1" DisplayType="true">
-        <EntityTypeShape EntityType="Model.CourseOccurrence" Width="2.5" PointX="4.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.CourseOccurrence" PointX="5.125" PointY="4.375" Width="2.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.CourseTeacher" Width="1.5" PointX="8.125" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.TeacherReduction" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
-        <AssociationConnector Association="Model.FK_CourseTeacher_Course" ManuallyRouted="false" />
+        <AssociationConnector ManuallyRouted="false" Association="Model.FK_CourseTeacher_Course" />
         <EntityTypeShape EntityType="Model.Course" Width="2.75" PointX="5.375" PointY="1" />
         <AssociationConnector Association="Model.FK_CourseOccurrence_Course" />
         <EntityTypeShape EntityType="Model.Teacher" Width="2.625" PointX="1.125" PointY="4" />

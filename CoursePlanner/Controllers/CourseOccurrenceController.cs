@@ -182,6 +182,10 @@ namespace CoursePlanner.Controllers
                               select m.TeacherId).Single();
 
             courseoccurrence.CourseResponsibleID = newteacher;
+
+            // ADDED NOW (2017-10-17)
+            courseoccurrence.Changes = CourseChangeType.NewCourseResponsible;   
+
             db.Entry(courseoccurrence).State = EntityState.Modified;
             db.SaveChanges();
 

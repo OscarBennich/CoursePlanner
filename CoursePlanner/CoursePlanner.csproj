@@ -204,6 +204,9 @@
     <Compile Include="Models\Course.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CourseChangeType.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CourseClassifications.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>

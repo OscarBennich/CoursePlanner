@@ -100,9 +100,10 @@
                     <li class="list-group-item">
                         <b>Course Budget</b> <p class="pull-right">@Html.DisplayFor(model => model.Budget)</p>
 
-                      @if (User.IsInRole("Study Director")) {
                         <button id="editBudget" class="btn btn-danger btn-xs" onclick="EditBudget()"> Edit Budget </button>
-                      }
+                        @*@if (User.IsInRole("Study Director")) {
+                              <button id="editBudget" class="btn btn-danger btn-xs" onclick="EditBudget()"> Edit Budget </button>
+                            }*@
                         @using (Html.BeginForm("EditBudget", "CourseOccurrence"))
                         {
                             @Html.AntiForgeryToken()
@@ -112,7 +113,7 @@
                                 <input id="saveBudget" class="btn btn-success btn-xs" value="Save Budget" type="submit" onclick=SaveBudget() />
                             </fieldset>
                         }
-                       
+
                     </li>
 
 
@@ -175,12 +176,14 @@
                     </li>
                     <li class="list-group-item">
                         <b style="font-size: 1.5em;">&nbsp;</b>
-                      @if (User.IsInRole("Study Director")) {
                         <button class="btn btn-danger btn-sm pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
-                      }
+                        @*@if (User.IsInRole("Study Director"))
+                        {
+                            <button class="btn btn-danger btn-sm pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                        }*@
                     </li>
                 </ul>
-                 
+
                 <!-- Modal -->
                 <div class="modal fade" id="crModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
@@ -233,7 +236,7 @@
                         }
                     </div>
                 </div>
-                 
+
 
                 <!-- Modal -->
                 <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -309,16 +312,12 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="box-body">
-<<<<<<< HEAD
-
                                 <button class="btn btn-danger " type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })'"> Allocate teacher to courses </button>
-                                <br /><b>&nbsp;</b>
-=======
-                                @if (User.IsInRole("Study Director")) {
-                                <button class="btn btn-danger " type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })'"> Allocate teacher to courses </button>
-                                }
-                                    <br/><b>&nbsp;</b>
->>>>>>> Role_Distribution_and_Linking_User_Profile_and_Teacher_Profile_Page
+                                @*@if (User.IsInRole("Study Director"))
+                                {
+                                    <button class="btn btn-danger " type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { cid = @Model.CourseOccurrenceID })'"> Allocate teacher to courses </button>
+                                }*@
+                                <br />
                                 <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                                     <thead>
                                         <tr>
@@ -476,7 +475,7 @@
         $(document).ready(function () {
             //Initialize Select2 Elements
             $(".select2").select2();
-            }
+        }
         )
 
         $(document).on("click", ".RemoveTeacherButton", function () {
