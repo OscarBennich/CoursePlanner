@@ -14,7 +14,7 @@ using CoursePlanner.Models;
 namespace CoursePlanner.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+    //[InitializeSimpleMembership]
     public class AccountController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
