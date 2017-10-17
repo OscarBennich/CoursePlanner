@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Web.WebPages.OAuth;
 using CoursePlanner.Models;
+using WebMatrix.WebData;
 
 namespace CoursePlanner
 {
@@ -27,6 +28,7 @@ namespace CoursePlanner
             //    appSecret: "");
 
             //OAuthWebSecurity.RegisterGoogleClient();
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
         }
     }
 }

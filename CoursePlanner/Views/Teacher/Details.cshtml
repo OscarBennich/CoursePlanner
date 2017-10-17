@@ -487,7 +487,7 @@
         // Get context with jQuery - using jQuery's .get() method.
         var pieChartCanvas = $('#DistributionSpringPieChart').get(0).getContext('2d')
 
-        var allocatedSpring = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
+        var allocatedSpring = (@ViewBag.TeachingHoursAvailableSpring - @ViewBag.TeachingHoursAllocatedSpring)
 
 
         if(allocatedSpring < 0)
@@ -695,7 +695,7 @@
             labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
             datasets: [
                 {
-                    label: "Expected workload",
+                    label: "Current workload",
                     fillColor: "rgba(60,141,188,0.9)",
                     strokeColor: "rgba(60,141,188,0.8)",
                     pointColor: "#3b8bba",
@@ -705,7 +705,7 @@
                     data: [@ViewBag.Period1,@ViewBag.Period2,@ViewBag.Period3,@ViewBag.Period4,@ViewBag.Period5,@ViewBag.Period6,@ViewBag.Period7,@ViewBag.Period8]
                 },
                 {
-                    label: "Current workload",
+                    label: "Expected workload",
                     fillColor: "rgba(210, 214, 222, 1)",
                     strokeColor: "rgba(210, 214, 222, 1)",
                     pointColor: "rgba(210, 214, 222, 1)",

@@ -20,15 +20,15 @@ namespace CoursePlanner.Controllers
     //    //}
      protected override void OnActionExecuting(ActionExecutingContext filterContext)
      {
-         ViewBag.TeacherId = GetTeacherId();
+         ViewBag.CurrentTeacherId = new Func<int ,int>(GetTeacherId);
          base.OnActionExecuting(filterContext);
      }
-     private int GetTeacherId()
+     private int GetTeacherId(int id)
      {
 
          
          int teacherId = (from m in db.Teacher
-                          where m.TeacherName.ToUpper().StartsWith(User.Identity.Name.ToUpper())
+                          where m.TeacherUserId == id
                           select m.TeacherId).FirstOrDefault();
          return teacherId;
 
