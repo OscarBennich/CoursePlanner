@@ -9,12 +9,12 @@
 
 <script type="text/javascript">
     function EditBudget() {
-        document.getElementById('editBudget').className = "btn btn-warning btn-xs hidden";
+        document.getElementById('editBudget').className = "btn btn-danger btn-xs hidden";
         document.getElementById('budgetEditForm').className = "show";
     }
 
     function SaveBudget() {
-        document.getElementById('editBudget').className = "btn btn-warning btn-xs show";
+        document.getElementById('editBudget').className = "btn btn-danger btn-xs show";
         document.getElementById('budgetEditForm').className = "hidden";
     }
 
@@ -130,7 +130,7 @@
                         @if (User.IsInRole("Study Director"))
                         {
                             if (Model.Status.ToString() == "Completed") { 
-                            <button id="editBudget" class="btn btn-danger btn-xs disabled" onclick="EditBudget()"> Edit Budget </button>
+                            <button id="editBudget" class="btn btn-danger btn-xs disabled" > Edit Budget </button>
                             }
                             else
                             {
@@ -385,7 +385,7 @@
                                 {
                                     if (Model.Status.ToString() == "Completed")
                                     {
-                                        <button class="btn btn-danger disabled" id="allocateTeacher" data-target="#AllocateModal" data-toggle="modal" type="button">Allocate teacher to courses</button>
+                                        <button class="btn btn-danger disabled" id="allocateTeacher"  type="button">Allocate teacher to courses</button>
                                     }
                                     else
                                     {
@@ -421,7 +421,7 @@
                                                 if (Model.Status.ToString() == "Completed")
                                                 {
                                                     <p>
-                                                        <button id="manageCourseResponsible" class="btn btn-danger center-block disabled" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                                                        <button id="manageCourseResponsible" class="btn btn-danger center-block disabled"  type="button"> Change Course Responsible </button>
                                                     </p>
                                                 }
                                                 else
@@ -473,13 +473,14 @@
                                                 </td>
 
                                                 <td>
+                                                    @courseTeacher.Teacher.CourseTeacher.Where(x => x.CourseOccurrenceId == Model.CourseOccurrenceID && x.TeacherId == courseTeacher.TeacherId).Select(y => y.Hours).FirstOrDefault()
                                                     @if (User.IsInRole("Study Director"))
                                                     {
-                                                        @courseTeacher.Teacher.CourseTeacher.Where(x => x.CourseOccurrenceId == Model.CourseOccurrenceID && x.TeacherId == courseTeacher.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                      
 
                                                         if (Model.Status.ToString() == "Completed")
                                                         {
-                                                            <button id="removeTeacher" class="btn btn-danger RemoveTeacherButton pull-right disabled" data-target="#removeModal" data-todo='{"id":@courseTeacher.TeacherId,"tname":"@courseTeacher.Teacher.TeacherName","thours":"@courseTeacher.Hours"}' data-toggle="modal" type="button"> Remove </button>
+                                                            <button id="removeTeacher" class="btn btn-danger RemoveTeacherButton pull-right disabled"  type="button"> Remove </button>
                                                         }
                                                         else
                                                         {
