@@ -1,0 +1,10 @@
+﻿------ Discover test started ------
+NUnit VS Adapter 2.0.0.0 discovering tests is started
+NUnit VS Adapter 2.0.0.0 discovering test is finished
+========== Discover test finished: 17 found (0:00:02,1890386) ==========
+------ Run test started ------
+NUnit VS Adapter 2.0.0.0 executing tests is started
+Loading tests from U:\AGILEProject\CoursePlanner.Tests\bin\Debug\CoursePlanner.Tests.dll
+Run started: U:\AGILEProject\CoursePlanner.Tests\bin\Debug\CoursePlanner.Tests.dll
+NUnit VS Adapter 2.0.0.0 executing tests is finished
+========== Run test finished: 17 run (0:00:02,1180298) ==========
