@@ -1,11 +1,5 @@
 ﻿@model CoursePlanner.Models.Message
 
-@{
-    ViewBag.Title = "Create";
-}
-
-<h2>Create</h2>
-
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -20,6 +14,7 @@
             @Html.EditorFor(model => model.MessageText)
             @Html.ValidationMessageFor(model => model.MessageText)
         </div>
+        <br />
         <div class="editor-label">
             Send to 
         </div>
@@ -27,6 +22,7 @@
             @Html.DropDownList("RecieverID", String.Empty)
             @Html.ValidationMessageFor(model => model.RecieverID)
         </div>
+        <br />
         <div class="editor-label">
             @Html.LabelFor(model => model.CourseOccurrenceID, "CourseOccurrence") (Optional)
         </div>
@@ -35,7 +31,8 @@
             @Html.ValidationMessageFor(model => model.CourseOccurrenceID)
         </div>
         <p>
-            <input type="submit" value="Create" />
+            <br />
+            <input type="submit" class="btn btn-success btn-sm" value="Send Message" />
         </p>
     </fieldset>
 }

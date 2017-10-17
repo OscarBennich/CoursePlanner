@@ -4,70 +4,69 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <fieldset>
     <legend>Message</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.MessageText)
+        Message Text
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.MessageText)
     </div>
-
+    <br />
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.TeacherSender.TeacherName)
+         Sender
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.TeacherSender.TeacherName)
     </div>
-
+    <br />
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.TeacherReciever.TeacherName)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.TeacherReciever.TeacherName)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.MessageSendDate)
+         Message Sent
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.MessageSendDate)
     </div>
-
+    <br />
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.MessageReadDate)
+        Affected Course
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.MessageReadDate)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CourseOccurrence.Year)
-    </div>
-    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseOccurrence.Course.CourseName)
+        -
         @Html.DisplayFor(model => model.CourseOccurrence.Year)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ApproveChanges)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ApproveChanges)
-    </div>
-
-    <div class="display-label">
+    @*Not implementing the response message for now*@
+    @*<div class="display-label">
          @Html.DisplayNameFor(model => model.ResponseToMessage.MessageText)
     </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.ResponseToMessage.MessageText)
-    </div>
-    <button>
-        RESPOND
-    </button>
+    </div>*@
+
+    <br />
+    @using (Html.BeginForm("MessageResponseApprove", "Message"))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset id="messageResponseApproveForm">
+            <input hidden value="@Model.MessageID" name="id" />
+            <input id="approveChanges" class="btn btn-success btn-sm" value="Approve Changes" type="submit"/>
+        </fieldset>
+    }
+
+    <br />
+
+    @using (Html.BeginForm("MessageResponseReject", "Message"))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset id="messageResponseRejectForm">
+            <input hidden value="@Model.MessageID" name="id" />
+            <input id="rejectChanges" class="btn btn-danger btn-sm" value="Reject Changes" type="submit" />
+        </fieldset>
+    }
 </fieldset>
+<br />
 <p>      
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Inbox", "Index")
 </p>

@@ -42,7 +42,8 @@ namespace CoursePlanner.Controllers
 
         //
         // GET: /CourseTeacher/Create
-         [Authorize(Roles = "Study Director")]
+        
+        [Authorize(Roles = "Study Director")]
         public ActionResult Create(int cid = 0, int tid = 0)
         {
             var courses = db.CourseOccurrence.Where(c => c.Status != Statuses.Completed).Select(c => new SelectListItem

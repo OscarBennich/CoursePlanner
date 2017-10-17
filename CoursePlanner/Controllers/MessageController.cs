@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CoursePlanner.Models;
 using System.Web.Security;
+using System.Data.Objects.SqlClient;
 
 namespace CoursePlanner.Controllers
 {
@@ -48,12 +49,52 @@ namespace CoursePlanner.Controllers
             return View(message);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MessageResponseApprove(int id)
+        {
+            Message message = db.Message.Find(id);
+            message.ApproveChanges = true;
+            message.MessageType = MessageType.ResponseMessage;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(message).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MessageResponseReject(int id)
+        {
+            Message message = db.Message.Find(id);
+            message.ApproveChanges = false;
+            message.MessageType = MessageType.ResponseMessage;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(message).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
+
         //
         // GET: /Message/Create
 
         public ActionResult Create()
         {
-            ViewBag.CourseOccurrenceID = new SelectList(db.CourseOccurrence, "CourseOccurrenceID", "Year");
+            var courses = db.CourseOccurrence.Where(c => c.Status != Statuses.Completed).Select(c => new SelectListItem
+            {
+                Value = SqlFunctions.StringConvert((double)c.CourseOccurrenceID).Trim(),
+                Text = c.Course.CourseName + " " + c.Year,
+            }).OrderBy(c => c.Text).ToList();
+
+            ViewBag.CourseOccurrenceId = new SelectList(courses, "Value", "Text", String.Empty);           
             ViewBag.ResponseMessageID = new SelectList(db.Message, "MessageID", "MessageText");
             ViewBag.RecieverID = new SelectList(db.Teacher, "TeacherId", "TeacherName");
 

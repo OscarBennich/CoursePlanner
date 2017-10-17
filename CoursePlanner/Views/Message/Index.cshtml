@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<CoursePlanner.Models.Message>
 
 @{
-    ViewBag.Title = "Message Inbox";
+    ViewBag.Title = "Inbox";
 }
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Send new message", "Create")
 </p>
 
 <div class="row">
@@ -13,11 +13,26 @@
         <div class="box box-danger">
             <!-- /.box-header -->
             <div class="box-body">
-                <table class="table table-bordered table-hover" id="teacherlist">
+                <h3>
+                    Course Responses
+                </h3>
+                <table class="table table-bordered table-hover" id="messageList" style="cursor: pointer">
                     <thead>
                         <tr>
                             <th>
                                 Message Seen
+                            </th>
+                            <th>
+                                Message Type
+                            </th>
+                            <th>
+                                Affected Course
+                            </th>
+                            <th>
+                                Approved Changes
+                            </th>
+                            <th>
+                                Message
                             </th>
                             <th>
                                 Sender Name
@@ -25,44 +40,50 @@
                             <th>
                                 Message Sent
                             </th>
-                            <th>
-                                Course 
-                            </th>
-                            <th>
-                                Message
-                            </th>
-                            <th>
-                                Details
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
+                            <tr class='clickable-row' data-href='@Url.Action("Details", "Message", new { id = item.MessageID })' >
                                 <td>
-                                    @if(item.MessageReadDate != null)
+                                    @if (item.MessageReadDate != null)
                                     {
                                         <text> ✓ </text>
-                                    }                                          
+                                    }
+                                    else
+                                    {
+                                        <text> X </text>
+                                    }
                                 </td>
                                 <td>
-                                    @item.TeacherSender.TeacherName
-                                </td>
-                                <td>                                
-                                    @item.MessageSendDate
+                                    @item.MessageType
                                 </td>
                                 <td>
                                     @item.CourseOccurrence.Course.CourseName
                                 </td>
                                 <td>
-                                    @item.MessageText
+                                    @if (item.ApproveChanges == true)
+                                    {
+                                        <text> ✓ </text>
+                                    }
+                                    else if (item.ApproveChanges == false)
+                                    {
+                                        <text> X </text>
+                                    }
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Details", "Details", new { id = item.MessageID })
+                                    @item.MessageText
+                                </td>
+
+                                <td>
+                                    @item.TeacherSender.TeacherName
+                                </td>
+                                <td>
+                                    @item.MessageSendDate
                                 </td>
                             </tr>
-                        }                     
+                        }
                     </tbody>
                 </table>
             </div>
@@ -72,11 +93,15 @@
     </div>
     <!--/.col-xs-12-->
 </div>
+
 <!--/.row-->
 @section MyScripts{
     <script>
         $(document).ready(function () {
-            $('#teacherlist').DataTable()
+            $('#messageList').DataTable()
+            $(".clickable-row").click(function () {
+                window.location.href = $(this).data("href");
+            });
         });
     </script>
 }
