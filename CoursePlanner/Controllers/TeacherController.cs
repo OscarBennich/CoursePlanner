@@ -258,7 +258,7 @@ namespace CoursePlanner.Controllers
             base.Dispose(disposing);
         }
 
-        private int GetBaseAnnualHours(DateTime teacherDateOfBirth)
+        public int GetBaseAnnualHours(DateTime teacherDateOfBirth)
         {
             int age = GetAge(teacherDateOfBirth);
 
@@ -280,7 +280,7 @@ namespace CoursePlanner.Controllers
             }
         }
 
-        private int GetAge(DateTime teacherDateOfBirth)
+        public int GetAge(DateTime teacherDateOfBirth)
         {
             int age = 0;
             age = DateTime.Now.Year - teacherDateOfBirth.Year;
@@ -294,7 +294,7 @@ namespace CoursePlanner.Controllers
             }
         }
 
-        private double CalculateTeachingHoursAvailable(Teacher teacher, int baseAnnualWorkingHours, Terms term) //should split into terms, testing for now
+        public double CalculateTeachingHoursAvailable(Teacher teacher, int baseAnnualWorkingHours, Terms term) //should split into terms, testing for now
         {   
             int teachingHoursAvailable = 0;
             double totalReductionPercentage = 0;
@@ -310,7 +310,7 @@ namespace CoursePlanner.Controllers
                 {
                     // Once we have the base amount we apply the sum of all other reductions (Research, Assignments, Administration and Other reductions) for that term
                     // For example a professor (per default) would have 50% research and 10% administration so the sum is 0,5 + 0,1 = 0,6
-                    totalReductionPercentage = (double)db.TeacherReduction.Where(x => x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).Sum();
+                    totalReductionPercentage = (double)teacher.TeacherReduction.Where(x => x.TeacherId == teacher.TeacherId && x.Term == Terms.Fall).Select(y => y.Percentage).Sum();
                 }
                 catch { }
             }
@@ -320,7 +320,7 @@ namespace CoursePlanner.Controllers
 
                 try 
                 {
-                    totalReductionPercentage = (double)db.TeacherReduction.Where(x => x.TeacherId == teacher.TeacherId && x.Term == Terms.Spring).Select(y => y.Percentage).Sum();
+                    totalReductionPercentage = (double)teacher.TeacherReduction.Where(x => x.TeacherId == teacher.TeacherId && x.Term == Terms.Spring).Select(y => y.Percentage).Sum();
                 }
                 catch { }
             }
@@ -331,7 +331,7 @@ namespace CoursePlanner.Controllers
             return teachingHoursAvailable = Convert.ToInt32(teachingHoursAvailable * (1- totalReductionPercentage));
         }
 
-        private int CalculateTeachingHoursAllocated(Teacher teacher, Terms term)
+        public int CalculateTeachingHoursAllocated(Teacher teacher, Terms term)
         {
             int teachingHoursAllocated = 0;
             var currentYear = GetCurrentEducationalYear();
@@ -342,7 +342,7 @@ namespace CoursePlanner.Controllers
                 {   
                     // Calculate the sum of all hours allocated for this teacher in all course occurances which match
                     // with the teacherID and where the term matches (Fall in this case)
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall && x.CourseOccurrence.Year == currentYear).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(teacher.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Fall && x.CourseOccurrence.Year == currentYear).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }
@@ -350,7 +350,7 @@ namespace CoursePlanner.Controllers
             {
                 try
                 {
-                    teachingHoursAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring && x.CourseOccurrence.Year == currentYear).Select(y => y.Hours).Sum());
+                    teachingHoursAllocated += Convert.ToInt32(teacher.CourseTeacher.Where(x => x.TeacherId == teacher.TeacherId && x.CourseOccurrence.Term == Terms.Spring && x.CourseOccurrence.Year == currentYear).Select(y => y.Hours).Sum());
                 }
                 catch { }
             }
