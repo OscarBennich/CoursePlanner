@@ -71,7 +71,7 @@ namespace CoursePlanner.Controllers
 
         //
         // POST: /CourseTeacher/Create
-         [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseTeacher courseteacher)

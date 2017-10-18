@@ -117,7 +117,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Fall);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
@@ -141,7 +141,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Spring);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
@@ -173,7 +173,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Fall);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
@@ -210,7 +210,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Fall);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
@@ -243,7 +243,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Spring);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
@@ -280,7 +280,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Spring);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
@@ -314,7 +314,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
@@ -356,7 +356,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
@@ -389,7 +389,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
@@ -430,7 +430,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);

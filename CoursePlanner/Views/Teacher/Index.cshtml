@@ -1,4 +1,5 @@
-﻿@model IEnumerable<CoursePlanner.Models.Teacher>
+﻿@using CoursePlanner.Models
+@model IEnumerable<CoursePlanner.Models.Teacher>
 
 @{
     ViewBag.Title = "List of Teachers";
@@ -28,17 +29,16 @@
                                 Contract End Date
                             </th>
                             <th>
-                                Available Teaching Hours Fall
+                                Balance fall
                             </th>
                             <th>
-                                
-                                Allocated Teaching Hours Fall
+                                Balance spring
                             </th>
                             <th>
-                                Available Teaching Hours Spring
+                                Total Balance
                             </th>
                             <th>
-                                Allocated Teaching Hours Spring
+                                Conflicts
                             </th>
                         </tr>
                     </thead>
@@ -56,32 +56,38 @@
                                     @Html.DisplayFor(modelItem => item.TeacherContractType)
                                 </td>
 
-                               @if (item.FixedContractEndDate != null)
-                               {
+                                @if (item.FixedContractEndDate != null)
+                                {
+                                    <td>
+                                        @item.FixedContractEndDate.Value.ToString("yyyy/MM/dd")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>No end date set</td>
+                                }
                                 <td>
-                                    @item.FixedContractEndDate.Value.ToString("yyyy/MM/dd")
-                                </td>
-                               }
-                               else
-                               {
-                                   <td>No end date set</td>
-                               }
-                                <td>
-                                    @ViewBag.TeachingHoursAvailableFall(Convert.ToInt32(item.TeacherId))
-                                </td>
-                                <td>
-                                   @ViewBag.TeachingHoursAllocatedFall(Convert.ToInt32(item.TeacherId))
+                                    @*@(ViewBag.TeachingHoursAvailableFall(item.TeacherId) - ViewBag.TeachingHoursAllocatedFall(item.TeacherId))*@
+                                    @ViewBag.BalanceInTerm(item, Terms.Fall)
                                 </td>
                                 <td>
-                                    @ViewBag.TeachingHoursAvailableSpring(Convert.ToInt32(item.TeacherId))
+                                    @*@(ViewBag.TeachingHoursAvailableSpring(item.TeacherId) - ViewBag.TeachingHoursAllocatedSpring(item.TeacherId))*@
+                                    @ViewBag.BalanceInTerm(item, Terms.Spring)
                                 </td>
-                                <td>
-                                    @ViewBag.TeachingHoursAllocatedSpring(Convert.ToInt32(item.TeacherId))
-                                </td>
+                                @{
+                                var totalBalance = (ViewBag.BalanceInTerm(item, Terms.Fall) + ViewBag.BalanceInTerm(item, Terms.Spring));
+                                if (totalBalance < 0)
+                                {
+                                    <td class="text-red">@totalBalance</td>
+                                }
+                                else
+                                {
+                                    <td>@totalBalance</td>
+                                }
+                                }
+                                <td><p>Content</p></td>
                             </tr>
                         }
-                     
-
                     </tbody>
                 </table>
             </div>

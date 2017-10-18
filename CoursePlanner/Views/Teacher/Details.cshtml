@@ -1,11 +1,48 @@
-﻿@model CoursePlanner.Models.Teacher
+﻿@using CoursePlanner.Models;
+@model Teacher
 
 @{
     ViewBag.Title = Model.TeacherName;
 }
 
+@helper PrintPeriodConflicts(int[] Periods)
+{
+    for (int i = 0; i < Periods.Length; i++)
+    {
+        if (Periods[i] >= 120 || Periods[i] <= -120)
+        {
+            <span class="label label-danger">@Periods[i]</span>
+        }
+        else if ((Periods[i] > 60 && Periods[i] < 120) || (Periods[i] < -60 && Periods[i] > -120))
+        {
+            <span class="label label-warning">@Periods[i]</span>
+        }
+        else
+        {
+            <span class="label label-success">@Periods[i]</span>
+        }
+    }
+}
+
+<style>
+    #conflicts {
+        border-collapse: separate;
+        border-spacing: 5px 0;
+    }
+
+    #conflicts td {
+        margin-left: auto;
+        margin-right: auto; 
+        font-size: 1.08em;
+    }
+
+    #conflicts td p {
+        padding: -5px;
+    }
+</style>
+
 <p>
-    <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action(" index", "Teacher" )'" />
+    <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "Teacher")'" />
 </p>
 <div class="row">
     <div class="col-md-4">
@@ -14,33 +51,47 @@
             <div class="box-body box-profile">
                 <h3 class="profile-username text-center">@Html.DisplayFor(model => model.TeacherName)</h3>
                 <p class="text-muted text-center">@Html.DisplayFor(model => model.TeacherPosition)</p>
+                <table id="conflicts" style="margin-left: auto; margin-right: auto;">
+                    <thead>
+                        <tr>
+                            <th class="text-center font-light">Fall Balance</th>
+                            <th class="text-center font-light">Spring Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><p>@PrintPeriodConflicts(@ViewBag.BalancePerPeriodFall)</p></td>
+                            <td><p>@PrintPeriodConflicts(@ViewBag.BalancePerPeriodSpring)</p></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Contract type</b> <a class="pull-right">@Html.DisplayFor(model => model.TeacherContractType)</a>
+                        <b>Contract type</b> <p class="pull-right">@Html.DisplayFor(model => model.TeacherContractType)</p>
                     </li>
                     @if (Model.FixedContractEndDate != null)
                     {
-                        <li class="list-group-item">
-                            <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
-                        </li>
+                    <li class="list-group-item">
+                        <b>Contract end date</b> <p class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</p>
+                    </li>
                     }
                     <li class="list-group-item">
-                        <b>Total percentage fall</b> <a class="pull-right">@Convert.ToDouble(Model.TotalPercentageFall.Value * 100)%</a>
+                        <b>Total percentage fall</b> <p class="pull-right">@Convert.ToDouble(Model.TotalPercentageFall.Value * 100)%</p>
                     </li>
                     <li class="list-group-item">
-                        <b>Total percentage spring</b> <a class="pull-right">@Convert.ToDouble(Model.TotalPercentageSpring.Value * 100)%</a>
+                        <b>Total percentage spring</b> <p class="pull-right">@Convert.ToDouble(Model.TotalPercentageSpring.Value * 100)%</p>
                     </li>
                     <li class="list-group-item">
-                        <b>Base annual working hours</b> <a class="pull-right">@ViewBag.BaseAnnualWorkingHours</a>
+                        <b>Base annual working hours</b> <p class="pull-right">@ViewBag.BaseAnnualWorkingHours</p>
                     </li>
                     @if (User.IsInRole("Study Director"))
                     {
-                        <li class="list-group-item">
-                            <b style="font-size: 1.5em;">&nbsp;</b>
+                    <li class="list-group-item">
+                        <b style="font-size: 1.5em;">&nbsp;</b>
 
-                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action(" create", "CourseTeacher" , new { tid=@Model.TeacherId })'"> Allocate teacher to courses </button>
+                        <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })'"> Allocate teacher to courses </button>
 
-                        </li>
+                    </li>
                     }
                 </ul>
             </div>
@@ -55,7 +106,6 @@
                 <li><a href="#year" data-toggle="tab">Hours During Year</a></li>
                 <li><a href="#history" data-toggle="tab">History</a></li>
                 <li><a href="#comments" data-toggle="tab">Comments</a></li>
-
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="fall">
@@ -82,32 +132,24 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesFall)
+                                            @foreach (CourseOccurrence c in ViewBag.CourseOccurencesFall)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @c.Course.CourseCode
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
-                                                    </td>
-                                                    <td>
-                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseResponsibleID, "Teacher")">
-                                                            @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
-                                                            {
-                                                                @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
-                                                            }
-                                                            else
-                                                            {
-                                                                <p class="center">No course responsible</p>
-                                                            }
-                                                        </a>
-
-                                                    </td>
-                                                </tr>
+                                            <tr>
+                                                <td>
+                                                    @c.Course.CourseCode
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                </td>
+                                                <td>
+                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
+                                                        @Html.ViewBag.GetCourseResponsibleName((int)c.CourseResponsibleID)
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -145,31 +187,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesSpring)
+                                            @foreach (CourseOccurrence c in ViewBag.CourseOccurencesSpring)
                                             {
-                                                <tr>
-                                                    <td>
-                                                        @c.Course.CourseCode
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
-                                                    </td>
-                                                    <td>
-                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                    </td>
-                                                    <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseResponsibleID, "Teacher")">
-                                                            @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
+                                            <tr>
+                                                <td>
+                                                    @c.Course.CourseCode
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                </td>
+                                                <td>
+                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
+                                                        @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
                                                             {
-                                                                @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
+                                                            @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
                                                             }
                                                             else
                                                             {
-                                                                <p class="center">No course responsible</p>
+                                                            <p class="center">No course responsible</p>
                                                             }
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -183,9 +225,11 @@
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="year">
+
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="history">
+
                 </div>
                 <div class="tab-pane" id="comments">
                     <div class="row">
@@ -194,57 +238,57 @@
                                 <h4>Public comments:</h4>
                                 @foreach (CoursePlanner.Models.Comment c in ViewBag.publicComments)
                                 {
-                                    <div class="box box-danger">
-                                        <div class="box-body">
-                                            <b>Comment: </b><br />
-                                            @c.BaseMessage.MessageText
-                                            @if (User.IsInRole("Study Director"))
+                                <div class="box box-danger">
+                                    <div class="box-body">
+                                        <b>Comment: </b><br />
+                                        @c.BaseMessage.MessageText
+                                        @if (User.IsInRole("Study Director"))
                                             {
-                                                <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher", new { toDeleteComment = @c.BaseMessageID })'"> Remove</button>
+                                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher", new { toDeleteComment = @c.BaseMessageID })'"> Remove</button>
                                             }
-                                        </div>
                                     </div>
+                                </div>
                                 }
                                 <h4>Private comments:</h4>
                                 @foreach (CoursePlanner.Models.Comment c in ViewBag.privateComments)
                                 {
-                                    <div class="box box-danger">
-                                        <div class="box-body">
-                                            <b>Comment: </b><br />
-                                            @c.BaseMessage.MessageText
-                                            @if (User.IsInRole("Study Director"))
+                                <div class="box box-danger">
+                                    <div class="box-body">
+                                        <b>Comment: </b><br />
+                                        @c.BaseMessage.MessageText
+                                        @if (User.IsInRole("Study Director"))
                                             {
-                                                <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher", new { toDeleteComment = @c.BaseMessageID })'"> Remove</button>
+                                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher", new { toDeleteComment = @c.BaseMessageID })'"> Remove</button>
                                             }
-                                        </div>
                                     </div>
+                                </div>
                                 }
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 @if (User.IsInRole("Study Director"))
                                 {
-                                    <h4>Add comment:</h4>
+                                <h4>Add comment:</h4>
                                     using (Html.BeginForm("CreateComment", "Teacher"))
                                     {
-                                        @Html.AntiForgeryToken()
-                                        <fieldset id="createCommentForm">
-                                            <input hidden value="@Model.TeacherId" name="receiverId" />
-                                            <input hidden value="33" name="senderId" />
-                                            <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" name="publicComment" checked value="true" onclick="this.value = this.checked;"> Public
-                                                </span>
-                                                <input type="text" value="" class="form-control" name="messageText" placeholder="Type comment..." required />
-                                                <div class="input-group-btn">
+                                @Html.AntiForgeryToken()
+                                <fieldset id="createCommentForm">
+                                    <input hidden value="@Model.TeacherId" name="receiverId" />
+                                    <input hidden value="33" name="senderId" />
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input type="checkbox" name="publicComment" checked value="true" onclick="this.value = this.checked;"> Public
+                                        </span>
+                                        <input type="text" value="" class="form-control" name="messageText" placeholder="Type comment..." required />
+                                        <div class="input-group-btn">
 
-                                                    <input class="btn btn-success" value="Comment" type="submit"  />
+                                            <input class="btn btn-success" value="Comment" type="submit" />
 
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    }                                
-                                }                                                              
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                    }
+                                }
                             </div>
 
                         </div>
@@ -255,30 +299,31 @@
             </div>
             <!-- /.tab-content -->
         </div>
-        <!-- /.nav-tabs-custom -->
-        <div class="box box-danger">
-            <div class="box-header with-border">
-                <h3 class="box-title">Yearly workload distribution</h3>
-                <div class="pull-right">
-
-                    <i class="fa fa-circle-o text-blue"></i>
-                    Current workload
-
-                    <i class="fa fa-circle-o text-green"></i>
-                    Expected workload
-
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="chart">
-                    <canvas id="PeriodChart" style="height:250px"></canvas>
-                </div>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
     </div>
+    <!-- /.tab-content -->
 </div>
+<!-- /.nav-tabs-custom -->
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">Yearly workload distribution</h3>
+        <div class="pull-right">
+
+            <i class="fa fa-circle-o text-blue"></i>
+            Current workload
+
+            <i class="fa fa-circle-o text-green"></i>
+            Expected workload
+
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="chart">
+            <canvas id="PeriodChart" style="height:250px"></canvas>
+        </div>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
 <div class="row">
     <div class="col-md-3">
         <div class="box box-danger">
@@ -469,352 +514,371 @@
             <!-- /.box-body -->
         </div>
     </div>
-
 </div>
 <!-- /.col (RIGHT) -->
 <!-- /.row -->
 <!-- /.box -->
 @section PieCharts{
     <script>
-$(document).ready(function () {
+        $(document).ready(function () {
 
-        //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var pieChartCanvas = $('#DistributionFallPieChart').get(0).getContext('2d')
+            //-------------
+            //- PIE CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var pieChartCanvas = $('#DistributionFallPieChart').get(0).getContext('2d')
 
-        var allocatedFall = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
+            var allocatedFall = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
 
-        if(allocatedFall < 0)
-        {
-            allocatedFall = 0
-        }
-
-
-        var pieChart = new Chart(pieChartCanvas)
-        var PieData = [
+            if(allocatedFall < 0)
             {
-                value: @ViewBag.TeachingHoursAvailableFall,
-                color: '#00a65a',
-                highlight: '#00a65a',
-                label: 'Available Hours Fall'
-            },
-            {
-                value: @ViewBag.TeachingHoursAllocatedFall,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
-                label: 'Allocated Hours Fall'
-            },
-            {
-                value: allocatedFall,
-                color: '#4D8FAC',
-                highlight: '#4D8FAC',
-                label: 'Remaining Hours Fall'
+                allocatedFall = 0
             }
-        ]
-        var pieOptions = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor: '#fff',
-            //Number - The width of each segment stroke
-            segmentStrokeWidth: 2,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps: 100,
-            //String - Animation easing effect
-            animationEasing: 'easeOutBounce',
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: true,
-            //String - A legend template
-            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-        }
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        pieChart.Doughnut(PieData, pieOptions)
-    });
-	
-	$(document).ready(function () {
-
-        //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var pieChartCanvas = $('#DistributionSpringPieChart').get(0).getContext('2d')
-
-        var allocatedSpring = (@ViewBag.TeachingHoursAvailableSpring - @ViewBag.TeachingHoursAllocatedSpring)
 
 
-        if(allocatedSpring < 0)
-        {
-            allocatedSpring = 0
-        }
-
-
-        var pieChart = new Chart(pieChartCanvas)
-        var PieData = [
-            {
-                value: @ViewBag.TeachingHoursAvailableSpring,
-                color: '#00a65a',
-                highlight: '#00a65a',
-                label: 'Available Hours Spring'
-            },
-            {
-                value: @ViewBag.TeachingHoursAllocatedSpring,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
-                label: 'Allocated Hours Spring'
-            },
-            {
-                value: allocatedSpring,
-                color: '#4D8FAC',
-                highlight: '#4D8FAC',
-                label: 'Remaining Hours Spring'
+            var pieChart = new Chart(pieChartCanvas)
+            var PieData = [
+                @*{
+                    value: @ViewBag.TeachingHoursAvailableFall,
+                    color: '#00a65a',
+                    highlight: '#00a65a',
+                    label: 'Available Hours Fall'
+                },*@
+                {
+                    value: @ViewBag.TeachingHoursAllocatedFall,
+                    color: '#00c0ef',
+                    highlight: '#00c0ef',
+                    label: 'Allocated Hours Fall'
+                },
+                {
+                    value: allocatedFall,
+                    color: '#4D8FAC',
+                    highlight: '#4D8FAC',
+                    label: 'Remaining Hours Fall'
+                }
+            ]
+            var pieOptions = {
+                //Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                //String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                //Number - The width of each segment stroke
+                segmentStrokeWidth: 2,
+                //Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                //Number - Amount of animation steps
+                animationSteps: 100,
+                //String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                //Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                //Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: false,
+                //Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: true,
+                //String - A legend template
+                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
             }
-        ]
-        var pieOptions = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor: '#fff',
-            //Number - The width of each segment stroke
-            segmentStrokeWidth: 2,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps: 100,
-            //String - Animation easing effect
-            animationEasing: 'easeOutBounce',
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: true,
-            //String - A legend template
-            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-        }
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        pieChart.Doughnut(PieData, pieOptions)
-    });
-	
-	$(document).ready(function () {
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            pieChart.Doughnut(PieData, pieOptions)
+        });
 
-        //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var fallPieChartCanvas = $('#ReductionFallPieChart').get(0).getContext('2d')
-        var fallpieChart = new Chart(fallPieChartCanvas)
-        var fallPieData = [
-        {
-            value: @ViewBag.TotalTeachingHoursFall,
-            color: '#f56954',
-            highlight: '#f56954',
-            label: 'Teaching Hours'
-        },
-		{
-			value: @ViewBag.TotalHoursAllocatedResearchFall,
-			color: '#00a65a',
-			highlight: '#00a65a',
-			label: 'Research'
-		},
-		{
-			value: @ViewBag.TotalHoursAllocatedAdministrationFall,
-			color: '#f39c12',
-			highlight: '#f39c12',
-			label: 'Administration'
-		},
-		{
-			value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
-			color: '#00c0ef',
-			highlight: '#00c0ef',
-			label: 'Assignments'
-		},
-		{
-			value: @ViewBag.TotalHoursAllocatedOtherFall,
-			color: '#D0D7DD',
-			highlight: '#D0D7DD',
-			label: 'Other'
-		}
-        ]
-        var fallpieOptions = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor: '#fff',
-            //Number - The width of each segment stroke
-            segmentStrokeWidth: 2,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps: 100,
-            //String - Animation easing effect
-            animationEasing: 'easeOutBounce',
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: true,
-            //String - A legend template
-            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
-        }
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        fallpieChart.Doughnut(fallPieData, fallpieOptions)
-    });
-	
-	$(document).ready(function () {
 
-        //-------------
-        //- PIE CHART -
-        //-------------
-        // Get context with jQuery - using jQuery's .get() method.
-        var springPieChartCanvas = $('#ReductionSpringPieChart').get(0).getContext('2d')
-        var springpieChart = new Chart(springPieChartCanvas)
-        var springPieData = [
+        $(document).ready(function () {
+
+            //-------------
+            //- PIE CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var pieChartCanvas = $('#DistributionSpringPieChart').get(0).getContext('2d')
+
+            var allocatedSpring = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
+
+            if(allocatedSpring < 0)
             {
-                value: @ViewBag.TotalTeachingHoursSpring,
+                allocatedSpring = 0
+            }
+
+
+            var pieChart = new Chart(pieChartCanvas)
+            var PieData = [
+                @*{
+                    value: @ViewBag.TeachingHoursAvailableSpring,
+                    color: '#00a65a',
+                    highlight: '#00a65a',
+                    label: 'Available Hours Spring'
+                },*@
+                {
+                    value: @ViewBag.TeachingHoursAllocatedSpring,
+                    color: '#00c0ef',
+                    highlight: '#00c0ef',
+                    label: 'Allocated Hours Spring'
+                },
+                {
+                    value: allocatedSpring,
+                    color: '#4D8FAC',
+                    highlight: '#4D8FAC',
+                    label: 'Remaining Hours Spring'
+                }
+            ]
+            var pieOptions = {
+                //Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                //String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                //Number - The width of each segment stroke
+                segmentStrokeWidth: 2,
+                //Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                //Number - Amount of animation steps
+                animationSteps: 100,
+                //String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                //Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                //Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: false,
+                //Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: true,
+                //String - A legend template
+                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            pieChart.Doughnut(PieData, pieOptions)
+        });
+
+        $(document).ready(function () {
+
+            //-------------
+            //- PIE CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var fallPieChartCanvas = $('#ReductionFallPieChart').get(0).getContext('2d')
+            var fallpieChart = new Chart(fallPieChartCanvas)
+            var fallPieData = [
+            {
+                value: @ViewBag.TotalTeachingHoursFall,
                 color: '#f56954',
                 highlight: '#f56954',
                 label: 'Teaching Hours'
             },
-            {
-                value: @ViewBag.TotalHoursAllocatedResearchSpring,
-                color: '#00a65a',
-                highlight: '#00a65a',
-                label: 'Research'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedAdministrationSpring,
-                color: '#f39c12',
-                highlight: '#f39c12',
-                label: 'Administration'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedAssignmentsSpring,
-                color: '#00c0ef',
-                highlight: '#00c0ef',
-                label: 'Assignments'
-            },
-            {
-                value: @ViewBag.TotalHoursAllocatedOtherSpring,
-                color: '#D0D7DD',
-                highlight: '#D0D7DD',
-                label: 'Other'
-            }
-        ]
-        var springpieOptions = {
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke: true,
-            //String - The colour of each segment stroke
-            segmentStrokeColor: '#fff',
-            //Number - The width of each segment stroke
-            segmentStrokeWidth: 2,
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout: 50, // This is 0 for Pie charts
-            //Number - Amount of animation steps
-            animationSteps: 100,
-            //String - Animation easing effect
-            animationEasing: 'easeOutBounce',
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate: true,
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale: false,
-            //Boolean - whether to make the chart responsive to window resizing
-            responsive: true,
-            // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-            maintainAspectRatio: true,
-            //String - A legend template
-            legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+        {
+            value: @ViewBag.TotalHoursAllocatedResearchFall,
+            color: '#00a65a',
+            highlight: '#00a65a',
+            label: 'Research'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedAdministrationFall,
+            color: '#f39c12',
+            highlight: '#f39c12',
+            label: 'Administration'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
+            color: '#00c0ef',
+            highlight: '#00c0ef',
+            label: 'Assignments'
+        },
+        {
+            value: @ViewBag.TotalHoursAllocatedOtherFall,
+            color: '#D0D7DD',
+            highlight: '#D0D7DD',
+            label: 'Other'
         }
-        //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-        springpieChart.Doughnut(springPieData, springpieOptions)
-    });
-
-	
-	$(document).ready(function () {
-
-                    //-------------
-                    //- BAR CHART -
-                    //-------------
-                    var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
-                    var periodChart = new Chart(periodChartCanvas)
-                    var periodChartData = {
-                        labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
-                        datasets: [
-                            {
-                                label: "Current workload",
-                                fillColor: "rgba(60,141,188,0.9)",
-                                strokeColor: "rgba(60,141,188,0.8)",
-                                pointColor: "#3b8bba",
-                                pointStrokeColor: "rgba(60,141,188,1)",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(60,141,188,1)",
-                                data: [@ViewBag.Period1,@ViewBag.Period2,@ViewBag.Period3,@ViewBag.Period4,@ViewBag.Period5,@ViewBag.Period6,@ViewBag.Period7,@ViewBag.Period8]
-                            },
-                            {
-                                label: "Expected workload",
-                                fillColor: "rgba(210, 214, 222, 1)",
-                                strokeColor: "rgba(210, 214, 222, 1)",
-                                pointColor: "rgba(210, 214, 222, 1)",
-                                pointStrokeColor: "#c1c7d1",
-                                pointHighlightFill: "#fff",
-                                pointHighlightStroke: "rgba(220,220,220,1)",
-                                data: [@ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours,@ViewBag.ExpectedPeriodHours]
-                            }
-
-                        ]
-                    }
-                    periodChartData.datasets[1].fillColor = "#00a65a"
-                    periodChartData.datasets[1].strokeColor = "#00a65a"
-                    periodChartData.datasets[1].pointColor = "#00a65a"
-                    var periodChartOptions = {
-                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-                        scaleBeginAtZero: true,
-                        //Boolean - Whether grid lines are shown across the chart
-                        scaleShowGridLines: false,
-                        //String - Colour of the grid lines
-                        scaleGridLineColor: "rgba(0,0,0,.05)",
-                        //Number - Width of the grid lines
-                        scaleGridLineWidth: 1,
-                        //Boolean - Whether to show horizontal lines (except X axis)
-                        scaleShowHorizontalLines: true,
-                        //Boolean - Whether to show vertical lines (except Y axis)
-                        scaleShowVerticalLines: true,
-                        //Boolean - If there is a stroke on each period
-                        barShowStroke: true,
-                        //Number - Pixel width of the period stroke
-                        barStrokeWidth: 2,
-                        //Number - Spacing between each of the X value sets
-                        barValueSpacing: 5,
-                        //Number - Spacing between data sets within X values
-                        barDatasetSpacing: 1,
-                        //String - A legend template
-                        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-                        //Boolean - whether to make the chart responsive
-                        responsive: true,
-                        maintainAspectRatio: true
-                    }
-
-                    periodChartOptions.datasetFill = false
-                    periodChart.Bar(periodChartData, periodChartOptions)
-                });
-
-    </script>
+            ]
+            var fallpieOptions = {
+                //Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                //String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                //Number - The width of each segment stroke
+                segmentStrokeWidth: 2,
+                //Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                //Number - Amount of animation steps
+                animationSteps: 100,
+                //String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                //Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                //Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: false,
+                //Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: true,
+                //String - A legend template
+                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
             }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            fallpieChart.Doughnut(fallPieData, fallpieOptions)
+        });
+
+        $(document).ready(function () {
+
+            //-------------
+            //- PIE CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var springPieChartCanvas = $('#ReductionSpringPieChart').get(0).getContext('2d')
+            var springpieChart = new Chart(springPieChartCanvas)
+            var springPieData = [
+                {
+                    value: @ViewBag.TotalTeachingHoursSpring,
+                    color: '#f56954',
+                    highlight: '#f56954',
+                    label: 'Teaching Hours'
+                },
+                {
+                    value: @ViewBag.TotalHoursAllocatedResearchSpring,
+                    color: '#00a65a',
+                    highlight: '#00a65a',
+                    label: 'Research'
+                },
+                {
+                    value: @ViewBag.TotalHoursAllocatedAdministrationSpring,
+                    color: '#f39c12',
+                    highlight: '#f39c12',
+                    label: 'Administration'
+                },
+                {
+                    value: @ViewBag.TotalHoursAllocatedAssignmentsSpring,
+                    color: '#00c0ef',
+                    highlight: '#00c0ef',
+                    label: 'Assignments'
+                },
+                {
+                    value: @ViewBag.TotalHoursAllocatedOtherSpring,
+                    color: '#D0D7DD',
+                    highlight: '#D0D7DD',
+                    label: 'Other'
+                }
+            ]
+            var springpieOptions = {
+                //Boolean - Whether we should show a stroke on each segment
+                segmentShowStroke: true,
+                //String - The colour of each segment stroke
+                segmentStrokeColor: '#fff',
+                //Number - The width of each segment stroke
+                segmentStrokeWidth: 2,
+                //Number - The percentage of the chart that we cut out of the middle
+                percentageInnerCutout: 50, // This is 0 for Pie charts
+                //Number - Amount of animation steps
+                animationSteps: 100,
+                //String - Animation easing effect
+                animationEasing: 'easeOutBounce',
+                //Boolean - Whether we animate the rotation of the Doughnut
+                animateRotate: true,
+                //Boolean - Whether we animate scaling the Doughnut from the centre
+                animateScale: false,
+                //Boolean - whether to make the chart responsive to window resizing
+                responsive: true,
+                // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+                maintainAspectRatio: true,
+                //String - A legend template
+                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            springpieChart.Doughnut(springPieData, springpieOptions)
+        });
+
+        $(document).ready(function () {
+
+            //-------------
+            //- BAR CHART -
+            //-------------
+            var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
+            var periodChart = new Chart(periodChartCanvas)
+            var periodChartData = {
+                labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
+                datasets: [
+                    {
+                        label: "Current workload",
+                        fillColor: "rgba(210, 214, 222, 0.9)",
+                        strokeColor: "rgba(210, 214, 222, 0.8)",
+                        pointColor: "rgba(210, 214, 222, 1)",
+                        pointStrokeColor: "rgba(210, 214, 222, 1)",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(210, 214, 222, 1)",
+                        data: [@ViewBag.HoursFallInPeriods[0],@ViewBag.HoursFallInPeriods[1],@ViewBag.HoursFallInPeriods[2],@ViewBag.HoursFallInPeriods[3],@ViewBag.HoursSpringInPeriods[0],@ViewBag.HoursSpringInPeriods[1],@ViewBag.HoursSpringInPeriods[2],@ViewBag.HoursSpringInPeriods[3]]
+                    },
+                    {
+                        label: "Expected workload",
+                        fillColor: "rgba(145, 145, 145, 1)",
+                        strokeColor: "rgba(145, 145, 145, 1)",
+                        pointColor: "rgba(145, 145, 145, 1)",
+                        pointStrokeColor: "rgba(145, 145, 145, 1)",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(145, 145, 145, 0.9)",
+                        data: [@ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursSpring, @ViewBag.ExpectedPeriodHoursSpring, @ViewBag.ExpectedPeriodHoursSpring,@ViewBag.ExpectedPeriodHoursSpring]
+                    }
+                ]
+            }
+            periodChartData.datasets[0].fillColor = "rgba(210, 214, 222, 1)"
+            periodChartData.datasets[0].strokeColor = "rgba(210, 214, 222, 1)"
+            periodChartData.datasets[0].pointColor = "rgba(210, 214, 222, 1)"
+            periodChartData.datasets[1].fillColor = "#00a65a"
+            periodChartData.datasets[1].strokeColor = "#00a65a"
+            periodChartData.datasets[1].pointColor = "#00a65a"
+            var periodChartOptions = {
+                //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                scaleBeginAtZero: true,
+                //Boolean - Whether grid lines are shown across the chart
+                scaleShowGridLines: false,
+                //String - Colour of the grid lines
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                //Number - Width of the grid lines
+                scaleGridLineWidth: 1,
+                //Boolean - Whether to show horizontal lines (except X axis)
+                scaleShowHorizontalLines: true,
+                //Boolean - Whether to show vertical lines (except Y axis)
+                scaleShowVerticalLines: true,
+                //Boolean - If there is a stroke on each period
+                barShowStroke: true,
+                //Number - Pixel width of the period stroke
+                barStrokeWidth: 2,
+                //Number - Spacing between each of the X value sets
+                barValueSpacing: 5,
+                //Number - Spacing between data sets within X values
+                barDatasetSpacing: 1,
+                //String - A legend template
+                legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+                //Boolean - whether to make the chart responsive
+                responsive: true,
+                maintainAspectRatio: true
+            }
+
+            periodChartOptions.datasetFill = false
+            periodChart.Bar(periodChartData, periodChartOptions)
+
+            @*var totalExpectedFall = @ViewBag.ExpectedPeriodHoursFall;
+            var totalExectedSpring = @ViewBag.ExpectedPeriodHoursSpring;
+
+            var bars = periodChartData.datasets[0].bars;
+            for(i = 0; i < 8; i++){
+                var color="dd4b39";
+                if(i < 4){
+                    // Viewbag is not defined :(
+                    if(ViewBag.CalculateDifferenceProcentage(totalExpectedFall, bars[i].value) > 10){
+                        bars[i].fillColor = color;
+                    }
+                }
+                else {
+                    if(ViewBag.CalculateDifferenceProcentage(totalExectedSpring, bars[i].value) > 10){
+                        bars[i].fillColor = color;
+                    }
+                }
+            }
+            periodChart.update();*@
+        });
+    </script>
+}
