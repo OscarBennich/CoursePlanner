@@ -1,0 +1,91 @@
+﻿@model IEnumerable<CoursePlanner.Models.RequestApprovalMessage>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseMessage.TeacherSender.TeacherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseMessage.TeacherReciever.TeacherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseMessage.MessageText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseMessage.MessageSendDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BaseMessage.MessageReadDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseOccurrence.Course.CourseName)
+        </th>
+        <th>
+            Respond
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseMessage.TeacherSender.TeacherName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseMessage.TeacherReciever.TeacherName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseMessage.MessageText)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseMessage.MessageSendDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaseMessage.MessageReadDate)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseOccurrence.Course.CourseName)
+            </td>
+
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.RequestApprovalMessageID }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.RequestApprovalMessageID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.RequestApprovalMessageID })
+                </td>*@
+            <td>
+
+                @using (Html.BeginForm("CreateResponseApprovalMessage", "RequestApprovalMessage"))
+                {
+                    @Html.AntiForgeryToken()
+                    <fieldset id="createResponseApprovalMessageForm">
+                        <input hidden value="1" name="senderId" />
+                        <input hidden value="33" name="receiverId" />
+                        <input hidden value="@item.RequestApprovalMessageID" name="requestApprovalMessageId" />
+                        <input type="text" value="" name="messageText" />
+                        <input type="radio" value="true" name="response" />
+                        <input type="radio" value="false" name="response" />
+                        <input class="btn btn-success btn-xs" value="Respond" type="submit" />
+                    </fieldset>
+                }
+
+
+
+            </td>
+        </tr>
+    }
+
+</table>

@@ -10,15 +10,10 @@
 namespace CoursePlanner.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class CourseTeacher
+    public enum MessageType : int
     {
-        public int CourseOccurrenceId { get; set; }
-        public int TeacherId { get; set; }
-        public int Hours { get; set; }
-    
-        public virtual CourseOccurrence CourseOccurrence { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        ResponseMessage = 0,
+        TextMessage = 1
     }
 }

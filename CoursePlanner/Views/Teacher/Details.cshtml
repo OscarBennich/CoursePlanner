@@ -5,7 +5,7 @@
 }
 
 <p>
-    <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "Teacher")'" />
+    <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action(" index", "Teacher" )'" />
 </p>
 <div class="row">
     <div class="col-md-4">
@@ -20,9 +20,9 @@
                     </li>
                     @if (Model.FixedContractEndDate != null)
                     {
-                    <li class="list-group-item">
-                        <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
-                    </li>
+                        <li class="list-group-item">
+                            <b>Contract end date</b> <a class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</a>
+                        </li>
                     }
                     <li class="list-group-item">
                         <b>Total percentage fall</b> <a class="pull-right">@Convert.ToDouble(Model.TotalPercentageFall.Value * 100)%</a>
@@ -35,13 +35,13 @@
                     </li>
                     @if (User.IsInRole("Study Director"))
                     {
-                    <li class="list-group-item">
-                        <b style="font-size: 1.5em;">&nbsp;</b> 
-                  
-                        <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })'"> Allocate teacher to courses </button>
-                                 
-                  </li>
-                   }
+                        <li class="list-group-item">
+                            <b style="font-size: 1.5em;">&nbsp;</b>
+
+                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action(" create", "CourseTeacher" , new { tid=@Model.TeacherId })'"> Allocate teacher to courses </button>
+
+                        </li>
+                    }
                 </ul>
             </div>
             <!-- /.box-body -->
@@ -54,6 +54,7 @@
                 <li><a href="#spring" data-toggle="tab">Spring Term</a></li>
                 <li><a href="#year" data-toggle="tab">Hours During Year</a></li>
                 <li><a href="#history" data-toggle="tab">History</a></li>
+                <li><a href="#comments" data-toggle="tab">Comments</a></li>
 
             </ul>
             <div class="tab-content">
@@ -83,30 +84,30 @@
                                         <tbody>
                                             @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesFall)
                                             {
-                                            <tr>
-                                                <td>
-                                                    @c.Course.CourseCode
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
-                                                </td>
-                                                <td>
-                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
-                                                        @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
-                                                        {
-                                                            @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
-                                                        }
-                                                        else
-                                                        {
-                                                            <p class="center">No course responsible</p>
-                                                        }
-                                                    </a>
+                                                <tr>
+                                                    <td>
+                                                        @c.Course.CourseCode
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action(" details />" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                    </td>
+                                                    <td>
+                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action(" details />" + @c.CourseResponsibleID, "Teacher")">
+                                                            @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
+                                                            {
+                                                                @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
+                                                            }
+                                                            else
+                                                            {
+                                                                <p class="center">No course responsible</p>
+                                                            }
+                                                        </a>
 
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -146,18 +147,18 @@
                                         <tbody>
                                             @foreach (CoursePlanner.Models.CourseOccurrence c in (List<CoursePlanner.Models.CourseOccurrence>)ViewBag.CourseOccurencesSpring)
                                             {
-                                            <tr>
-                                                <td>
-                                                    @c.Course.CourseCode
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
-                                                </td>
-                                                <td>
-                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">                                                      
+                                                <tr>
+                                                    <td>
+                                                        @c.Course.CourseCode
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action(" details />" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                    </td>
+                                                    <td>
+                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action(" details />" + @c.CourseResponsibleID, "Teacher")">
                                                             @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
                                                             {
                                                                 @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
@@ -166,9 +167,9 @@
                                                             {
                                                                 <p class="center">No course responsible</p>
                                                             }
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -182,11 +183,74 @@
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="year">
-
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="history">
+                </div>
+                <div class="tab-pane" id="comments">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box-body" id="chat-box">
+                                <h4>Public comments:</h4>
+                                @foreach (CoursePlanner.Models.Comment c in ViewBag.publicComments)
+                                {
+                                    <div class="box box-danger">
+                                        <div class="box-body">
+                                            <b>Comment: </b><br />
+                                            @c.BaseMessage.MessageText
+                                            @if (User.IsInRole("Study Director"))
+                                            {
+                                                <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher", new { toDeleteComment = @c.BaseMessageID })'"> Remove</button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                <h4>Private comments:</h4>
+                                @foreach (CoursePlanner.Models.Comment c in ViewBag.privateComments)
+                                {
+                                    <div class="box box-danger">
+                                        <div class="box-body">
+                                            <b>Comment: </b><br />
+                                            @c.BaseMessage.MessageText
+                                            @if (User.IsInRole("Study Director"))
+                                            {
+                                                <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher", new { toDeleteComment = @c.BaseMessageID })'"> Remove</button>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                @if (User.IsInRole("Study Director"))
+                                {
+                                    <h4>Add comment:</h4>
+                                    using (Html.BeginForm("CreateComment", "Teacher"))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <fieldset id="createCommentForm">
+                                            <input hidden value="@Model.TeacherId" name="receiverId" />
+                                            <input hidden value="33" name="senderId" />
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" name="publicComment" checked value="true" onclick="this.value = this.checked;"> Public
+                                                </span>
+                                                <input type="text" value="" class="form-control" name="messageText" placeholder="Type comment..." required />
+                                                <div class="input-group-btn">
 
+                                                    <input class="btn btn-success" value="Comment" type="submit"  />
+
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    }                                
+                                }                                                              
+                            </div>
+
+                        </div>
+                        <!--/.col-xs-12-->
+                    </div>
+                    <!--/.row-->
                 </div>
             </div>
             <!-- /.tab-content -->
@@ -412,7 +476,7 @@
 <!-- /.box -->
 @section PieCharts{
     <script>
-    $(document).ready(function () {
+$(document).ready(function () {
 
         //-------------
         //- PIE CHART -
@@ -477,9 +541,8 @@
         // You can switch between pie and douhnut using the method below.
         pieChart.Doughnut(PieData, pieOptions)
     });
-
-
-    $(document).ready(function () {
+	
+	$(document).ready(function () {
 
         //-------------
         //- PIE CHART -
@@ -545,8 +608,8 @@
         // You can switch between pie and douhnut using the method below.
         pieChart.Doughnut(PieData, pieOptions)
     });
-
-    $(document).ready(function () {
+	
+	$(document).ready(function () {
 
         //-------------
         //- PIE CHART -
@@ -561,30 +624,30 @@
             highlight: '#f56954',
             label: 'Teaching Hours'
         },
-    {
-        value: @ViewBag.TotalHoursAllocatedResearchFall,
-        color: '#00a65a',
-        highlight: '#00a65a',
-        label: 'Research'
-    },
-    {
-        value: @ViewBag.TotalHoursAllocatedAdministrationFall,
-        color: '#f39c12',
-        highlight: '#f39c12',
-        label: 'Administration'
-    },
-    {
-        value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
-        color: '#00c0ef',
-        highlight: '#00c0ef',
-        label: 'Assignments'
-    },
-    {
-        value: @ViewBag.TotalHoursAllocatedOtherFall,
-        color: '#D0D7DD',
-        highlight: '#D0D7DD',
-        label: 'Other'
-    }
+		{
+			value: @ViewBag.TotalHoursAllocatedResearchFall,
+			color: '#00a65a',
+			highlight: '#00a65a',
+			label: 'Research'
+		},
+		{
+			value: @ViewBag.TotalHoursAllocatedAdministrationFall,
+			color: '#f39c12',
+			highlight: '#f39c12',
+			label: 'Administration'
+		},
+		{
+			value: @ViewBag.TotalHoursAllocatedAssignmentsFall,
+			color: '#00c0ef',
+			highlight: '#00c0ef',
+			label: 'Assignments'
+		},
+		{
+			value: @ViewBag.TotalHoursAllocatedOtherFall,
+			color: '#D0D7DD',
+			highlight: '#D0D7DD',
+			label: 'Other'
+		}
         ]
         var fallpieOptions = {
             //Boolean - Whether we should show a stroke on each segment
@@ -614,8 +677,8 @@
         // You can switch between pie and douhnut using the method below.
         fallpieChart.Doughnut(fallPieData, fallpieOptions)
     });
-
-    $(document).ready(function () {
+	
+	$(document).ready(function () {
 
         //-------------
         //- PIE CHART -
@@ -684,73 +747,74 @@
         springpieChart.Doughnut(springPieData, springpieOptions)
     });
 
-    $(document).ready(function () {
+	
+	$(document).ready(function () {
 
-        //-------------
-        //- BAR CHART -
-        //-------------
-        var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
-        var periodChart = new Chart(periodChartCanvas)
-        var periodChartData = {
-            labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
-            datasets: [
-                {
-                    label: "Current workload",
-                    fillColor: "rgba(60,141,188,0.9)",
-                    strokeColor: "rgba(60,141,188,0.8)",
-                    pointColor: "#3b8bba",
-                    pointStrokeColor: "rgba(60,141,188,1)",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(60,141,188,1)",
-                    data: [@ViewBag.Period1,@ViewBag.Period2,@ViewBag.Period3,@ViewBag.Period4,@ViewBag.Period5,@ViewBag.Period6,@ViewBag.Period7,@ViewBag.Period8]
-                },
-                {
-                    label: "Expected workload",
-                    fillColor: "rgba(210, 214, 222, 1)",
-                    strokeColor: "rgba(210, 214, 222, 1)",
-                    pointColor: "rgba(210, 214, 222, 1)",
-                    pointStrokeColor: "#c1c7d1",
-                    pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: [@ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours,@ViewBag.ExpectedPeriodHours]
-                }
-              
-            ]
-        }
-        periodChartData.datasets[1].fillColor = "#00a65a"
-        periodChartData.datasets[1].strokeColor = "#00a65a"
-        periodChartData.datasets[1].pointColor = "#00a65a"
-        var periodChartOptions = {
-            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-            scaleBeginAtZero: true,
-            //Boolean - Whether grid lines are shown across the chart
-            scaleShowGridLines: false,
-            //String - Colour of the grid lines
-            scaleGridLineColor: "rgba(0,0,0,.05)",
-            //Number - Width of the grid lines
-            scaleGridLineWidth: 1,
-            //Boolean - Whether to show horizontal lines (except X axis)
-            scaleShowHorizontalLines: true,
-            //Boolean - Whether to show vertical lines (except Y axis)
-            scaleShowVerticalLines: true,
-            //Boolean - If there is a stroke on each period
-            barShowStroke: true,
-            //Number - Pixel width of the period stroke
-            barStrokeWidth: 2,
-            //Number - Spacing between each of the X value sets
-            barValueSpacing: 5,
-            //Number - Spacing between data sets within X values
-            barDatasetSpacing: 1,
-            //String - A legend template
-            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-            //Boolean - whether to make the chart responsive
-            responsive: true,
-            maintainAspectRatio: true
-        }
+                    //-------------
+                    //- BAR CHART -
+                    //-------------
+                    var periodChartCanvas = $("#PeriodChart").get(0).getContext("2d")
+                    var periodChart = new Chart(periodChartCanvas)
+                    var periodChartData = {
+                        labels: ["Period 1 Fall", "Period 2 Fall", "Period 3 Fall", "Period 4 Fall", "Period 1 Spring", "Period 2 Spring", "Period 3 Spring","Period 4 Spring"],
+                        datasets: [
+                            {
+                                label: "Current workload",
+                                fillColor: "rgba(60,141,188,0.9)",
+                                strokeColor: "rgba(60,141,188,0.8)",
+                                pointColor: "#3b8bba",
+                                pointStrokeColor: "rgba(60,141,188,1)",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(60,141,188,1)",
+                                data: [@ViewBag.Period1,@ViewBag.Period2,@ViewBag.Period3,@ViewBag.Period4,@ViewBag.Period5,@ViewBag.Period6,@ViewBag.Period7,@ViewBag.Period8]
+                            },
+                            {
+                                label: "Expected workload",
+                                fillColor: "rgba(210, 214, 222, 1)",
+                                strokeColor: "rgba(210, 214, 222, 1)",
+                                pointColor: "rgba(210, 214, 222, 1)",
+                                pointStrokeColor: "#c1c7d1",
+                                pointHighlightFill: "#fff",
+                                pointHighlightStroke: "rgba(220,220,220,1)",
+                                data: [@ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours, @ViewBag.ExpectedPeriodHours,@ViewBag.ExpectedPeriodHours]
+                            }
 
-        periodChartOptions.datasetFill = false
-        periodChart.Bar(periodChartData, periodChartOptions)
-    });
+                        ]
+                    }
+                    periodChartData.datasets[1].fillColor = "#00a65a"
+                    periodChartData.datasets[1].strokeColor = "#00a65a"
+                    periodChartData.datasets[1].pointColor = "#00a65a"
+                    var periodChartOptions = {
+                        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+                        scaleBeginAtZero: true,
+                        //Boolean - Whether grid lines are shown across the chart
+                        scaleShowGridLines: false,
+                        //String - Colour of the grid lines
+                        scaleGridLineColor: "rgba(0,0,0,.05)",
+                        //Number - Width of the grid lines
+                        scaleGridLineWidth: 1,
+                        //Boolean - Whether to show horizontal lines (except X axis)
+                        scaleShowHorizontalLines: true,
+                        //Boolean - Whether to show vertical lines (except Y axis)
+                        scaleShowVerticalLines: true,
+                        //Boolean - If there is a stroke on each period
+                        barShowStroke: true,
+                        //Number - Pixel width of the period stroke
+                        barStrokeWidth: 2,
+                        //Number - Spacing between each of the X value sets
+                        barValueSpacing: 5,
+                        //Number - Spacing between data sets within X values
+                        barDatasetSpacing: 1,
+                        //String - A legend template
+                        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+                        //Boolean - whether to make the chart responsive
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }
 
-</script>
-}
+                    periodChartOptions.datasetFill = false
+                    periodChart.Bar(periodChartData, periodChartOptions)
+                });
+
+    </script>
+            }

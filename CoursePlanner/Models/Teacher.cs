@@ -19,6 +19,8 @@ namespace CoursePlanner.Models
             this.CourseOccurrence = new HashSet<CourseOccurrence>();
             this.CourseTeacher = new HashSet<CourseTeacher>();
             this.TeacherReduction = new HashSet<TeacherReduction>();
+            this.BaseMessage = new HashSet<BaseMessage>();
+            this.BaseMessage1 = new HashSet<BaseMessage>();
         }
     
         public int TeacherId { get; set; }
@@ -34,5 +36,7 @@ namespace CoursePlanner.Models
         public virtual ICollection<CourseOccurrence> CourseOccurrence { get; set; }
         public virtual ICollection<CourseTeacher> CourseTeacher { get; set; }
         public virtual ICollection<TeacherReduction> TeacherReduction { get; set; }
+        public virtual ICollection<BaseMessage> BaseMessage { get; set; }
+        public virtual ICollection<BaseMessage> BaseMessage1 { get; set; }
     }
 }

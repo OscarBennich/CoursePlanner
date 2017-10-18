@@ -1,0 +1,29 @@
+﻿@model CoursePlanner.Models.RequestApprovalMessage
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>RequestApprovalMessage</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseOccurrence.Year)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseOccurrence.Year)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BaseMessage.MessageText)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BaseMessage.MessageText)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RequestApprovalMessageID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

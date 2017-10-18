@@ -23,7 +23,8 @@ namespace CoursePlanner.Controllers
          ViewBag.CurrentTeacherId = new Func<int ,int>(GetTeacherId);
          base.OnActionExecuting(filterContext);
      }
-     private int GetTeacherId(int id)
+	 
+	public int GetTeacherId(int id)
      {
 
          
@@ -34,5 +35,6 @@ namespace CoursePlanner.Controllers
 
 
      }
+
     }
 }

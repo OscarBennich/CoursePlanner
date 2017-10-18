@@ -12,13 +12,19 @@ namespace CoursePlanner.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CourseTeacher
+    public partial class RequestApprovalMessage
     {
-        public int CourseOccurrenceId { get; set; }
-        public int TeacherId { get; set; }
-        public int Hours { get; set; }
+        public RequestApprovalMessage()
+        {
+            this.ResponseApprovalMessage = new HashSet<ResponseApprovalMessage>();
+        }
     
+        public int RequestApprovalMessageID { get; set; }
+        public int CourseOccurrenceID { get; set; }
+        public int BaseMessageID { get; set; }
+    
+        public virtual BaseMessage BaseMessage { get; set; }
         public virtual CourseOccurrence CourseOccurrence { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public virtual ICollection<ResponseApprovalMessage> ResponseApprovalMessage { get; set; }
     }
 }

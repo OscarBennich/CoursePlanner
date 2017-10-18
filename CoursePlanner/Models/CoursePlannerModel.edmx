@@ -5,6 +5,26 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BaseMessage">
+          <Key>
+            <PropertyRef Name="BaseMessageID" />
+          </Key>
+          <Property Name="BaseMessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderID" Type="int" Nullable="false" />
+          <Property Name="RecieverID" Type="int" Nullable="false" />
+          <Property Name="MessageText" Type="nvarchar(max)" />
+          <Property Name="MessageSendDate" Type="datetime" Nullable="false" />
+          <Property Name="MessageReadDate" Type="datetime" />
+          <Property Name="MessageDeletionDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BaseMessageID" Type="int" Nullable="false" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -42,7 +62,24 @@
           </Key>
           <Property Name="CourseOccurrenceId" Type="int" Nullable="false" />
           <Property Name="TeacherId" Type="int" Nullable="false" />
-          <Property Name="Hours" Type="int" />
+          <Property Name="Hours" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RequestApprovalMessage">
+          <Key>
+            <PropertyRef Name="RequestApprovalMessageID" />
+          </Key>
+          <Property Name="RequestApprovalMessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseOccurrenceID" Type="int" Nullable="false" />
+          <Property Name="BaseMessageID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResponseApprovalMessage">
+          <Key>
+            <PropertyRef Name="ResponseApprovalMessageID" />
+          </Key>
+          <Property Name="ResponseApprovalMessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Response" Type="bit" Nullable="false" />
+          <Property Name="BaseMessageID" Type="int" Nullable="false" />
+          <Property Name="RequestApprovalMessageID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Teacher">
           <Key>
@@ -68,6 +105,42 @@
           <Property Name="Term" Type="int" />
           <Property Name="Percentage" Type="float" />
         </EntityType>
+        <Association Name="FK_BaseMessage_Teacher_Reciever">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="BaseMessage" Type="Self.BaseMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="BaseMessage">
+              <PropertyRef Name="RecieverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaseMessage_Teacher_Sender">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
+          <End Role="BaseMessage" Type="Self.BaseMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="BaseMessage">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_BaseMessage">
+          <End Role="BaseMessage" Type="Self.BaseMessage" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BaseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CourseOccurrence_Course">
           <End Role="Course" Type="Self.Course" Multiplicity="1" />
           <End Role="CourseOccurrence" Type="Self.CourseOccurrence" Multiplicity="*" />
@@ -116,6 +189,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RequestApprovalMessage_BaseMessage">
+          <End Role="BaseMessage" Type="Self.BaseMessage" Multiplicity="1" />
+          <End Role="RequestApprovalMessage" Type="Self.RequestApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Principal>
+            <Dependent Role="RequestApprovalMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestApprovalMessage_CourseOccurrence">
+          <End Role="CourseOccurrence" Type="Self.CourseOccurrence" Multiplicity="1" />
+          <End Role="RequestApprovalMessage" Type="Self.RequestApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseOccurrence">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Principal>
+            <Dependent Role="RequestApprovalMessage">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResponseApprovalMessage_BaseMessage">
+          <End Role="BaseMessage" Type="Self.BaseMessage" Multiplicity="1" />
+          <End Role="ResponseApprovalMessage" Type="Self.ResponseApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Principal>
+            <Dependent Role="ResponseApprovalMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResponseApprovalMessage_RequestApprovalMessage">
+          <End Role="RequestApprovalMessage" Type="Self.RequestApprovalMessage" Multiplicity="1" />
+          <End Role="ResponseApprovalMessage" Type="Self.ResponseApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestApprovalMessage">
+              <PropertyRef Name="RequestApprovalMessageID" />
+            </Principal>
+            <Dependent Role="ResponseApprovalMessage">
+              <PropertyRef Name="RequestApprovalMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TeacherReduction_Teacher">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
           <End Role="TeacherReduction" Type="Self.TeacherReduction" Multiplicity="*" />
@@ -129,11 +250,27 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="BaseMessage" EntityType="Self.BaseMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseOccurrence" EntityType="Self.CourseOccurrence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CourseTeacher" EntityType="Self.CourseTeacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestApprovalMessage" EntityType="Self.RequestApprovalMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResponseApprovalMessage" EntityType="Self.ResponseApprovalMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeacherReduction" EntityType="Self.TeacherReduction" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BaseMessage_Teacher_Reciever" Association="Self.FK_BaseMessage_Teacher_Reciever">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaseMessage_Teacher_Sender" Association="Self.FK_BaseMessage_Teacher_Sender">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_BaseMessage" Association="Self.FK_Comment_BaseMessage">
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
           <AssociationSet Name="FK_CourseOccurrence_Course" Association="Self.FK_CourseOccurrence_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
@@ -149,6 +286,22 @@
           <AssociationSet Name="FK_CourseTeacher_Teacher" Association="Self.FK_CourseTeacher_Teacher">
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="CourseTeacher" EntitySet="CourseTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestApprovalMessage_BaseMessage" Association="Self.FK_RequestApprovalMessage_BaseMessage">
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+            <End Role="RequestApprovalMessage" EntitySet="RequestApprovalMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestApprovalMessage_CourseOccurrence" Association="Self.FK_RequestApprovalMessage_CourseOccurrence">
+            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+            <End Role="RequestApprovalMessage" EntitySet="RequestApprovalMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResponseApprovalMessage_BaseMessage" Association="Self.FK_ResponseApprovalMessage_BaseMessage">
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+            <End Role="ResponseApprovalMessage" EntitySet="ResponseApprovalMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResponseApprovalMessage_RequestApprovalMessage" Association="Self.FK_ResponseApprovalMessage_RequestApprovalMessage">
+            <End Role="RequestApprovalMessage" EntitySet="RequestApprovalMessage" />
+            <End Role="ResponseApprovalMessage" EntitySet="ResponseApprovalMessage" />
           </AssociationSet>
           <AssociationSet Name="FK_TeacherReduction_Teacher" Association="Self.FK_TeacherReduction_Teacher">
             <End Role="Teacher" EntitySet="Teacher" />
@@ -179,6 +332,7 @@
           <NavigationProperty Name="CourseTeacher" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseOccurrence" ToRole="CourseTeacher" />
           <NavigationProperty Name="Course" Relationship="Model.FK_CourseOccurrence_Course" FromRole="CourseOccurrence" ToRole="Course" />
           <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="CourseOccurrence" ToRole="Teacher" />
+          <NavigationProperty Name="RequestApprovalMessage" Relationship="Model.FK_RequestApprovalMessage_CourseOccurrence" FromRole="CourseOccurrence" ToRole="RequestApprovalMessage" />
         </EntityType>
         <EntityType Name="CourseTeacher">
           <Key>
@@ -187,7 +341,7 @@
           </Key>
           <Property Name="CourseOccurrenceId" Type="Int32" Nullable="false" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
-          <Property Name="Hours" Type="Int32" />
+          <Property Name="Hours" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CourseOccurrence" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseTeacher" ToRole="CourseOccurrence" />
           <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseTeacher_Teacher" FromRole="CourseTeacher" ToRole="Teacher" />
         </EntityType>
@@ -240,7 +394,39 @@
             <End Role="Teacher" EntitySet="Teacher" />
             <End Role="TeacherReduction" EntitySet="TeacherReduction" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="BaseMessage" EntityType="Model.BaseMessage" />
+          <EntitySet Name="RequestApprovalMessage" EntityType="Model.RequestApprovalMessage" />
+          <AssociationSet Name="FK_BaseMessage_Teacher_Reciever" Association="Model.FK_BaseMessage_Teacher_Reciever">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BaseMessage_Teacher_Sender" Association="Model.FK_BaseMessage_Teacher_Sender">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestApprovalMessage_BaseMessage" Association="Model.FK_RequestApprovalMessage_BaseMessage">
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+            <End Role="RequestApprovalMessage" EntitySet="RequestApprovalMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RequestApprovalMessage_CourseOccurrence" Association="Model.FK_RequestApprovalMessage_CourseOccurrence">
+            <End Role="CourseOccurrence" EntitySet="CourseOccurrence" />
+            <End Role="RequestApprovalMessage" EntitySet="RequestApprovalMessage" />
+          </AssociationSet>
+          <EntitySet Name="ResponseApprovalMessage" EntityType="Model.ResponseApprovalMessage" />
+          <AssociationSet Name="FK_ResponseApprovalMessage_BaseMessage" Association="Model.FK_ResponseApprovalMessage_BaseMessage">
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+            <End Role="ResponseApprovalMessage" EntitySet="ResponseApprovalMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResponseApprovalMessage_RequestApprovalMessage" Association="Model.FK_ResponseApprovalMessage_RequestApprovalMessage">
+            <End Role="RequestApprovalMessage" EntitySet="RequestApprovalMessage" />
+            <End Role="ResponseApprovalMessage" EntitySet="ResponseApprovalMessage" />
+          </AssociationSet>
+          <EntitySet Name="Comment" EntityType="Model.Comment" />
+          <AssociationSet Name="FK_Comment_BaseMessage" Association="Model.FK_Comment_BaseMessage">
+            <End Role="BaseMessage" EntitySet="BaseMessage" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="CourseId" />
@@ -341,7 +527,9 @@
           <NavigationProperty Name="CourseOccurrence" Relationship="Model.FK_CourseOccurrence_Teacher" FromRole="Teacher" ToRole="CourseOccurrence" />
           <NavigationProperty Name="CourseTeacher" Relationship="Model.FK_CourseTeacher_Teacher" FromRole="Teacher" ToRole="CourseTeacher" />
           <NavigationProperty Name="TeacherReduction" Relationship="Model.FK_TeacherReduction_Teacher" FromRole="Teacher" ToRole="TeacherReduction" />
-        </EntityType>
+          <NavigationProperty Name="BaseMessage" Relationship="Model.FK_BaseMessage_Teacher_Reciever" FromRole="Teacher" ToRole="BaseMessage" />
+          <NavigationProperty Name="BaseMessage1" Relationship="Model.FK_BaseMessage_Teacher_Sender" FromRole="Teacher" ToRole="BaseMessage" />
+          </EntityType>
         <Association Name="FK_CourseOccurrence_Teacher">
           <End Type="Model.Teacher" Role="Teacher" Multiplicity="0..1" />
           <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="*" />
@@ -378,7 +566,143 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EnumType Name="MessageType">
+          <Member Name="ResponseMessage" />
+          <Member Name="TextMessage" />
+        </EnumType>
+        <EntityType Name="BaseMessage">
+          <Key>
+            <PropertyRef Name="BaseMessageID" />
+          </Key>
+          <Property Name="BaseMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderID" Type="Int32" Nullable="false" />
+          <Property Name="RecieverID" Type="Int32" Nullable="false" />
+          <Property Name="MessageText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MessageSendDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MessageReadDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TeacherReciever" Relationship="Model.FK_BaseMessage_Teacher_Reciever" FromRole="BaseMessage" ToRole="Teacher" />
+          <NavigationProperty Name="TeacherSender" Relationship="Model.FK_BaseMessage_Teacher_Sender" FromRole="BaseMessage" ToRole="Teacher" />
+          <NavigationProperty Name="RequestApprovalMessage" Relationship="Model.FK_RequestApprovalMessage_BaseMessage" FromRole="BaseMessage" ToRole="RequestApprovalMessage" />
+          <NavigationProperty Name="ResponseApprovalMessage" Relationship="Model.FK_ResponseApprovalMessage_BaseMessage" FromRole="BaseMessage" ToRole="ResponseApprovalMessage" />
+          <NavigationProperty Name="Comment" Relationship="Model.FK_Comment_BaseMessage" FromRole="BaseMessage" ToRole="Comment" />
+          <Property Name="MessageDeletionDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RequestApprovalMessage">
+          <Key>
+            <PropertyRef Name="RequestApprovalMessageID" />
+          </Key>
+          <Property Name="RequestApprovalMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseOccurrenceID" Type="Int32" Nullable="false" />
+          <Property Name="BaseMessageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaseMessage" Relationship="Model.FK_RequestApprovalMessage_BaseMessage" FromRole="RequestApprovalMessage" ToRole="BaseMessage" />
+          <NavigationProperty Name="CourseOccurrence" Relationship="Model.FK_RequestApprovalMessage_CourseOccurrence" FromRole="RequestApprovalMessage" ToRole="CourseOccurrence" />
+          <NavigationProperty Name="ResponseApprovalMessage" Relationship="Model.FK_ResponseApprovalMessage_RequestApprovalMessage" FromRole="RequestApprovalMessage" ToRole="ResponseApprovalMessage" />
+        </EntityType>
+        <Association Name="FK_BaseMessage_Teacher_Reciever">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Model.BaseMessage" Role="BaseMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="BaseMessage">
+              <PropertyRef Name="RecieverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BaseMessage_Teacher_Sender">
+          <End Type="Model.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Model.BaseMessage" Role="BaseMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherId" />
+            </Principal>
+            <Dependent Role="BaseMessage">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestApprovalMessage_BaseMessage">
+          <End Type="Model.BaseMessage" Role="BaseMessage" Multiplicity="1" />
+          <End Type="Model.RequestApprovalMessage" Role="RequestApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Principal>
+            <Dependent Role="RequestApprovalMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RequestApprovalMessage_CourseOccurrence">
+          <End Type="Model.CourseOccurrence" Role="CourseOccurrence" Multiplicity="1" />
+          <End Type="Model.RequestApprovalMessage" Role="RequestApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseOccurrence">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Principal>
+            <Dependent Role="RequestApprovalMessage">
+              <PropertyRef Name="CourseOccurrenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ResponseApprovalMessage">
+          <Key>
+            <PropertyRef Name="ResponseApprovalMessageID" />
+          </Key>
+          <Property Name="ResponseApprovalMessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Response" Type="Boolean" Nullable="false" />
+          <Property Name="BaseMessageID" Type="Int32" Nullable="false" />
+          <Property Name="RequestApprovalMessageID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaseMessage" Relationship="Model.FK_ResponseApprovalMessage_BaseMessage" FromRole="ResponseApprovalMessage" ToRole="BaseMessage" />
+          <NavigationProperty Name="RequestApprovalMessage" Relationship="Model.FK_ResponseApprovalMessage_RequestApprovalMessage" FromRole="ResponseApprovalMessage" ToRole="RequestApprovalMessage" />
+        </EntityType>
+        <Association Name="FK_ResponseApprovalMessage_BaseMessage">
+          <End Type="Model.BaseMessage" Role="BaseMessage" Multiplicity="1" />
+          <End Type="Model.ResponseApprovalMessage" Role="ResponseApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Principal>
+            <Dependent Role="ResponseApprovalMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResponseApprovalMessage_RequestApprovalMessage">
+          <End Type="Model.RequestApprovalMessage" Role="RequestApprovalMessage" Multiplicity="1" />
+          <End Type="Model.ResponseApprovalMessage" Role="ResponseApprovalMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestApprovalMessage">
+              <PropertyRef Name="RequestApprovalMessageID" />
+            </Principal>
+            <Dependent Role="ResponseApprovalMessage">
+              <PropertyRef Name="RequestApprovalMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseMessageID" Type="Int32" Nullable="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BaseMessage" Relationship="Model.FK_Comment_BaseMessage" FromRole="Comment" ToRole="BaseMessage" />
+        </EntityType>
+        <Association Name="FK_Comment_BaseMessage">
+          <End Type="Model.BaseMessage" Role="BaseMessage" Multiplicity="1" />
+          <End Type="Model.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseMessage">
+              <PropertyRef Name="BaseMessageID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BaseMessageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -448,6 +772,47 @@
                 <ScalarProperty Name="TeacherDateOfBirth" ColumnName="TeacherDateOfBirth" />
                 <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
                 <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaseMessage">
+            <EntityTypeMapping TypeName="Model.BaseMessage">
+              <MappingFragment StoreEntitySet="BaseMessage">
+                <ScalarProperty Name="MessageDeletionDate" ColumnName="MessageDeletionDate" />
+                <ScalarProperty Name="MessageReadDate" ColumnName="MessageReadDate" />
+                <ScalarProperty Name="MessageSendDate" ColumnName="MessageSendDate" />
+                <ScalarProperty Name="MessageText" ColumnName="MessageText" />
+                <ScalarProperty Name="RecieverID" ColumnName="RecieverID" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="BaseMessageID" ColumnName="BaseMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestApprovalMessage">
+            <EntityTypeMapping TypeName="Model.RequestApprovalMessage">
+              <MappingFragment StoreEntitySet="RequestApprovalMessage">
+                <ScalarProperty Name="BaseMessageID" ColumnName="BaseMessageID" />
+                <ScalarProperty Name="CourseOccurrenceID" ColumnName="CourseOccurrenceID" />
+                <ScalarProperty Name="RequestApprovalMessageID" ColumnName="RequestApprovalMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResponseApprovalMessage">
+            <EntityTypeMapping TypeName="Model.ResponseApprovalMessage">
+              <MappingFragment StoreEntitySet="ResponseApprovalMessage">
+                <ScalarProperty Name="RequestApprovalMessageID" ColumnName="RequestApprovalMessageID" />
+                <ScalarProperty Name="BaseMessageID" ColumnName="BaseMessageID" />
+                <ScalarProperty Name="Response" ColumnName="Response" />
+                <ScalarProperty Name="ResponseApprovalMessageID" ColumnName="ResponseApprovalMessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="Model.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+                <ScalarProperty Name="BaseMessageID" ColumnName="BaseMessageID" />
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

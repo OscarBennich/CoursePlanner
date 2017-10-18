@@ -1,0 +1,49 @@
+﻿@model CoursePlanner.Models.Message
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Message</legend>
+
+        <div class="editor-label">
+            Message Text
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MessageText)
+            @Html.ValidationMessageFor(model => model.MessageText)
+        </div>
+        <div class="editor-label">
+            Send to 
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("RecieverID", String.Empty)
+            @Html.ValidationMessageFor(model => model.RecieverID)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CourseOccurrenceID, "CourseOccurrence") (Optional)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("CourseOccurrenceID", String.Empty)
+            @Html.ValidationMessageFor(model => model.CourseOccurrenceID)
+        </div>
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

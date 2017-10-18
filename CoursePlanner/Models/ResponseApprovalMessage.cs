@@ -12,13 +12,14 @@ namespace CoursePlanner.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CourseTeacher
+    public partial class ResponseApprovalMessage
     {
-        public int CourseOccurrenceId { get; set; }
-        public int TeacherId { get; set; }
-        public int Hours { get; set; }
+        public int ResponseApprovalMessageID { get; set; }
+        public bool Response { get; set; }
+        public int BaseMessageID { get; set; }
+        public int RequestApprovalMessageID { get; set; }
     
-        public virtual CourseOccurrence CourseOccurrence { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public virtual BaseMessage BaseMessage { get; set; }
+        public virtual RequestApprovalMessage RequestApprovalMessage { get; set; }
     }
 }

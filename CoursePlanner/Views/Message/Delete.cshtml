@@ -1,0 +1,75 @@
+﻿@model CoursePlanner.Models.Message
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Message</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MessageText)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MessageText)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherSender.TeacherName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherSender.TeacherName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TeacherReciever.TeacherName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TeacherReciever.TeacherName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MessageSendDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MessageSendDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.MessageReadDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.MessageReadDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CourseOccurrence.Year)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CourseOccurrence.Year)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ApproveChanges)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ApproveChanges)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ResponseToMessage.MessageText)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ResponseToMessage.MessageText)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

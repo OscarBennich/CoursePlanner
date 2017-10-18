@@ -191,12 +191,19 @@
     <Compile Include="Controllers\CourseOccurrenceController.cs" />
     <Compile Include="Controllers\CourseTeacherController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RequestApprovalMessageController.cs" />
     <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BaseMessage.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Comment.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ContractTypes.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
@@ -236,6 +243,9 @@
     <Compile Include="Models\CourseTypes.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageType.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Periods.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
@@ -243,6 +253,12 @@
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReductionTypes.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RequestApprovalMessage.cs">
+      <DependentUpon>CoursePlannerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ResponseApprovalMessage.cs">
       <DependentUpon>CoursePlannerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Statuses.cs">
@@ -774,6 +790,16 @@
     <Content Include="Views\CourseTeacher\Edit.cshtml" />
     <Content Include="Views\CourseTeacher\Index.cshtml" />
     <Content Include="Views\Home\_CourseConflictTable.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
+    <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Message\Create.cshtml" />
+    <Content Include="Views\Message\Edit.cshtml" />
+    <Content Include="Views\Message\Delete.cshtml" />
+    <Content Include="Views\RequestApprovalMessage\Index.cshtml" />
+    <Content Include="Views\RequestApprovalMessage\Details.cshtml" />
+    <Content Include="Views\RequestApprovalMessage\Create.cshtml" />
+    <Content Include="Views\RequestApprovalMessage\Edit.cshtml" />
+    <Content Include="Views\RequestApprovalMessage\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

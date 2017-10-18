@@ -34,26 +34,26 @@ namespace CoursePlanner.Controllers
             CourseOccurrence courseOccurrence = db.CourseOccurrence.Find(courseOccurrenceId);
             int CourseHoursTotalAllocated = CalculateCourseHoursAllocated(courseOccurrence);
 
-            return CourseHoursTotalAllocated; 
+            return CourseHoursTotalAllocated;
         }
 
         private int CalculateCourseHoursAllocated(CourseOccurrence courseOccurrence)
         {
             int CourseHoursTotalAllocated = 0;
-        
-
-            
-                try
-                {
-
-                    CourseHoursTotalAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.CourseOccurrenceId == courseOccurrence.CourseOccurrenceID).Select(y => y.Hours).Sum());
-                }
-                catch { }
 
 
 
+            try
+            {
 
-                return CourseHoursTotalAllocated;
+                CourseHoursTotalAllocated += Convert.ToInt32(db.CourseTeacher.Where(x => x.CourseOccurrenceId == courseOccurrence.CourseOccurrenceID).Select(y => y.Hours).Sum());
+            }
+            catch { }
+
+
+
+
+            return CourseHoursTotalAllocated;
         }
 
         private string GetCurrentEducationalYear()
@@ -95,17 +95,17 @@ namespace CoursePlanner.Controllers
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
 
             ViewBag.teachersCourse = teachersCourse;
-            ViewBag.TeachersHistory = 
+            ViewBag.TeachersHistory =
                 new Func<int, IEnumerable<Teacher>>(GetTeacherHistory);
 
             ViewBag.GetCourseResponsibleName =
               new Func<int, string>(GetCourseResponsibleNameFind);
 
             ViewBag.IsCourseResponsibleName =
-              new Func<int, int,string>(IsCourseResponsibleNameFind);
+              new Func<int, int, string>(IsCourseResponsibleNameFind);
             ViewBag.TeachersForCourseResponsible = db.Teacher.ToList();
 
-          
+
             return View(courseoccurrence);
         }
 
@@ -152,10 +152,10 @@ namespace CoursePlanner.Controllers
                                              select m.TeacherName).Single();
                 return Convert.ToString(CourseResponsibleName);
             }
-            catch(Exception E)
+            catch (Exception E)
             {
                 return "no course responsible";
-            }      
+            }
         }
 
 
@@ -361,7 +361,33 @@ namespace CoursePlanner.Controllers
                 academicYear = (DateTime.Today.Year - 1) + "/" + DateTime.Today.Year;
             }
 
+
             return academicYear;
         }     
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateRequestApprovalMessage(int courseId, int senderId, int receiverId, string messageText)
+        {
+            BaseMessage baseMessage = new BaseMessage();
+            baseMessage.SenderID = senderId;
+            baseMessage.RecieverID = receiverId;
+            baseMessage.MessageText = messageText;
+            baseMessage.MessageSendDate = DateTime.Now;
+
+            RequestApprovalMessage requestMessage = new RequestApprovalMessage();
+            requestMessage.CourseOccurrenceID = courseId;
+            requestMessage.BaseMessage = baseMessage;
+
+            db.RequestApprovalMessage.Add(requestMessage);
+            db.SaveChanges();
+
+
+            return RedirectToAction("Details/" + courseId);
+        }
+
+
     }
 }
