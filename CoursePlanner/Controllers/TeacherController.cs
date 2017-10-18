@@ -95,7 +95,11 @@ namespace CoursePlanner.Controllers
                 return HttpNotFound();
             }
 
-            var publicComments = db.Comment.Where(x => x.BaseMessage.RecieverID == teacher.TeacherId && x.IsPublic == true).FirstOrDefault();
+            var publicComments = db.Comment.Where(x => x.BaseMessage.RecieverID == teacher.TeacherId && x.IsPublic == true && x.BaseMessage.MessageDeletionDate == null);
+            ViewBag.publicComments = publicComments;
+
+            var privateComments = db.Comment.Where(x => x.BaseMessage.RecieverID == teacher.TeacherId && x.IsPublic == false && x.BaseMessage.MessageDeletionDate == null);
+            ViewBag.privateComments = privateComments;
 
             List<CourseOccurrence> courseOccurencesFall = GetTeacherCourses(teacher.TeacherId, Terms.Fall).ToList();
             List<CourseOccurrence> courseOccurencesSpring = GetTeacherCourses(teacher.TeacherId, Terms.Spring).ToList();
@@ -197,6 +201,20 @@ namespace CoursePlanner.Controllers
             }
 
             return View(teacher);
+        }
+
+        public ActionResult DeleteComment(int toDeleteComment)
+        {
+
+            var deletedComment = db.Comment.Where(x => x.BaseMessageID == toDeleteComment).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                deletedComment.BaseMessage.MessageDeletionDate = DateTime.Now;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details/" + deletedComment.BaseMessage.RecieverID);
         }
 
         //
