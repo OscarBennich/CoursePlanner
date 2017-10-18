@@ -27,6 +27,7 @@ namespace CoursePlanner.Models
         public string MessageText { get; set; }
         public System.DateTime MessageSendDate { get; set; }
         public Nullable<System.DateTime> MessageReadDate { get; set; }
+        public Nullable<System.DateTime> MessageDeletionDate { get; set; }
     
         public virtual Teacher TeacherReciever { get; set; }
         public virtual Teacher TeacherSender { get; set; }

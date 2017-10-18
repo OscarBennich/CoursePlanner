@@ -15,6 +15,7 @@
           <Property Name="MessageText" Type="nvarchar(max)" />
           <Property Name="MessageSendDate" Type="datetime" Nullable="false" />
           <Property Name="MessageReadDate" Type="datetime" />
+          <Property Name="MessageDeletionDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -61,7 +62,7 @@
           </Key>
           <Property Name="CourseOccurrenceId" Type="int" Nullable="false" />
           <Property Name="TeacherId" Type="int" Nullable="false" />
-          <Property Name="Hours" Type="int" />
+          <Property Name="Hours" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestApprovalMessage">
           <Key>
@@ -340,7 +341,7 @@
           </Key>
           <Property Name="CourseOccurrenceId" Type="Int32" Nullable="false" />
           <Property Name="TeacherId" Type="Int32" Nullable="false" />
-          <Property Name="Hours" Type="Int32" />
+          <Property Name="Hours" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CourseOccurrence" Relationship="Self.FK_CourseTeacher_Course" FromRole="CourseTeacher" ToRole="CourseOccurrence" />
           <NavigationProperty Name="Teacher" Relationship="Model.FK_CourseTeacher_Teacher" FromRole="CourseTeacher" ToRole="Teacher" />
         </EntityType>
@@ -584,6 +585,7 @@
           <NavigationProperty Name="RequestApprovalMessage" Relationship="Model.FK_RequestApprovalMessage_BaseMessage" FromRole="BaseMessage" ToRole="RequestApprovalMessage" />
           <NavigationProperty Name="ResponseApprovalMessage" Relationship="Model.FK_ResponseApprovalMessage_BaseMessage" FromRole="BaseMessage" ToRole="ResponseApprovalMessage" />
           <NavigationProperty Name="Comment" Relationship="Model.FK_Comment_BaseMessage" FromRole="BaseMessage" ToRole="Comment" />
+          <Property Name="MessageDeletionDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="RequestApprovalMessage">
           <Key>
@@ -776,6 +778,7 @@
           <EntitySetMapping Name="BaseMessage">
             <EntityTypeMapping TypeName="Model.BaseMessage">
               <MappingFragment StoreEntitySet="BaseMessage">
+                <ScalarProperty Name="MessageDeletionDate" ColumnName="MessageDeletionDate" />
                 <ScalarProperty Name="MessageReadDate" ColumnName="MessageReadDate" />
                 <ScalarProperty Name="MessageSendDate" ColumnName="MessageSendDate" />
                 <ScalarProperty Name="MessageText" ColumnName="MessageText" />

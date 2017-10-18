@@ -16,7 +16,7 @@ namespace CoursePlanner.Models
     {
         public int CourseOccurrenceId { get; set; }
         public int TeacherId { get; set; }
-        public Nullable<int> Hours { get; set; }
+        public int Hours { get; set; }
     
         public virtual CourseOccurrence CourseOccurrence { get; set; }
         public virtual Teacher Teacher { get; set; }
