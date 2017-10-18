@@ -30,8 +30,6 @@ namespace CoursePlanner.Controllers
                           where m.TeacherName.ToUpper().StartsWith(User.Identity.Name.ToUpper())
                           select m.TeacherId).FirstOrDefault();
          return teacherId;
-
-
      }
     }
 }
