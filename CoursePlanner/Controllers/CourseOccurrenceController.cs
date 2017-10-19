@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using CoursePlanner.Models;
 using System.Data.Entity.Infrastructure;
 using System.Data.Objects.SqlClient;
+using WebMatrix.WebData;
 
 namespace CoursePlanner.Controllers
 {

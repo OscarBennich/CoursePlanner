@@ -9,7 +9,7 @@ using CoursePlanner.Models;
 
 namespace CoursePlanner.Controllers
 {
-    public class RequestApprovalMessageController : Controller
+    public class RequestApprovalMessageController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 
@@ -19,7 +19,23 @@ namespace CoursePlanner.Controllers
         public ActionResult Index()
         {
             var requestapprovalmessage = db.RequestApprovalMessage.Include(r => r.BaseMessage).Include(r => r.CourseOccurrence);
+            ViewBag.ResponseStatus= new Func<int, string>(GetResponseStatus);
+            ViewBag.ResponseMessage = new Func<int, string>(GetResponseMessage);
             return View(requestapprovalmessage.ToList());
+        }
+
+
+        public string GetResponseStatus(int requestApprovalId)
+        {
+            ResponseApprovalMessage responseMessage = db.ResponseApprovalMessage.Where(r => r.RequestApprovalMessageID == requestApprovalId).FirstOrDefault();
+            return responseMessage.Response.ToString();
+        }
+
+        public string GetResponseMessage(int requestApprovalId)
+        {
+            ResponseApprovalMessage responseMessage = db.ResponseApprovalMessage.Where(r => r.RequestApprovalMessageID == requestApprovalId).FirstOrDefault();
+            BaseMessage existingBaseMessage = db.BaseMessage.Where(b => b.BaseMessageID == responseMessage.BaseMessageID).FirstOrDefault();
+            return existingBaseMessage.MessageText.ToString();
         }
 
         //
@@ -136,6 +152,8 @@ namespace CoursePlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateResponseApprovalMessage(int requestApprovalMessageId, int senderId, int receiverId, string messageText, string response)
         {
+            
+
             BaseMessage baseMessage = new BaseMessage();
             baseMessage.SenderID = senderId;
             baseMessage.RecieverID = receiverId;
@@ -147,8 +165,14 @@ namespace CoursePlanner.Controllers
             responseMessage.BaseMessage = baseMessage;
 
             responseMessage.Response = Convert.ToBoolean(response);
-
             db.ResponseApprovalMessage.Add(responseMessage);
+            RequestApprovalMessage existingRequestMessage =db.RequestApprovalMessage.Find(requestApprovalMessageId);
+            BaseMessage existingBaseMessage = db.BaseMessage.Where(b => b.BaseMessageID == existingRequestMessage.BaseMessageID).FirstOrDefault();
+           // BaseMessage existingRequestMessage = db.BaseMessage.Find(requestApprovalMessageId);
+
+            existingBaseMessage.MessageReadDate = DateTime.Now;
+            db.Entry(existingRequestMessage).State = EntityState.Modified;
+
             db.SaveChanges();
 
 

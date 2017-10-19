@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebMatrix.WebData;
 
 
 namespace CoursePlanner.Controllers
@@ -20,16 +21,22 @@ namespace CoursePlanner.Controllers
     //    //}
      protected override void OnActionExecuting(ActionExecutingContext filterContext)
      {
-         ViewBag.TeacherId = GetTeacherId();
+         //ViewBag.CurrentTeacherId = new Func<int, int>(GetTeacherId);
+         ViewBag.CurrentTeacherId = GetTeacherId();
          base.OnActionExecuting(filterContext);
      }
-     
+
      public int GetTeacherId()
      {
+
+
          int teacherId = (from m in db.Teacher
-                          where m.TeacherName.ToUpper().StartsWith(User.Identity.Name.ToUpper())
-                          select m.TeacherId).FirstOrDefault();
+                          where m.TeacherUserId == WebSecurity.CurrentUserId
+                        select m.TeacherId).FirstOrDefault();
          return teacherId;
+
+
      }
+
     }
 }

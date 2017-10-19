@@ -421,9 +421,12 @@
                                         <table class="table table-bordered table-hover table-responsive" id="courseoverview">
                                             <thead>
                                                 <tr>
+                                                  @if (User.IsInRole("Study Director"))
+                                                    {
                                                     <th>
                                                         Request approval
                                                     </th>
+                                                    }
                                                     <th>
                                                         Teacher Name
                                                     </th>
@@ -440,8 +443,12 @@
                                                 @foreach (CoursePlanner.Models.CourseTeacher courseTeacher in (List<CoursePlanner.Models.CourseTeacher>)ViewBag.teachersCourse)
                                                 {
                                                     <tr>
-                                                        <td>    
-                                                            <input type="checkbox" name="approvalMessageSelection" value="@courseTeacher.TeacherId.ToString()" /> 
+                                                        @if (User.IsInRole("Study Director"))
+                                                        {
+                                                            <td>
+                                                                <input type="checkbox" name="approvalMessageSelection" value="@courseTeacher.TeacherId.ToString()" />
+                                                            </td>
+                                                        }
                                                         <td>
                                                             <a href="@Url.Action("Details/" + @courseTeacher.TeacherId, "Teacher")"><span>@courseTeacher.Teacher.TeacherName</span></a>
                                                         </td>
@@ -469,7 +476,10 @@
                                         </table>
                                         <br />
                                         <input hidden value="@Model.CourseOccurrenceID" name="courseOccurrenceID" />
-                                        <input class="btn btn-success btn-sm" value="Send request" type="submit" />                                      
+                                        @if (User.IsInRole("Study Director"))
+                                        {
+                                        <input class="btn btn-success btn-sm" value="Send request" type="submit" /> 
+                                        }                                     
                                     </fieldset>
                                 }
                                 </div>
