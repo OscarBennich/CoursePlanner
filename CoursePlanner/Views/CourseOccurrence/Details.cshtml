@@ -376,7 +376,7 @@
                                     <div class="box-header with-border">
                                         <h4 class="box-title">
                                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="" aria-expanded="true">
-                                                Course Responisble
+                                                Course Responsible
                                             </a>
                                         </h4>
                                     </div>
@@ -384,7 +384,7 @@
                                         <div class="box-body">
                                             @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
                                             {
-                                                <b>Course Reponsible</b>
+                                                <b>Course Responsible</b>
                                                 <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
                                             }
                                             else
