@@ -187,6 +187,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BaseMessageController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseOccurrenceController.cs" />
     <Compile Include="Controllers\CourseTeacherController.cs" />
@@ -800,6 +801,11 @@
     <Content Include="Views\RequestApprovalMessage\Create.cshtml" />
     <Content Include="Views\RequestApprovalMessage\Edit.cshtml" />
     <Content Include="Views\RequestApprovalMessage\Delete.cshtml" />
+    <Content Include="Views\BaseMessage\Create.cshtml" />
+    <Content Include="Views\BaseMessage\Delete.cshtml" />
+    <Content Include="Views\BaseMessage\Details.cshtml" />
+    <Content Include="Views\BaseMessage\Edit.cshtml" />
+    <Content Include="Views\BaseMessage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

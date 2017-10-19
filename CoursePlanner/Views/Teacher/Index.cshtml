@@ -1,7 +1,29 @@
-﻿@model IEnumerable<CoursePlanner.Models.Teacher>
+﻿@using CoursePlanner.Models
+@model IEnumerable<CoursePlanner.Models.Teacher>
 
 @{
     ViewBag.Title = "List of Teachers";
+}
+
+@helper PrintPeriodConflicts(int[] Periods)
+{
+    <p>
+    @for (int i = 0; i < Periods.Length; i++)
+    {
+        if (Periods[i] >= 120 || Periods[i] <= -120)
+        {
+            <span class="label label-danger">@Periods[i]</span>
+        }
+        else if ((Periods[i] > 60 && Periods[i] < 120) || (Periods[i] < -60 && Periods[i] > -120))
+        {
+            <span class="label label-warning">@Periods[i]</span>
+        }
+        else
+        {
+            <span class="label label-success">@Periods[i]</span>
+        }
+    }
+    </p>
 }
 
 <div class="row">
@@ -28,17 +50,13 @@
                                 Contract End Date
                             </th>
                             <th>
-                                Available Teaching Hours Fall
+                                Balance fall
                             </th>
                             <th>
-                                
-                                Allocated Teaching Hours Fall
+                                Balance spring
                             </th>
                             <th>
-                                Available Teaching Hours Spring
-                            </th>
-                            <th>
-                                Allocated Teaching Hours Spring
+                                Total Balance
                             </th>
                         </tr>
                     </thead>
@@ -56,32 +74,39 @@
                                     @Html.DisplayFor(modelItem => item.TeacherContractType)
                                 </td>
 
-                               @if (item.FixedContractEndDate != null)
-                               {
+                                @if (item.FixedContractEndDate != null)
+                                {
+                                    <td>
+                                        @item.FixedContractEndDate.Value.ToString("yyyy/MM/dd")
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>No end date set</td>
+                                }
                                 <td>
-                                    @item.FixedContractEndDate.Value.ToString("yyyy/MM/dd")
-                                </td>
-                               }
-                               else
-                               {
-                                   <td>No end date set</td>
-                               }
-                                <td>
-                                    @ViewBag.TeachingHoursAvailableFall(Convert.ToInt32(item.TeacherId))
-                                </td>
-                                <td>
-                                   @ViewBag.TeachingHoursAllocatedFall(Convert.ToInt32(item.TeacherId))
-                                </td>
-                                <td>
-                                    @ViewBag.TeachingHoursAvailableSpring(Convert.ToInt32(item.TeacherId))
+                                    @*@ViewBag.BalanceInTerm(item, Terms.Fall)*@
+                                    @{var balancePerPeriodFall = ViewBag.BalancePerPeriodInTerm(item, Terms.Fall);}
+                                    @PrintPeriodConflicts(balancePerPeriodFall)
                                 </td>
                                 <td>
-                                    @ViewBag.TeachingHoursAllocatedSpring(Convert.ToInt32(item.TeacherId))
+                                    @*@ViewBag.BalanceInTerm(item, Terms.Spring)*@
+                                    @{var balancePerPeriodSpring = ViewBag.BalancePerPeriodInTerm(item, Terms.Spring);}
+                                    @PrintPeriodConflicts(balancePerPeriodSpring)
                                 </td>
+                                @{
+                                var totalBalance = (ViewBag.BalanceInTerm(item, Terms.Fall) + ViewBag.BalanceInTerm(item, Terms.Spring));
+                                if (totalBalance < 0)
+                                {
+                                    <td class="text-red">@totalBalance</td>
+                                }
+                                else
+                                {
+                                    <td>@totalBalance</td>
+                                }
+                                }
                             </tr>
                         }
-                     
-
                     </tbody>
                 </table>
             </div>

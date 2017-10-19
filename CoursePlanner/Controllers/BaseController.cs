@@ -6,14 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 
-
 namespace CoursePlanner.Controllers
 {
     public class BaseController : Controller
     {
         //
         // GET: /Base/
-
         private CoursePlannerEntities db = new CoursePlannerEntities();
         //    //protected override ViewResult View(IView view, object model)
         //    //{
@@ -22,12 +20,15 @@ namespace CoursePlanner.Controllers
         //    //}
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+
             ViewBag.CurrentTeacherId = GetTeacherId();
 
             IEnumerable<Comment> comments = GetCommentsNotifications();
             ViewBag.CommentsNotifications = comments;
             ViewBag.CommentsNotificationsCount = comments.Count();
 
+            //ViewBag.CurrentTeacherId = new Func<int, int>(GetTeacherId);
+            ViewBag.CurrentTeacherId = GetTeacherId();
             base.OnActionExecuting(filterContext);
         }
 
@@ -48,7 +49,6 @@ namespace CoursePlanner.Controllers
         }
 
         #endregion
-
-
+        }
     }
 }

@@ -1,10 +1,6 @@
 ﻿﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CoursePlanner;
 using CoursePlanner.Controllers;
 using CoursePlanner.Models;
 
@@ -100,14 +96,14 @@ namespace CoursePlanner.Tests.Controllers
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAvailableFallTest()
+        public void TotalTeachingHoursAvailableFallTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TotalPercentageSpring = 1,
                 TotalPercentageFall = 1,
                 TeacherDateOfBirth = new DateTime(1950, 01, 01)
@@ -117,21 +113,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Fall);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAvailableSpringTest()
+        public void TotalTeachingHoursAvailableSpringTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 001,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TotalPercentageSpring = 1,
                 TotalPercentageFall = 1,
                 TeacherDateOfBirth = new DateTime(1950, 01, 01)
@@ -141,21 +137,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Spring);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAvailableWithOneReductionFallTest()
+        public void TotalTeachingHoursAvailableWithOneReductionFallTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TotalPercentageSpring = 1,
                 TotalPercentageFall = 1,
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
@@ -173,21 +169,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Fall);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAvailableWithTwoReductionsFallTest()
+        public void TotalTeachingHoursAvailableWithTwoReductionsFallTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TotalPercentageSpring = 1,
                 TotalPercentageFall = 1,
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
@@ -210,7 +206,7 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Fall);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
@@ -218,14 +214,14 @@ namespace CoursePlanner.Tests.Controllers
 
 
         [TestMethod]
-        public void CalculateTeachingHoursAvailableWithOneReductionSpringTest()
+        public void TotalTeachingHoursAvailableWithOneReductionSpringTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TotalPercentageSpring = 1,
                 TotalPercentageFall = 1,
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
@@ -243,21 +239,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Spring);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAvailableWithTwoReductionsSpringTest()
+        public void TotalTeachingHoursAvailableWithTwoReductionsSpringTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TotalPercentageSpring = 1,
                 TotalPercentageFall = 1,
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
@@ -280,20 +276,20 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAvailable(teacher, baseHours, Terms.Spring);
+            var result = tc.TotalTeachingHoursTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
         }
         [TestMethod]
-        public void CalculateTeachingHoursAllocatedOneOccurrenceFallTest()
+        public void TotalTeachingHoursAllocatedOneOccurrenceFallTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TeacherDateOfBirth = new DateTime(1990, 01, 01),
                 CourseTeacher = new List<CourseTeacher>()
                  {
@@ -314,21 +310,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAllocatedTwoOccurrencesFallTest()
+        public void TotalTeachingHoursAllocatedTwoOccurrencesFallTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
                 CourseTeacher = new List<CourseTeacher>()
                  {
@@ -356,21 +352,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Fall);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Fall);
 
             //assert
             Assert.AreEqual(target, result);
         }
 
         [TestMethod]
-        public void CalculateTeachingHoursAllocatedOneOccurrenceSpringTest()
+        public void TotalTeachingHoursAllocatedOneOccurrenceSpringTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
                 CourseTeacher = new List<CourseTeacher>()
                  {
@@ -389,20 +385,21 @@ namespace CoursePlanner.Tests.Controllers
 
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Spring);
 
             //assert
             Assert.AreEqual(target, result);
         }
+
         [TestMethod]
-        public void CalculateTeachingHoursAllocatedTwoOccurrencesSpringTest()
+        public void TotalTeachingHoursAllocatedTwoOccurrencesSpringTest()
         {
             //arrange
             var tc = new TeacherController();
             var teacher = new Teacher()
             {
                 TeacherId = 1,
-                TeacherName = "Sofi",
+                TeacherName = "Teacher",
                 TeacherDateOfBirth = new DateTime(1950, 01, 01),
                 CourseTeacher = new List<CourseTeacher>()
                  {
@@ -428,10 +425,860 @@ namespace CoursePlanner.Tests.Controllers
 
             var target = 250;
 
+            //act
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Spring);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void TotalTeachingHoursAllocatedNoOccurrencesTest()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01)
+            };
+
+            var target = 0;
 
             //act
-            var result = tc.CalculateTeachingHoursAllocated(teacher, Terms.Spring);
+            var result = tc.TeachingHoursAllocatedTerm(teacher, Terms.Spring);
 
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void HoursAllocatedPerReductionAdministrationFall()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>
+                {
+                    new TeacherReduction
+                    {
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }
+                }
+            };
+            var target = (int)(Math.Round((decimal)((1700/2 * 1) * 0.1), 0, MidpointRounding.AwayFromZero));
+
+            //act
+            var result = tc.HoursAllocatedPerReduction(teacher, Terms.Fall, ReductionTypes.Administration);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void HoursAllocatedPerReductionAdministrationSpring()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageSpring = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>
+                {
+                    new TeacherReduction
+                    {
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    }
+                }
+            };
+            var target = (int)(Math.Round((decimal)((1700 / 2 * 1) * 0.1), 0, MidpointRounding.AwayFromZero));
+
+            //act
+            var result = tc.HoursAllocatedPerReduction(teacher, Terms.Spring, ReductionTypes.Administration);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void HoursAllocatedPerReductionAdministrationMoreThanOneFall()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>
+                {
+                    new TeacherReduction
+                    {
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    },
+                    new TeacherReduction
+                    {
+                        Percentage = 0.3,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }
+                }
+            };
+            var target = (int)(Math.Round((decimal)((1700 / 2 * 1) * 0.4), 0, MidpointRounding.AwayFromZero));
+
+            //act
+            var result = tc.HoursAllocatedPerReduction(teacher, Terms.Fall, ReductionTypes.Assignments);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void HoursAllocatedPerReductionAdministrationMoreThanOneSpring()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageSpring = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>
+                {
+                    new TeacherReduction
+                    {
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    },
+                    new TeacherReduction
+                    {
+                        Percentage = 0.3,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    }
+                }
+            };
+            var target = (int)(Math.Round((decimal)((1700 / 2 * 1) * 0.4), 0, MidpointRounding.AwayFromZero));
+
+            //act
+            var result = tc.HoursAllocatedPerReduction(teacher, Terms.Spring, ReductionTypes.Assignments);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void HoursAllocatedPerReductionNoReductions()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageSpring = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01)
+            };
+
+            var target = 0;
+
+            //act
+            var result = tc.HoursAllocatedPerReduction(teacher, Terms.Spring, ReductionTypes.Administration);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageByTypeAdministration()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }}
+            };
+
+            var target = 0.1;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Fall, ReductionTypes.Administration);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageByTypeAssignments()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }}
+            };
+
+            var target = 0.1;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Fall, ReductionTypes.Assignments);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageByTypeOther()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Other,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }}
+            };
+
+            var target = 0.1;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Fall, ReductionTypes.Other);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageByTypeResearch()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Research,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }}
+            };
+
+            var target = 0.1;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Fall, ReductionTypes.Research);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageByTypeAdministrationMoreThanOne()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    },
+                        new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+            }}
+            };
+
+            var target = 0.2;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Fall, ReductionTypes.Administration);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageByTypeAdministrationMoreThanOneSpring()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageSpring = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    },
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Administration,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    }}
+            };
+
+            var target = 0.2;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Spring, ReductionTypes.Administration);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionPercentageNoReductions()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01)
+            };
+
+            var target = 0.0;
+
+            //act
+            var result = tc.GetReductionByTypePercentage(teacher, Terms.Fall, ReductionTypes.Research);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+        
+        [TestMethod]
+        public void GetReductionByPercentageFall()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }
+                    }
+            };
+
+            var target = 0.1;
+
+            //act
+            var result = tc.GetTotalReductionPercentage(teacher, Terms.Fall);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionByPercentageMoreThanOneTypeFall()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    },
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Research,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    },
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Other,
+                        TeacherId = 1,
+                        Term = Terms.Fall
+                    }
+                }
+            };
+
+            var target = 0.3;
+
+            //act
+            var result = tc.GetTotalReductionPercentage(teacher, Terms.Fall);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionByPercentageSpring()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    }
+                }
+            };
+
+            var target = 0.1;
+
+            //act
+            var result = tc.GetTotalReductionPercentage(teacher, Terms.Spring);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionByPercentageMoreThanOneTypeSpring()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>{
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Assignments,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    },
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Research,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    },
+                    new TeacherReduction{
+                        Percentage = 0.1,
+                        ReductionType = ReductionTypes.Other,
+                        TeacherId = 1,
+                        Term = Terms.Spring
+                    }
+                }
+            };
+
+            var target = 0.3;
+
+            //act
+            var result = tc.GetTotalReductionPercentage(teacher, Terms.Spring);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void GetReductionByPercentageNoReductions()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01)
+            };
+
+            var target = 0.0;
+
+            //act
+            var result = tc.GetTotalReductionPercentage(teacher, Terms.Spring);
+
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void HoursInPeriodsInTermTest()
+        {
+            var courseOccurence1 = new CourseOccurrence()
+            {
+                Term = Terms.Spring,
+                Year = "2017/2018",
+                Period = Periods.P1
+            };
+
+            var courseOccurence2 = new CourseOccurrence()
+            {
+                Term = Terms.Spring,
+                Year = "2017/2018",
+                Period = Periods.P2
+            };
+
+            var courseOccurence3 = new CourseOccurrence()
+            {
+                Term = Terms.Spring,
+                Year = "2017/2018",
+                Period = Periods.P3
+            };
+
+            var courseOccurence4 = new CourseOccurrence()
+            {
+                Term = Terms.Spring,
+                Year = "2017/2018",
+                Period = Periods.P4
+            };
+
+            var courseTeacher1 = new CourseTeacher
+            {
+                TeacherId = 1,
+                Hours = 100,
+                CourseOccurrenceId = 1,
+                CourseOccurrence = courseOccurence1
+            };
+            courseOccurence1.CourseTeacher = new List<CourseTeacher>{courseTeacher1};
+
+            var courseTeacher2 = new CourseTeacher
+            {
+                TeacherId = 1,
+                Hours = 100,
+                CourseOccurrenceId = 1,
+                CourseOccurrence = courseOccurence2
+            };
+            courseOccurence2.CourseTeacher = new List<CourseTeacher>{courseTeacher2};
+            
+            var courseTeacher3 = new CourseTeacher
+            {
+                TeacherId = 1,
+                Hours = 100,
+                CourseOccurrenceId = 1,
+                CourseOccurrence = courseOccurence3
+            };
+            courseOccurence3.CourseTeacher = new List<CourseTeacher>{courseTeacher3};
+
+            var courseTeacher4 = new CourseTeacher
+            {
+                TeacherId = 1,
+                Hours = 100,
+                CourseOccurrenceId = 1,
+                CourseOccurrence = courseOccurence4
+            };
+            courseOccurence4.CourseTeacher = new List<CourseTeacher>{courseTeacher4};
+
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                CourseTeacher = new List<CourseTeacher>
+                {
+                    courseTeacher1,
+                    courseTeacher2,
+                    courseTeacher3,
+                    courseTeacher4 }
+            };
+
+            courseTeacher1.Teacher = teacher;
+            courseTeacher2.Teacher = teacher;
+            courseTeacher3.Teacher = teacher; 
+            courseTeacher4.Teacher = teacher;
+
+            var target = new []{ 100,100,100,100};
+
+            //act
+            var result = tc.HoursInPeriodsOnTerm(teacher, Terms.Spring);
+
+            //assert
+            Assert.AreEqual(target[0], result[0]);
+            Assert.AreEqual(target[1], result[1]);
+            Assert.AreEqual(target[2], result[2]);
+            Assert.AreEqual(target[3], result[3]);
+        }
+
+        [TestMethod]
+        public void BalanceInTermTestFall()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                CourseTeacher = new List<CourseTeacher>()
+                {
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 100,
+                        CourseOccurrenceId = 1,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                        }
+                    },
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 100,
+                        CourseOccurrenceId = 2,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                        }
+                    }
+                }
+            };
+
+
+            var allocated = 200;
+            var available = 1700 / 2;
+
+            var target = available - allocated;
+
+            //act
+            var result = tc.BalanceInTerm(teacher, Terms.Fall);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void BalanceInTermTestSpring()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageSpring = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                CourseTeacher = new List<CourseTeacher>()
+                {
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 100,
+                        CourseOccurrenceId = 1,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                        }
+                    },
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 100,
+                        CourseOccurrenceId = 2,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                        }
+                    }
+                }
+            };
+
+
+            var allocated = 200;
+            var available = 1700 / 2;
+
+            var target = available - allocated;
+
+            //act
+            var result = tc.BalanceInTerm(teacher, Terms.Spring);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void BalanceInTermTestSpringWithReduction()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageSpring = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                TeacherReduction = new List<TeacherReduction>
+                {
+                    new TeacherReduction()
+                    {
+                        Term = Terms.Spring,
+                        Percentage = 0.2
+                    }
+                },
+                CourseTeacher = new List<CourseTeacher>()
+                {
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 100,
+                        CourseOccurrenceId = 1,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                        }
+                    },
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 100,
+                        CourseOccurrenceId = 2,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Spring,
+                            Year = "2017/2018"
+                        }
+                    }
+                }
+            };
+
+
+            var allocated = 200;
+            var available = Math.Round((double)(1700 / 2) * (1 - 0.2), 0, MidpointRounding.AwayFromZero);
+
+            var target = available - allocated;
+
+            //act
+            var result = tc.BalanceInTerm(teacher, Terms.Spring);
+            //assert
+            Assert.AreEqual(target, result);
+        }
+
+        [TestMethod]
+        public void BalanceInTermTestFallNegativeBalance()
+        {
+            //arrange
+            var tc = new TeacherController();
+            var teacher = new Teacher()
+            {
+                TeacherId = 1,
+                TeacherName = "Teacher",
+                TotalPercentageFall = 1,
+                TeacherDateOfBirth = new DateTime(1950, 01, 01),
+                CourseTeacher = new List<CourseTeacher>()
+                {
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 500,
+                        CourseOccurrenceId = 1,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                        }
+                    },
+                    new CourseTeacher
+                    {
+                        TeacherId = 1,
+                        Hours = 500,
+                        CourseOccurrenceId = 2,
+                        CourseOccurrence = new CourseOccurrence
+                        {
+                            Term = Terms.Fall,
+                            Year = "2017/2018"
+                        }
+                    }
+                }
+            };
+
+
+            var allocated = 1000;
+            var available = 1700 / 2;
+
+            var target = available - allocated;
+
+            //act
+            var result = tc.BalanceInTerm(teacher, Terms.Fall);
             //assert
             Assert.AreEqual(target, result);
         }
