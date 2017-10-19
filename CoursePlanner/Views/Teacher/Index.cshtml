@@ -5,6 +5,27 @@
     ViewBag.Title = "List of Teachers";
 }
 
+@helper PrintPeriodConflicts(int[] Periods)
+{
+    <p>
+    @for (int i = 0; i < Periods.Length; i++)
+    {
+        if (Periods[i] >= 120 || Periods[i] <= -120)
+        {
+            <span class="label label-danger">@Periods[i]</span>
+        }
+        else if ((Periods[i] > 60 && Periods[i] < 120) || (Periods[i] < -60 && Periods[i] > -120))
+        {
+            <span class="label label-warning">@Periods[i]</span>
+        }
+        else
+        {
+            <span class="label label-success">@Periods[i]</span>
+        }
+    }
+    </p>
+}
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-danger">
@@ -37,9 +58,6 @@
                             <th>
                                 Total Balance
                             </th>
-                            <th>
-                                Conflicts
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,12 +85,14 @@
                                     <td>No end date set</td>
                                 }
                                 <td>
-                                    @*@(ViewBag.TeachingHoursAvailableFall(item.TeacherId) - ViewBag.TeachingHoursAllocatedFall(item.TeacherId))*@
-                                    @ViewBag.BalanceInTerm(item, Terms.Fall)
+                                    @*@ViewBag.BalanceInTerm(item, Terms.Fall)*@
+                                    @{var balancePerPeriodFall = ViewBag.BalancePerPeriodInTerm(item, Terms.Fall);}
+                                    @PrintPeriodConflicts(balancePerPeriodFall)
                                 </td>
                                 <td>
-                                    @*@(ViewBag.TeachingHoursAvailableSpring(item.TeacherId) - ViewBag.TeachingHoursAllocatedSpring(item.TeacherId))*@
-                                    @ViewBag.BalanceInTerm(item, Terms.Spring)
+                                    @*@ViewBag.BalanceInTerm(item, Terms.Spring)*@
+                                    @{var balancePerPeriodSpring = ViewBag.BalancePerPeriodInTerm(item, Terms.Spring);}
+                                    @PrintPeriodConflicts(balancePerPeriodSpring)
                                 </td>
                                 @{
                                 var totalBalance = (ViewBag.BalanceInTerm(item, Terms.Fall) + ViewBag.BalanceInTerm(item, Terms.Spring));
@@ -85,7 +105,6 @@
                                     <td>@totalBalance</td>
                                 }
                                 }
-                                <td><p>Content</p></td>
                             </tr>
                         }
                     </tbody>

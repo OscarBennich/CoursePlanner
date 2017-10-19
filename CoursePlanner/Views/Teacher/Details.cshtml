@@ -308,10 +308,10 @@
         <h3 class="box-title">Yearly workload distribution</h3>
         <div class="pull-right">
 
-            <i class="fa fa-circle-o text-blue"></i>
+            <i class="fa fa-circle-o text-green"></i>
             Current workload
 
-            <i class="fa fa-circle-o text-green"></i>
+            <i class="fa fa-circle-o text-gray"></i>
             Expected workload
 
         </div>
@@ -341,21 +341,15 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="javascript:void()" style="cursor:default">
-                                <i class="fa fa-circle-o text-green"></i>Total available hours for fall
-                                <span class="pull-right text-black">@ViewBag.TeachingHoursAvailableFall</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void()" style="cursor:default">
                                 <i class="fa fa-circle-o text-aqua"></i>
-                                Allocated hours for fall
+                                Allocated hours fall
                                 <span class="pull-right text-black">@ViewBag.TeachingHoursAllocatedFall</span>
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void()" style="cursor:default">
                                 <i class="fa fa-circle-o text-blue"></i>
-                                Remaining hours for fall
+                                Remaining hours fall
                                 <span class="pull-right text-black">@(ViewBag.TeachingHoursAvailableFall - ViewBag.TeachingHoursAllocatedFall)</span>
                             </a>
                         </li>
@@ -435,22 +429,15 @@
                     <ul class="nav nav-pills nav-stacked">
                         <li>
                             <a href="javascript:void()" style="cursor:default">
-                                <i class="fa fa-circle-o text-green"></i>
-                                Total available hours for spring
-                                <span class="pull-right text-black">@ViewBag.TeachingHoursAvailableSpring</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void()" style="cursor:default">
                                 <i class="fa fa-circle-o text-aqua"></i>
-                                Allocated hours for spring
+                                Allocated hours spring
                                 <span class="pull-right text-black">@ViewBag.TeachingHoursAllocatedSpring</span>
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void()" style="cursor:default">
                                 <i class="fa fa-circle-o text-blue"></i>
-                                Remaining hours for spring
+                                Remaining hours spring
                                 <span class="pull-right text-black">@(ViewBag.TeachingHoursAvailableSpring - ViewBag.TeachingHoursAllocatedSpring)</span>
                             </a>
                         </li>
@@ -528,22 +515,13 @@
             // Get context with jQuery - using jQuery's .get() method.
             var pieChartCanvas = $('#DistributionFallPieChart').get(0).getContext('2d')
 
-            var allocatedFall = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall)
-
-            if(allocatedFall < 0)
-            {
-                allocatedFall = 0
+            var allocatedFall = (@ViewBag.TeachingHoursAvailableFall - @ViewBag.TeachingHoursAllocatedFall);
+            if(allocatedFall < 0) {
+                allocatedFall = 0;
             }
 
-
-            var pieChart = new Chart(pieChartCanvas)
+            var pieChart = new Chart(pieChartCanvas);
             var PieData = [
-                @*{
-                    value: @ViewBag.TeachingHoursAvailableFall,
-                    color: '#00a65a',
-                    highlight: '#00a65a',
-                    label: 'Available Hours Fall'
-                },*@
                 {
                     value: @ViewBag.TeachingHoursAllocatedFall,
                     color: '#00c0ef',
@@ -556,7 +534,7 @@
                     highlight: '#4D8FAC',
                     label: 'Remaining Hours Fall'
                 }
-            ]
+            ];
             var pieOptions = {
                 //Boolean - Whether we should show a stroke on each segment
                 segmentShowStroke: true,
@@ -603,14 +581,8 @@
             }
 
 
-            var pieChart = new Chart(pieChartCanvas)
+            var pieChart = new Chart(pieChartCanvas);
             var PieData = [
-                @*{
-                    value: @ViewBag.TeachingHoursAvailableSpring,
-                    color: '#00a65a',
-                    highlight: '#00a65a',
-                    label: 'Available Hours Spring'
-                },*@
                 {
                     value: @ViewBag.TeachingHoursAllocatedSpring,
                     color: '#00c0ef',
@@ -623,7 +595,7 @@
                     highlight: '#4D8FAC',
                     label: 'Remaining Hours Spring'
                 }
-            ]
+            ];
             var pieOptions = {
                 //Boolean - Whether we should show a stroke on each segment
                 segmentShowStroke: true,
@@ -803,32 +775,32 @@
                 datasets: [
                     {
                         label: "Current workload",
-                        fillColor: "rgba(210, 214, 222, 0.9)",
-                        strokeColor: "rgba(210, 214, 222, 0.8)",
-                        pointColor: "rgba(210, 214, 222, 1)",
-                        pointStrokeColor: "rgba(210, 214, 222, 1)",
+                        fillColor: "rgba(0, 166, 90, 0.9)",
+                        strokeColor: "rgba(0, 166, 90, 0.8)",
+                        pointColor: "rgba(0, 166, 90, 1)",
+                        pointStrokeColor: "rgba(0, 166, 90, 1)",
                         pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(210, 214, 222, 1)",
+                        pointHighlightStroke: "rgba(0, 166, 90, 1)",
                         data: [@ViewBag.HoursFallInPeriods[0],@ViewBag.HoursFallInPeriods[1],@ViewBag.HoursFallInPeriods[2],@ViewBag.HoursFallInPeriods[3],@ViewBag.HoursSpringInPeriods[0],@ViewBag.HoursSpringInPeriods[1],@ViewBag.HoursSpringInPeriods[2],@ViewBag.HoursSpringInPeriods[3]]
                     },
                     {
                         label: "Expected workload",
-                        fillColor: "rgba(145, 145, 145, 1)",
-                        strokeColor: "rgba(145, 145, 145, 1)",
-                        pointColor: "rgba(145, 145, 145, 1)",
-                        pointStrokeColor: "rgba(145, 145, 145, 1)",
+                        fillColor: "rgba(210, 214, 222, 1)",
+                        strokeColor: "rgba(210, 214, 222, 1)",
+                        pointColor: "rgba(210, 214, 222, 1)",
+                        pointStrokeColor: "rgba(210, 214, 222, 1)",
                         pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(145, 145, 145, 0.9)",
+                        pointHighlightStroke: "rgba(210, 214, 222, 0.9)",
                         data: [@ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursFall, @ViewBag.ExpectedPeriodHoursSpring, @ViewBag.ExpectedPeriodHoursSpring, @ViewBag.ExpectedPeriodHoursSpring,@ViewBag.ExpectedPeriodHoursSpring]
                     }
                 ]
             }
-            periodChartData.datasets[0].fillColor = "rgba(210, 214, 222, 1)"
-            periodChartData.datasets[0].strokeColor = "rgba(210, 214, 222, 1)"
-            periodChartData.datasets[0].pointColor = "rgba(210, 214, 222, 1)"
-            periodChartData.datasets[1].fillColor = "#00a65a"
-            periodChartData.datasets[1].strokeColor = "#00a65a"
-            periodChartData.datasets[1].pointColor = "#00a65a"
+            periodChartData.datasets[0].fillColor = "rgba(0, 166, 90, 1)"
+            periodChartData.datasets[0].strokeColor = "rgba(0, 166, 90, 1)"
+            periodChartData.datasets[0].pointColor = "rgba(0, 166, 90, 1)"
+            periodChartData.datasets[1].fillColor = "rgba(191, 191, 191, 1)"
+            periodChartData.datasets[1].strokeColor = "rgba(191, 191, 191, 1)"
+            periodChartData.datasets[1].pointColor = "rgba(191, 191, 191, 1)"
             var periodChartOptions = {
                 //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
                 scaleBeginAtZero: true,

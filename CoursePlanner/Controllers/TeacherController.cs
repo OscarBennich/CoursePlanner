@@ -13,16 +13,13 @@ namespace CoursePlanner.Controllers
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();
 
+        #region Show View Methods
+
         // GET: /Teacher/
         public ActionResult Index()
         {
-            //ViewBag.TeachingHoursAllocatedFall = new Func<int, int>(TeachingHoursAllocatedFallFind);
-            //ViewBag.TeachingHoursAvailableFall = new Func<int, int>(TeachingHoursAvailableFallFind);
-            //ViewBag.TeachingHoursAllocatedSpring = new Func<int, int>(TeachingHoursAllocatedSpringFind);
-            //ViewBag.TeachingHoursAvailableSpring = new Func<int, int>(TeachingHoursAvailableSpringFind);
-
             ViewBag.BalanceInTerm = new Func<Teacher, Terms, int>(BalanceInTerm);
-
+            ViewBag.BalancePerPeriodInTerm = new Func<Teacher, Terms, int[]>(BalancePerPeriodTerm);
             return View(db.Teacher.ToList());
         }
 
@@ -193,67 +190,33 @@ namespace CoursePlanner.Controllers
             base.Dispose(disposing);
         }
 
-        
+        #endregion
+
+        #region Methods to fill viewbags
 
         public int TotalTeachingHoursTerm(Teacher teacher, Terms term)
         {
             return term == Terms.Fall ?
-                (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageFall * (1 - GetTotalReductionProcentage(teacher, term))), 0, MidpointRounding.AwayFromZero))
-                : (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageSpring * (1 - GetTotalReductionProcentage(teacher, term))), 0, MidpointRounding.AwayFromZero));
+                (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageFall * (1 - GetTotalReductionPercentage(teacher, term))), 0, MidpointRounding.AwayFromZero))
+                : (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageSpring * (1 - GetTotalReductionPercentage(teacher, term))), 0, MidpointRounding.AwayFromZero));
         }
 
         public int HoursAllocatedPerReduction(Teacher teacher, Terms term, ReductionTypes reduction)
         {
             return term == Terms.Fall ?
-                (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageFall * GetReductionByTypeProcentage(teacher, term, reduction)), 0, MidpointRounding.AwayFromZero))
-                : (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageSpring * GetReductionByTypeProcentage(teacher, term, reduction)), 0, MidpointRounding.AwayFromZero));
+                (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageFall * GetReductionByTypePercentage(teacher, term, reduction)), 0, MidpointRounding.AwayFromZero))
+                : (int)(Math.Round((decimal)((GetBaseAnnualHours(teacher.TeacherDateOfBirth) / 2) * teacher.TotalPercentageSpring * GetReductionByTypePercentage(teacher, term, reduction)), 0, MidpointRounding.AwayFromZero));
         }
-
-        public double GetTotalReductionProcentage(Teacher teacher, Terms term)
+        
+        public double GetTotalReductionPercentage(Teacher teacher, Terms term)
         {
-            return (double)(teacher.TeacherReduction.Where(r => r.Term == term).Sum(tr => tr.Percentage));
+            return Math.Round((double)teacher.TeacherReduction.Where(r => r.Term == term).Sum(tr => tr.Percentage), 2, MidpointRounding.AwayFromZero);
         }
 
-        public double GetReductionByTypeProcentage(Teacher teacher, Terms term, ReductionTypes reduction)
+        public double GetReductionByTypePercentage(Teacher teacher, Terms term, ReductionTypes reduction)
         {
             return (double)(teacher.TeacherReduction.Where(r => r.Term == term && r.ReductionType == reduction).Sum(tr => tr.Percentage));
         }
-
-        //public int TeachingHoursAllocatedFallFind(int teacherId)
-        //{
-        //    Teacher teacher = db.Teacher.Find(teacherId);
-        //    if (teacher == null)
-        //        return 0;
-
-        //    return TeachingHoursAllocatedTerm(teacher, Terms.Fall);
-        //}
-
-        //public int TeachingHoursAllocatedSpringFind(int teacherId)
-        //{
-        //    Teacher teacher = db.Teacher.Find(teacherId);
-        //    if (teacher == null)
-        //        return 0;
-
-        //    return TeachingHoursAllocatedTerm(teacher, Terms.Spring);
-        //}
-
-        //public int TeachingHoursAvailableFallFind(int teacherId)
-        //{
-        //    Teacher teacher = db.Teacher.Find(teacherId);
-        //    if (teacher == null)
-        //        return 0;
-
-        //    return TotalTeachingHoursTerm(teacher, Terms.Fall);
-        //}
-
-        //public int TeachingHoursAvailableSpringFind(int teacherId)
-        //{
-        //    Teacher teacher = db.Teacher.Find(teacherId);
-        //    if (teacher == null)
-        //        return 0;
-
-        //    return TotalTeachingHoursTerm(teacher, Terms.Spring);
-        //}
 
         public int TeachingHoursAllocatedTerm(Teacher teacher, Terms term)
         {
@@ -263,10 +226,10 @@ namespace CoursePlanner.Controllers
 
         }
 
-        private int[] HoursInPeriodsOnTerm(Teacher teacher, Terms term)
+        public int[] HoursInPeriodsOnTerm(Teacher teacher, Terms term)
         {
             var teacherCourses = GetTeacherCourses(teacher, term);
-            int[] hours = new int[4] { 0, 0, 0, 0 };
+            int[] hours = { 0, 0, 0, 0 };
 
             foreach (CourseOccurrence course in teacherCourses)
             {
@@ -364,13 +327,7 @@ namespace CoursePlanner.Controllers
                 : (TotalTeachingHoursTerm(teacher, term) - TeachingHoursAllocatedTerm(teacher, term));
         }
 
-        // return the difference between to periods (expected and allocated) in procentage (positive or negative)
-        //private int DifferenceInProcentage(int baseHours, int hours)
-        //{
-        //    return (int)(Math.Round((double)(baseHours - hours) / baseHours, 2, MidpointRounding.AwayFromZero) * 100);
-        //}
-
-        private int HoursInCourse(CourseOccurrence course, Teacher teacher)
+        public int HoursInCourse(CourseOccurrence course, Teacher teacher)
         {
             return (int)course.CourseTeacher.Where(c => c.CourseOccurrence == course && c.Teacher == teacher).Select(y => y.Hours).FirstOrDefault();
         }
@@ -440,5 +397,7 @@ namespace CoursePlanner.Controllers
             Teacher courseResponsible = db.Teacher.Where(t => t.TeacherId == courseResponsibleId).FirstOrDefault();
             return courseResponsible == null ? "No course responsible" : courseResponsible.TeacherName.ToString();
         }
+        
+        #endregion
     }
 }
