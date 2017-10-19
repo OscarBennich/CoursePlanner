@@ -188,7 +188,7 @@
 {
     var budget = course.Budget;
     var balance = budget - (course.CourseTeacher.ToList().Where(ct => ct.CourseOccurrenceId == course.CourseOccurrenceID).Sum(ct => ct.Hours));
-    if (course.Status == Statuses.Ongoing)
+    if (course.Status == Statuses.Approved || course.Status == Statuses.Completed)
     {
         <div class="perioditem faded">@balance</div>
     }

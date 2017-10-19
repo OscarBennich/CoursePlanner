@@ -485,10 +485,10 @@
           <Member Name="P1P2P3P4" />
         </EnumType>
         <EnumType Name="Statuses">
-          <Member Name="Planned" />
-          <Member Name="Ongoing" />
+          <Member Name="Planning" />
+          <Member Name="WaitingForApproval" />
+          <Member Name="Approved" />
           <Member Name="Completed" />
-          <Member Name="Started" />
         </EnumType>
         <EnumType Name="Positions">
           <Member Name="Professor" />

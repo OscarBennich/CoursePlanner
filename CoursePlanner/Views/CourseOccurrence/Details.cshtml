@@ -485,7 +485,15 @@
                                         <input hidden value="@Model.CourseOccurrenceID" name="courseOccurrenceID" />
                                         @if (User.IsInRole("Study Director"))
                                         {
+                                            if (Model.Status.ToString() == "Completed")
+                                            {
+                                             
+                                           <input class="btn btn-success btn-sm disabled" value="Send request"  />
+                                            }
+                                            else
+                                            {
                                         <input class="btn btn-success btn-sm" value="Send request" type="submit" /> 
+                                        }
                                         }                                     
                                     </fieldset>
                                 }
