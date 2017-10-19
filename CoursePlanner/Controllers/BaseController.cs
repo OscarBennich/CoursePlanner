@@ -27,6 +27,10 @@ namespace CoursePlanner.Controllers
             ViewBag.CommentsNotifications = comments;
             ViewBag.CommentsNotificationsCount = comments.Count();
 
+            IEnumerable<RequestApprovalMessage> messages = GetUnreadMessages();
+            ViewBag.messagesNotifications = messages;
+            ViewBag.messagesNotificationsCount = messages.Count();
+
             //ViewBag.CurrentTeacherId = new Func<int, int>(GetTeacherId);
             ViewBag.CurrentTeacherId = GetTeacherId();
             base.OnActionExecuting(filterContext);
@@ -49,6 +53,17 @@ namespace CoursePlanner.Controllers
         }
 
         #endregion
+
+        #region Messages Notifications
+
+        public List<RequestApprovalMessage> GetUnreadMessages()
+        {
+            int currentTeacherId = GetTeacherId();
+            return db.RequestApprovalMessage.Where(x => x.BaseMessage.RecieverID == currentTeacherId && x.BaseMessage.MessageDeletionDate == null && x.BaseMessage.MessageReadDate == null).OrderByDescending(x => x.BaseMessage.MessageSendDate).ToList();
         }
+
+        #endregion
+
     }
+}
 

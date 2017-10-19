@@ -44,57 +44,35 @@
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <!-- Messages: style can be found in dropdown.less-->
-                        <li class="dropdown messages-menu">
+                        <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
-                                <span class="label label-success">4</span>
+                                @if (@ViewBag.MessagesNotificationsCount > 0)
+                                {
+                                    <span class="label label-warning">
+                                        @ViewBag.MessagesNotificationsCount
+                                    </span>
+                                }
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have 4 messages</li>
+                                <li class="header">You have @ViewBag.MessagesNotificationsCount unread messages</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
-                                    <ul class="menu">
-                                        <li>
-                                            <!-- start message -->
-                                            <a href="#">
-                                                <h4>
-                                                    Support Team
-                                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <!-- end message -->
-                                        <li>
-                                            <a href="#">
-                                                <h4>
-                                                    Developers
-                                                    <small><i class="fa fa-clock-o"></i> Today</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <h4>
-                                                    Sales Department
-                                                    <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <h4>
-                                                    Reviewers
-                                                    <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                                </h4>
-                                                <p>Why not buy a new awesome theme?</p>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    @if (@ViewBag.MessagesNotificationsCount > 0)
+                                    {
+                                        <ul class="menu">
+                                            @foreach (CoursePlanner.Models.RequestApprovalMessage c in ViewBag.MessagesNotifications)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("Index", "RequestApprovalMessage")">
+                                                        <i class="fa fa-edit text-red"></i> @c.BaseMessage.MessageText
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
                                 </li>
-                                <li class="footer"><a href="#">See All Messages</a></li>
+                                @*<li class="footer"><a href="#">View all</a></li>*@
                             </ul>
                         </li>
                         <!-- Notifications: style can be found in dropdown.less -->
@@ -109,17 +87,19 @@
                                 }
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">You have @ViewBag.CommentsNotificationsCount comments</li>
+                                <li class="header">You have @ViewBag.CommentsNotificationsCount unread comments</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
+
                                     @if (@ViewBag.CommentsNotificationsCount > 0)
                                     {
                                         <ul class="menu">
                                             @foreach (CoursePlanner.Models.Comment c in ViewBag.CommentsNotifications)
                                             {
+
                                                 <li>
-                                                    <a href="@Url.Action("Details", "Teacher", new { id = ViewBag.CurrentTeacherId}, null)#comments">
-                                                        <i class="fa fa-edit text-red"></i> @c.BaseMessage.MessageText
+                                                    <a href="@Url.Action("ReadComment", "Teacher", new { toReadComment = @c.CommentID })">
+                                                        <i class="fa fa-edit text-red"></i>@c.BaseMessage.MessageText
                                                     </a>
                                                 </li>
                                             }
@@ -168,10 +148,6 @@
                                         }
                                     </div>
                                 </li>
-
-
-
-
                             </ul>
                         </li>
                     </ul>

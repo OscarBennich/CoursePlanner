@@ -189,6 +189,19 @@ namespace CoursePlanner.Controllers
                 db.SaveChanges();
             }
 
+            return RedirectToAction("Details/" + deletedComment.BaseMessage.RecieverID+"#comments");
+        }
+
+        public ActionResult ReadComment(int toReadComment)
+        {
+            var deletedComment = db.Comment.Where(x => x.CommentID == toReadComment).FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                deletedComment.BaseMessage.MessageReadDate = DateTime.Now;
+                db.SaveChanges();
+            }
+
             return RedirectToAction("Details/" + deletedComment.BaseMessage.RecieverID);
         }
 

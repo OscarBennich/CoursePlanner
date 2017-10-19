@@ -105,7 +105,7 @@ namespace CoursePlanner.Controllers
             ViewBag.IsCourseResponsibleName =
               new Func<int, int, string>(IsCourseResponsibleNameFind);
 
-            ViewBag.TeachersForCourseResponsible = db.CourseTeacher.Where(c => c.CourseOccurrenceId == id && c.CourseOccurrence.Year == CurrentEduYear).Select(c => c.Teacher).ToList();
+            ViewBag.TeachersForCourseResponsible = db.Teacher.ToList();
 
             return View(courseoccurrence);
         }
