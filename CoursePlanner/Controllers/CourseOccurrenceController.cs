@@ -96,6 +96,7 @@ namespace CoursePlanner.Controllers
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
 
             ViewBag.teachersCourse = teachersCourse;
+            
             ViewBag.TeachersHistory =
                 new Func<int, IEnumerable<Teacher>>(GetTeacherHistory);
 
@@ -118,7 +119,7 @@ namespace CoursePlanner.Controllers
 
             foreach(Teacher teacher in teachersCourse.Select(t => t.Teacher).ToList())
             {
-                ResponseApprovalMessage responseToAdd = (ResponseApprovalMessage)db.ResponseApprovalMessage.Where(x => x.BaseMessage.SenderID == teacher.TeacherId && x.RequestApprovalMessage.CourseOccurrence.CourseOccurrenceID == courseOccurrence.CourseOccurrenceID && x.Response != null && x.BaseMessage.MessageReadDate != null).OrderBy(x => x.BaseMessage.MessageReadDate).FirstOrDefault();
+                ResponseApprovalMessage responseToAdd = (ResponseApprovalMessage)db.ResponseApprovalMessage.Where(x => x.BaseMessage.SenderID == teacher.TeacherId && x.RequestApprovalMessage.CourseOccurrence.CourseOccurrenceID == courseOccurrence.CourseOccurrenceID).ToList().LastOrDefault();         
                 responseApprovalMessageList.Add(responseToAdd);
             }
 
@@ -450,6 +451,18 @@ namespace CoursePlanner.Controllers
                 requestMessage.BaseMessage = baseMessage;
                 db.RequestApprovalMessage.Add(requestMessage);
             }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Details/" + courseOccurrenceID);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApproveCourse(int courseOccurrenceID)
+        {
+            CourseOccurrence courseOccurrence = db.CourseOccurrence.Find(courseOccurrenceID);
+            courseOccurrence.Status = Statuses.Approved;
 
             db.SaveChanges();
 

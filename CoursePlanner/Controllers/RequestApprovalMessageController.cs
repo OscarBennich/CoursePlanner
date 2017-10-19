@@ -154,9 +154,7 @@ namespace CoursePlanner.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateResponseApprovalMessage(int requestApprovalMessageId, int senderId, int receiverId, string messageText, string response)
-        {
-            
-
+        {         
             BaseMessage baseMessage = new BaseMessage();
             baseMessage.SenderID = senderId;
             baseMessage.RecieverID = receiverId;

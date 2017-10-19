@@ -33,10 +33,23 @@
     //    }
     //}
 
-
 </script>
 <p>
     <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "CourseOccurrence")'" />
+
+    @if (User.IsInRole("Study Director") && Model.Status == Statuses.WaitingForApproval)
+    {
+        using (Html.BeginForm("ApproveCourse", "CourseOccurrence"))
+        {
+            @Html.AntiForgeryToken()
+            {
+                <fieldset id="createRequestApprovalMessageForm">
+                    <input hidden value="@Model.CourseOccurrenceID" name="courseOccurrenceID" />
+                    <input type="submit" style="float: right" class="btn btn-success btn-sm" value="Approve course" />
+                </fieldset>
+            }
+        }
+    }
 </p>
 <div class="row">
     <div class="col-md-3">
@@ -429,7 +442,7 @@
                                                             Request approval
                                                         </th>
                                                         <th>
-                                                            Has approved 
+                                                            Latest Response
                                                         </th>
                                                     }
                                                     <th>
@@ -454,13 +467,32 @@
                                                                 <input type="checkbox" name="approvalMessageSelection" value="@courseTeacher.TeacherId.ToString()" />
                                                             </td>
                                                             <td>
-                                                                @foreach(ResponseApprovalMessage responseApprovalMessage in ViewBag.ResponseApprovalMessageList)
+                                                                @{string approvalResponse = "No Respond Message Sent"; }
+                                                                  
+                                                                @foreach (ResponseApprovalMessage responseApprovalMessage in ViewBag.ResponseApprovalMessageList)
                                                                 {
-                                                                    if(responseApprovalMessage.BaseMessage.TeacherReciever == courseTeacher.Teacher)
+                                                                    if (responseApprovalMessage != null && responseApprovalMessage.BaseMessage.SenderID == courseTeacher.TeacherId && responseApprovalMessage.Response == true)
                                                                     {
-                                                                        <text> @responseApprovalMessage.Response; </text>
+                                                                        approvalResponse = "Accepted";
                                                                     }
+                                                                    else if (responseApprovalMessage != null && responseApprovalMessage.BaseMessage.SenderID == courseTeacher.TeacherId && responseApprovalMessage.Response == false)
+                                                                    {
+                                                                        approvalResponse = "Rejected";
+                                                                    }
+                                                                }          
+                                                                
+                                                                @if(approvalResponse == "Accepted")
+                                                                {
+                                                                    <span class="label label-success">@approvalResponse</span>
                                                                 }
+                                                                else if(approvalResponse == "Rejected")
+                                                                {
+                                                                    <span class="label label-danger">@approvalResponse</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="label label-primary">@approvalResponse</span>
+                                                                }                                                                                                              
                                                             </td>
                                                         }
                                                         <td>
