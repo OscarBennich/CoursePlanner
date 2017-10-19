@@ -89,13 +89,13 @@
                                                         @c.Course.CourseCode
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                        <a href="@Url.Action("details/" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
                                                     </td>
                                                     <td>
                                                         @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseResponsibleID, "Teacher")">
+                                                        <a href="@Url.Action("details/" + @c.CourseResponsibleID, "Teacher")">
                                                             @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
                                                             {
                                                                 @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
@@ -152,13 +152,13 @@
                                                         @c.Course.CourseCode
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                        <a href="@Url.Action("details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
                                                     </td>
                                                     <td>
                                                         @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
                                                     </td>
                                                     <td>
-                                                        <a href="@Url.Action(" details />" + @c.CourseResponsibleID, "Teacher")">
+                                                        <a href="@Url.Action("details/" + @c.CourseResponsibleID, "Teacher")">
                                                             @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
                                                             {
                                                                 @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
