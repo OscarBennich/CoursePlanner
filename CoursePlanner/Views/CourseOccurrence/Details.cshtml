@@ -229,7 +229,9 @@
                                             <input hidden value="@Model.CourseOccurrenceID" name="courseID" />
                                             <div class="col-xs-10 col-xs-offset-1">
                                                 <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible" />
-                                            </div>
+                                                <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible and notify now"/>
+                                               
+                                             </div>
                                         </div>
                                     </div>
                                 </div>
@@ -278,6 +280,7 @@
                                             <input hidden value="@Model.CourseOccurrenceID" name="cid" />
                                             <div class="col-xs-10 col-xs-offset-1">
                                                 <input class="btn btn-block btn-danger" type="submit" value="Allocate hours" />
+                                                <input class="btn btn-block btn-danger" type="submit" value="Allocate hours and notify now" />
                                                 
                                             </div>
                                         </div>
@@ -394,12 +397,16 @@
                                                 if (Model.Status.ToString() == "Completed")
                                                 {
                                                     <p>
+                                                        
+                                                        
+                                                        
                                                         <button id="manageCourseResponsible" class="btn btn-danger center-block disabled" type="button"> Change Course Responsible </button>
                                                     </p>
                                                 }
                                                 else
                                                 {
                                                     <p>
+                                                       
                                                         <button id="manageCourseResponsible" class="btn btn-danger center-block" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
                                                     </p>
 

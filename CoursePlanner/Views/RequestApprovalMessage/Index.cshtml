@@ -164,7 +164,7 @@
                                 @Html.DisplayNameFor(model => model.CourseOccurrence.Course.CourseName)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.BaseMessage.MessageText)
+                                Request Message Text
                             </th>
                             <th>
                                 @if (User.IsInRole("Study Director"))
@@ -186,7 +186,7 @@
                                 </th>
 
                                 <th>
-                                    Respond message
+                                    Respond message Text
                                 </th>
                             }
                             @if (User.IsInRole("Teacher") && !User.IsInRole("Study Director"))
@@ -195,6 +195,15 @@
                                     Respond Details
                                 </th>
                             }
+                            
+                            @if (User.IsInRole("Study Director"))
+                                    {
+
+                             <th>
+                                 Message Action
+                             </th>
+                            }
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -202,6 +211,8 @@
                         {
                             if (item.BaseMessage.SenderID == ViewBag.CurrentTeacherId || item.BaseMessage.RecieverID == ViewBag.CurrentTeacherId)
                             {
+                                if(string.IsNullOrEmpty(item.BaseMessage.MessageDeletionDate.ToString()))
+                                {
 
                                 <tr>
 
@@ -323,8 +334,7 @@
                                                         </div>
                                                         <p />
                                                         <p />
-                                                        @*<input type="radio" value="true" name="response" />
-                                            <input type="radio" value="false" name="response" />*@
+                                                        
                                                         <input class="btn btn-success btn-xs" value="Respond" type="submit" />
                                                     </fieldset>
                                                 }
@@ -360,9 +370,34 @@
 
                                         </td>
                                     }
+                                    @if (User.IsInRole("Study Director"))
+                                    {
+                                    <td>
+                                      @if (!string.IsNullOrEmpty(item.BaseMessage.MessageReadDate.ToString()))
+                                            {
+                                        using (Html.BeginForm("DeleteApprovalMessage", "RequestApprovalMessage"))
+                                        {
+                                        @Html.AntiForgeryToken()
+                                        <fieldset id="createResponseApprovalMessageForm">
+                                            <input hidden value="1" name="senderId" />
+                                            <input hidden value="33" name="receiverId" />
+                                            <input hidden value="@item.RequestApprovalMessageID" name="deleteApprovalMessageId" />
+                                           
+                                            <p />
+                                      
+                                            <p />
+                                            <p />
 
+                                            <input class="btn btn-danger btn-sm pull-right"  value="Delete" type="submit" />
+                                        </fieldset>
+                                        }
+                                      }
+                                    </td>
 
+                                    }
+                                    
                                 </tr>
+                            }
                             }
                         }
                     </tbody>

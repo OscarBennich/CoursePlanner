@@ -179,5 +179,26 @@ namespace CoursePlanner.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteApprovalMessage(int deleteApprovalMessageId)
+        {
+
+
+            RequestApprovalMessage existingRequestMessage = db.RequestApprovalMessage.Find(deleteApprovalMessageId);
+            BaseMessage existingBaseMessage = db.BaseMessage.Where(b => b.BaseMessageID == existingRequestMessage.BaseMessageID).FirstOrDefault();
+            // BaseMessage existingRequestMessage = db.BaseMessage.Find(requestApprovalMessageId);
+
+            existingBaseMessage.MessageDeletionDate = DateTime.Now;
+            db.Entry(existingRequestMessage).State = EntityState.Modified;
+
+            db.SaveChanges();
+
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
