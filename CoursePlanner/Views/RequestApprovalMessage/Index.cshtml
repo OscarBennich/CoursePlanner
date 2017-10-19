@@ -318,8 +318,8 @@
                                                 {
                                                     @Html.AntiForgeryToken()
                                                     <fieldset id="createResponseApprovalMessageForm">
-                                                        <input hidden value="1" name="senderId" />
-                                                        <input hidden value="33" name="receiverId" />
+                                                        <input hidden value="@item.BaseMessage.RecieverID" name="senderId" />
+                                                        <input hidden value="@item.BaseMessage.SenderID" name="receiverId" />
                                                         <input hidden value="@item.RequestApprovalMessageID" name="requestApprovalMessageId" />
                                                         <input type="text" value="" name="messageText" placeholder="Report if any concern" />
                                                         <p />

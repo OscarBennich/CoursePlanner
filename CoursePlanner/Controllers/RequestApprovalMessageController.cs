@@ -21,6 +21,9 @@ namespace CoursePlanner.Controllers
             var requestapprovalmessage = db.RequestApprovalMessage.Include(r => r.BaseMessage).Include(r => r.CourseOccurrence);
             ViewBag.ResponseStatus= new Func<int, string>(GetResponseStatus);
             ViewBag.ResponseMessage = new Func<int, string>(GetResponseMessage);
+
+            ViewBag.TeacherID = GetTeacherId();
+
             return View(requestapprovalmessage.ToList());
         }
 
