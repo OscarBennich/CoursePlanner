@@ -13,6 +13,7 @@ namespace CoursePlanner.Controllers
     {
         //
         // GET: /Base/
+
         private CoursePlannerEntities db = new CoursePlannerEntities();
         //    //protected override ViewResult View(IView view, object model)
         //    //{
@@ -47,6 +48,7 @@ namespace CoursePlanner.Controllers
         }
 
         #endregion
+
 
     }
 }
