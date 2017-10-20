@@ -30,15 +30,15 @@
         border-spacing: 5px 0;
     }
 
-    #conflicts td {
-        margin-left: auto;
-        margin-right: auto; 
-        font-size: 1.08em;
-    }
+        #conflicts td {
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.08em;
+        }
 
-    #conflicts td p {
-        padding: -5px;
-    }
+            #conflicts td p {
+                padding: -5px;
+            }
 </style>
 
 <p>
@@ -71,9 +71,9 @@
                     </li>
                     @if (Model.FixedContractEndDate != null)
                     {
-                    <li class="list-group-item">
-                        <b>Contract end date</b> <p class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</p>
-                    </li>
+                        <li class="list-group-item">
+                            <b>Contract end date</b> <p class="pull-right">@Model.FixedContractEndDate.Value.ToString("yyyy/MM/dd")</p>
+                        </li>
                     }
                     <li class="list-group-item">
                         <b>Total percentage fall</b> <p class="pull-right">@Convert.ToDouble(Model.TotalPercentageFall.Value * 100)%</p>
@@ -86,12 +86,12 @@
                     </li>
                     @if (User.IsInRole("Study Director"))
                     {
-                    <li class="list-group-item">
-                        <b style="font-size: 1.5em;">&nbsp;</b>
+                        <li class="list-group-item">
+                            <b style="font-size: 1.5em;">&nbsp;</b>
 
-                        <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })'"> Allocate teacher to courses </button>
+                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher", new { tid = @Model.TeacherId })'"> Allocate teacher to courses </button>
 
-                    </li>
+                        </li>
                     }
                 </ul>
             </div>
@@ -134,22 +134,22 @@
                                         <tbody>
                                             @foreach (CourseOccurrence c in ViewBag.CourseOccurencesFall)
                                             {
-                                            <tr>
-                                                <td>
-                                                    @c.Course.CourseCode
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
-                                                </td>
-                                                <td>
-                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
-                                                        @Html.ViewBag.GetCourseResponsibleName((int)c.CourseResponsibleID)
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                        @c.Course.CourseCode
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("Details/" + @c.CourseOccurrenceID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                    </td>
+                                                    <td>
+                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
+                                                            @Html.ViewBag.GetCourseResponsibleName((int)c.CourseResponsibleID)
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -189,29 +189,29 @@
                                         <tbody>
                                             @foreach (CourseOccurrence c in ViewBag.CourseOccurencesSpring)
                                             {
-                                            <tr>
-                                                <td>
-                                                    @c.Course.CourseCode
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
-                                                </td>
-                                                <td>
-                                                    @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
-                                                </td>
-                                                <td>
-                                                    <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
-                                                        @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
+                                                <tr>
+                                                    <td>
+                                                        @c.Course.CourseCode
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("Details/" + @c.CourseID, "CourseOccurrence")"><span>@c.Course.CourseName</span></a>
+                                                    </td>
+                                                    <td>
+                                                        @c.CourseTeacher.Where(x => x.CourseOccurrenceId == c.CourseOccurrenceID && x.TeacherId == Model.TeacherId).Select(y => y.Hours).FirstOrDefault()
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("Details/" + @c.CourseResponsibleID, "Teacher")">
+                                                            @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID)) != null)
                                                             {
-                                                            @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
+                                                                @Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(c.CourseResponsibleID))
                                                             }
                                                             else
                                                             {
-                                                            <p class="center">No course responsible</p>
+                                                                <p class="center">No course responsible</p>
                                                             }
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                        </a>
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -237,7 +237,7 @@
                             <div class="box-body chat" id="chat-box">
                                 @if (@ViewBag.publicCommentsCount > 0)
                                 {
-                                                                        <h4>Public comments:</h4>
+                                    <h4>Public comments:</h4>                                    
                                     foreach (CoursePlanner.Models.Comment c in ViewBag.publicComments)
                                     {
                                         <div class="box box-danger">
@@ -285,7 +285,7 @@
                             <div class="box-footer">
                                 @if (User.IsInRole("Study Director"))
                                 {
-                                <h4>Add comment:</h4>
+                                    <h4>Add comment:</h4>
                                     using (Html.BeginForm("CreateComment", "Teacher"))
                                     {
                                         @Html.AntiForgeryToken()
@@ -860,7 +860,7 @@
             periodChart.Bar(periodChartData, periodChartOptions)
         });
 
-            @*var totalExpectedFall = @ViewBag.ExpectedPeriodHoursFall;
+        @*var totalExpectedFall = @ViewBag.ExpectedPeriodHoursFall;
             var totalExectedSpring = @ViewBag.ExpectedPeriodHoursSpring;
 
             var bars = periodChartData.datasets[0].bars;

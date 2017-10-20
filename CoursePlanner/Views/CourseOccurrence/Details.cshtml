@@ -385,7 +385,7 @@
                                             @if (ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID)) != null)
                                             {
                                                 <b>Course Responsible</b>
-                                                <a class="pull-right" href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
+                                                <a href="@Url.Action("Details/"+@Model.CourseResponsibleID, "Teacher")"><span>@Html.ViewBag.GetCourseResponsibleName(Convert.ToInt32(Model.CourseResponsibleID))</span></a>
                                             }
                                             else
                                             {
@@ -398,19 +398,16 @@
                                                 @*<b style="font-size: 1.5em;">&nbsp;</b>*@
                                                 if (Model.Status.ToString() == "Completed")
                                                 {
-                                                    <p>
+                                                    
 
-                                                        <button id="manageCourseResponsible" class="btn btn-danger center-block disabled" type="button"> Change Course Responsible </button>
+                                                        <button id="manageCourseResponsible" class="btn btn-danger pull-right disabled" type="button"> Change Course Responsible </button>
 
-                                                    </p>
                                                 }
                                                 else
                                                 {
-                                                    <p>
 
-                                                        <button id="manageCourseResponsible" class="btn btn-danger center-block" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
-                                                    </p>
-
+                                                        <button id="manageCourseResponsible" class="btn btn-danger pull-right" data-target="#crModal" data-toggle="modal" type="button"> Change Course Responsible </button>
+                                                  
                                                 }
                                             }
                                         </div>
