@@ -18,7 +18,7 @@ namespace CoursePlanner.Controllers
 
         public ActionResult Index()
         {
-            var requestapprovalmessage = db.RequestApprovalMessage.Include(r => r.BaseMessage).Include(r => r.CourseOccurrence);
+            var requestapprovalmessage = db.RequestApprovalMessage.Where(r => r.BaseMessage.MessageDeletionDate == null).Include(r => r.BaseMessage).Include(r => r.CourseOccurrence);
             ViewBag.ResponseStatus= new Func<int, string>(GetResponseStatus);
             ViewBag.ResponseMessage = new Func<int, string>(GetResponseMessage);
 
