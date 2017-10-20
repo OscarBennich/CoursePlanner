@@ -9,6 +9,7 @@ using CoursePlanner.Models;
 
 namespace CoursePlanner.Controllers
 {
+    [Authorize]
     public class CourseController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();

@@ -10,6 +10,7 @@ using WebMatrix.WebData;
 
 namespace CoursePlanner.Controllers
 {
+    [Authorize]
     public class TeacherController : BaseController
     {
         private CoursePlannerEntities db = new CoursePlannerEntities();

@@ -137,6 +137,10 @@
         color: #fff;
         background-color: #333;
     }
+
+    .btn-margin{
+        margin-bottom:10px;
+    }
 </style>
 
 
@@ -280,9 +284,8 @@
                                                             <input hidden value="1" name="senderId" />
                                                             <input hidden value="33" name="receiverId" />
                                                             <input hidden value="@item.RequestApprovalMessageID" name="requestApprovalMessageId" />
-                                                            <input type="text" value="" name="messageText" placeholder="Report if any concern" />
-                                                            <p />
-                                                            <div class="btn-group" data-toggle="buttons">
+                                                            
+                                                            <div class="btn-group btn-margin" data-toggle="buttons">
                                                                 <label class="btn btn-default-green btn-sm active">
                                                                     <input name="response" id="optAccept" type="radio" checked="" autocomplete="off" value="true"> <input name="response" id="optReject" type="radio" value="false" autocomplete="off"> <strong>Accept</strong>
 
@@ -291,10 +294,9 @@
                                                                     <input name="response" id="optReject" type="radio" value="false" autocomplete="off"> <strong>Reject</strong>
                                                                 </label>
                                                             </div>
-                                                            <p />
-                                                            <p />
-
-                                                            <input class="btn btn-success btn-xs" value="Respond" type="submit" />
+                                                            <br />
+                                                            <input type="text" value="" name="messageText" placeholder="Report if any concern" />
+                                                            <input class="btn btn-danger btn-xs" value="Respond" type="submit" />
                                                         </fieldset>
                                                     }
                                                 }
