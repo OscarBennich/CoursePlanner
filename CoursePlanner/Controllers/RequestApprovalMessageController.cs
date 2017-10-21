@@ -22,6 +22,9 @@ namespace CoursePlanner.Controllers
             var requestapprovalmessage = db.RequestApprovalMessage.Include(r => r.BaseMessage).Include(r => r.CourseOccurrence);
             ViewBag.ResponseStatus= new Func<int, string>(GetResponseStatus);
             ViewBag.ResponseMessage = new Func<int, string>(GetResponseMessage);
+
+            ViewBag.TeacherID = GetTeacherId();
+
             return View(requestapprovalmessage.ToList());
         }
 
@@ -152,9 +155,7 @@ namespace CoursePlanner.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateResponseApprovalMessage(int requestApprovalMessageId, int senderId, int receiverId, string messageText, string response)
-        {
-            
-
+        {         
             BaseMessage baseMessage = new BaseMessage();
             baseMessage.SenderID = senderId;
             baseMessage.RecieverID = receiverId;

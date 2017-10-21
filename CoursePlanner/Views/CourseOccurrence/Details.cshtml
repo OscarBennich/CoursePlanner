@@ -33,10 +33,23 @@
     //    }
     //}
 
-
 </script>
 <p>
     <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "CourseOccurrence")'" />
+
+    @if (User.IsInRole("Study Director") && Model.Status == Statuses.WaitingForApproval)
+    {
+        using (Html.BeginForm("ApproveCourse", "CourseOccurrence"))
+        {
+            @Html.AntiForgeryToken()
+            {
+                <fieldset id="createRequestApprovalMessageForm">
+                    <input hidden value="@Model.CourseOccurrenceID" name="courseOccurrenceID" />
+                    <input type="submit" style="float: right" class="btn btn-success btn-sm" value="Approve course" />
+                </fieldset>
+            }
+        }
+    }
 </p>
 <div class="row">
     <div class="col-md-3">
@@ -218,18 +231,17 @@
 
                                             </div>
                                         </div>
-
+                                        <div class="row">
+                                            <div class="col-xs-10 col-xs-offset-1">
+                                                <h4>Set hours:</h4>
+                                                <input class="form-control pull-right" style="color: #000; background-color: #fff" name="hours" id="number" type="number">
+                                                <input hidden value="@Model.CourseOccurrenceID" name="courseID" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <div class="row">
-                                            <input hidden value="@Model.CourseOccurrenceID" name="id" />
-                                            <div class="col-xs-10 col-xs-offset-1">
-                                                <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible" />
-                                            </div>
-
-                                            <h4>Set hours:</h4>
-                                            <input class="form-control pull-right" style="color: #000; background-color: #fff" name="hours" id="number" type="number">
-
+                                        <div class="col-xs-10 col-xs-offset-1">
+                                            <input class="btn btn-block btn-danger" type="submit" value="Select new course responsible" />
                                         </div>
                                     </div>
                                 </div>
@@ -426,6 +438,9 @@
                                                         <th>
                                                             Request approval
                                                         </th>
+                                                        <th>
+                                                            Latest Response
+                                                        </th>
                                                     }
                                                     <th>
                                                         Teacher Name
@@ -447,6 +462,34 @@
                                                         {
                                                             <td>
                                                                 <input type="checkbox" name="approvalMessageSelection" value="@courseTeacher.TeacherId.ToString()" />
+                                                            </td>
+                                                            <td>
+                                                                @{string approvalResponse = "No Respond Message Sent"; }
+                                                                  
+                                                                @foreach (ResponseApprovalMessage responseApprovalMessage in ViewBag.ResponseApprovalMessageList)
+                                                                {
+                                                                    if (responseApprovalMessage != null && responseApprovalMessage.BaseMessage.SenderID == courseTeacher.TeacherId && responseApprovalMessage.Response == true)
+                                                                    {
+                                                                        approvalResponse = "Accepted";
+                                                                    }
+                                                                    else if (responseApprovalMessage != null && responseApprovalMessage.BaseMessage.SenderID == courseTeacher.TeacherId && responseApprovalMessage.Response == false)
+                                                                    {
+                                                                        approvalResponse = "Rejected";
+                                                                    }
+                                                                }          
+                                                                
+                                                                @if(approvalResponse == "Accepted")
+                                                                {
+                                                                    <span class="label label-success">@approvalResponse</span>
+                                                                }
+                                                                else if(approvalResponse == "Rejected")
+                                                                {
+                                                                    <span class="label label-danger">@approvalResponse</span>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="label label-primary">@approvalResponse</span>
+                                                                }                                                                                                              
                                                             </td>
                                                         }
                                                         <td>

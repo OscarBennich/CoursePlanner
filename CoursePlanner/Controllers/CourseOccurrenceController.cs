@@ -97,6 +97,7 @@ namespace CoursePlanner.Controllers
             ViewBag.CourseOccurencesHistory = courseOccurencesHistory;
 
             ViewBag.teachersCourse = teachersCourse;
+            
             ViewBag.TeachersHistory =
                 new Func<int, IEnumerable<Teacher>>(GetTeacherHistory);
 
@@ -108,7 +109,22 @@ namespace CoursePlanner.Controllers
 
             ViewBag.TeachersForCourseResponsible = db.Teacher.ToList();
 
+            ViewBag.ResponseApprovalMessageList = GetResponseApprovalMessage(teachersCourse, courseoccurrence);
+
             return View(courseoccurrence);
+        }
+
+        private IEnumerable<ResponseApprovalMessage> GetResponseApprovalMessage(List<CourseTeacher> teachersCourse, CourseOccurrence courseOccurrence)
+        {
+            List<ResponseApprovalMessage> responseApprovalMessageList = new List<ResponseApprovalMessage>();
+
+            foreach(Teacher teacher in teachersCourse.Select(t => t.Teacher).ToList())
+            {
+                ResponseApprovalMessage responseToAdd = (ResponseApprovalMessage)db.ResponseApprovalMessage.Where(x => x.BaseMessage.SenderID == teacher.TeacherId && x.RequestApprovalMessage.CourseOccurrence.CourseOccurrenceID == courseOccurrence.CourseOccurrenceID).ToList().LastOrDefault();         
+                responseApprovalMessageList.Add(responseToAdd);
+            }
+
+            return responseApprovalMessageList;
         }
 
         private IEnumerable<CourseOccurrence> GetCoursesHistory(int courseID, string year)
@@ -177,25 +193,10 @@ namespace CoursePlanner.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditCourseResponsible(int courseID, int newcourseresponsibleId, int hours = 0)
-        {
+        {   
             CourseOccurrence courseoccurrence = db.CourseOccurrence.Find(courseID);
 
             Teacher newTeacher = db.Teacher.Where(t => t.TeacherId == newcourseresponsibleId).FirstOrDefault();
-
-            //var newteacher = (from m in db.Teacher
-            //                  where m.TeacherId == newcourseresponsibleId
-            //                  select m.TeacherId).Single();
-
-            // Create message 
-            BaseMessage baseMessage = new BaseMessage();
-            baseMessage.SenderID = GetTeacherId();
-            baseMessage.RecieverID = newcourseresponsibleId;
-            baseMessage.MessageText = "You are now responsible for the course " + courseoccurrence.Course.CourseName + " " + courseoccurrence.Year;
-            baseMessage.MessageSendDate = DateTime.Now;
-            RequestApprovalMessage requestMessage = new RequestApprovalMessage();
-            requestMessage.CourseOccurrenceID = courseID;
-            requestMessage.BaseMessage = baseMessage;
-            db.RequestApprovalMessage.Add(requestMessage);
 
             // Create CourseTeacher instance
             string currentYear = GetCurrentEducationalYear();
@@ -218,7 +219,12 @@ namespace CoursePlanner.Controllers
             else 
             {
                 CourseTeacher courseTeacher = db.CourseTeacher.Where(c => c.TeacherId == newTeacher.TeacherId && c.CourseOccurrenceId == courseoccurrence.CourseOccurrenceID && c.CourseOccurrence.Year == currentYear).FirstOrDefault();
-                courseTeacher.Hours = hours;
+                
+                //Checking so that a current teacher doesn't get their hours reset if the field is not filled in
+                if(hours != 0)
+                {
+                    courseTeacher.Hours = hours;
+                }        
             }
 
             courseoccurrence.CourseResponsibleID = newTeacher.TeacherId;
@@ -406,27 +412,61 @@ namespace CoursePlanner.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateRequestApprovalMessage(int courseOccurrenceID, int[] approvalMessageSelection)
-        {
-            string currentYear = GetCurrentEducationalYear();
-
-            // Creating multiple messages
-            foreach (int receiverID in approvalMessageSelection)
+        {   
+            // Make sure that at least one teacher is selected when sending a message
+            if (approvalMessageSelection != null)
             {
-                BaseMessage baseMessage = new BaseMessage();
-                baseMessage.SenderID = GetTeacherId();
-                baseMessage.RecieverID = receiverID;
+                string currentYear = GetCurrentEducationalYear();
+                // Creating multiple messages, one for each selected teacher
+                foreach (int receiverID in approvalMessageSelection)
+                {
+                    // Checking if there are previous undread messages that are about the same course occurrence sent to the same teacher
+                    List<RequestApprovalMessage> requestApprovalMessageList = db.RequestApprovalMessage.Where(m => m.CourseOccurrenceID == courseOccurrenceID && m.CourseOccurrence.Year == currentYear && m.BaseMessage.RecieverID == receiverID).ToList();
+                    foreach (RequestApprovalMessage message in requestApprovalMessageList)
+                    {
+                        // If the messages are unread then they get removed 
+                        if (message.BaseMessage.MessageReadDate == null)
+                        {
+                            message.BaseMessage.MessageDeletionDate = DateTime.Now;
+                        }
+                    }
 
-                int currentHours = db.CourseTeacher.Where(c => c.TeacherId == receiverID && c.CourseOccurrenceId == courseOccurrenceID && c.CourseOccurrence.Year == currentYear).Select(c => c.Hours).FirstOrDefault();
+                    BaseMessage baseMessage = new BaseMessage();
+                    baseMessage.SenderID = GetTeacherId();
+                    baseMessage.RecieverID = receiverID;
 
-                baseMessage.MessageText = "You need to approve or reject the changes that have been made to this course. Your hours are now " + currentHours.ToString();
+                    int currentHours = db.CourseTeacher.Where(c => c.TeacherId == receiverID && c.CourseOccurrenceId == courseOccurrenceID && c.CourseOccurrence.Year == currentYear).Select(c => c.Hours).FirstOrDefault();
+                    baseMessage.MessageText = "You need to approve or reject the changes that have been made to this course. Your hours are now " + currentHours.ToString() + ".";
 
-                baseMessage.MessageSendDate = DateTime.Now;
+                    int courseResponsibleID = Convert.ToInt32(db.CourseOccurrence.Where(c => c.CourseOccurrenceID == courseOccurrenceID && c.Year == currentYear).Select(c => c.CourseResponsibleID).FirstOrDefault());
 
-                RequestApprovalMessage requestMessage = new RequestApprovalMessage();
-                requestMessage.CourseOccurrenceID = courseOccurrenceID;
-                requestMessage.BaseMessage = baseMessage;
-                db.RequestApprovalMessage.Add(requestMessage);
+                    // Case if the reciever is responsible for the course
+                    if (receiverID == courseResponsibleID)
+                    {
+                        baseMessage.MessageText += " You are also the course responsible for this course.";
+                    }
+
+                    baseMessage.MessageSendDate = DateTime.Now;
+
+                    RequestApprovalMessage requestMessage = new RequestApprovalMessage();
+                    requestMessage.CourseOccurrenceID = courseOccurrenceID;
+                    requestMessage.BaseMessage = baseMessage;
+                    db.RequestApprovalMessage.Add(requestMessage);
+                }
+
+                db.SaveChanges();
+
             }
+
+            return RedirectToAction("Details/" + courseOccurrenceID);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ApproveCourse(int courseOccurrenceID)
+        {
+            CourseOccurrence courseOccurrence = db.CourseOccurrence.Find(courseOccurrenceID);
+            courseOccurrence.Status = Statuses.Approved;
 
             db.SaveChanges();
 
