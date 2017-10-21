@@ -60,16 +60,28 @@
                                     <!-- inner menu: contains the actual data -->
                                     @if (@ViewBag.MessagesNotificationsCount > 0)
                                     {
-                                        <ul class="menu">
-                                            @foreach (CoursePlanner.Models.RequestApprovalMessage c in ViewBag.MessagesNotifications)
-                                            {
-                                                <li>
-                                                    <a href="@Url.Action("Index", "RequestApprovalMessage")">
-                                                        <i class="fa fa-edit text-red"></i> @c.BaseMessage.MessageText
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
+                                        using (Html.BeginForm("readRemoveMessage", "Base", FormMethod.Post, new { id = "readRemoveMessageForm" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <fieldset>
+                                                <ul class="menu">
+
+
+
+
+                                                    @foreach (CoursePlanner.Models.RequestApprovalMessage c in ViewBag.MessagesNotifications)
+                                                    {
+                                                        <li>
+
+                                                            <a onclick="readRemoveMessageForm.submit();">
+                                                                <i class="fa fa-edit text-red"></i> @c.BaseMessage.MessageText
+                                                            </a>
+                                                        </li>
+                                                    }
+
+                                                </ul>
+                                            </fieldset>
+                                        }
                                     }
                                 </li>
                                 @*<li class="footer"><a href="#">View all</a></li>*@

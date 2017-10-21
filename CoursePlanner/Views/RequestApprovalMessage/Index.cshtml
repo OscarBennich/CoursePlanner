@@ -223,7 +223,10 @@
 
 
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CourseOccurrence.Course.CourseName)
+                                            <a href="@Url.Action("Details", "CourseOccurrence", new { id = item.CourseOccurrenceID }, null)" class="name">
+                                                @Html.DisplayFor(modelItem => item.CourseOccurrence.Course.CourseName)
+                                            </a>
+                                          
                                         </td>
 
                                         <td>
@@ -237,7 +240,13 @@
                                         @if (User.IsInRole("Study Director"))
                                         {
                                             <td>
-                                                @if (!string.IsNullOrEmpty(item.BaseMessage.MessageReadDate.ToString()))
+                                                @if (item.BaseMessage.MessageText.Contains("removed"))
+                                                {
+                                                    <span class="label label-primary">No response needed</span>
+                                                }
+
+                                                else { 
+                                                if (!string.IsNullOrEmpty(item.BaseMessage.MessageReadDate.ToString()))
                                                 {
                                                     if (ViewBag.ResponseStatus(item.RequestApprovalMessageID) == "True")
                                                     {
@@ -265,7 +274,7 @@
                                                 {
                                                     <span class="label label-default">Not Yet Responded</span>
                                                 }
-
+                                                }
 
                                             </td>
                                         }
@@ -274,7 +283,14 @@
                                         @if (User.IsInRole("Teacher") && !User.IsInRole("Study Director"))
                                         {
                                             <td>
-                                                @if (string.IsNullOrEmpty(item.BaseMessage.MessageReadDate.ToString()))
+                                                @if (item.BaseMessage.MessageText.Contains("removed"))
+                                                {
+                                                    <span class="label label-primary">No response needed</span>
+                                                }
+                                                else
+                                                {
+
+                                                if (string.IsNullOrEmpty(item.BaseMessage.MessageReadDate.ToString()))
                                                 {
 
                                                     using (Html.BeginForm("CreateResponseApprovalMessage", "RequestApprovalMessage"))
@@ -333,15 +349,15 @@
                                                         </span>
                                                     }
                                                 }
+                                                }
 
                                             </td>
                                         }
                                         @if (User.IsInRole("Study Director"))
                                         {
                                             <td>
-                                                @if (!string.IsNullOrEmpty(item.BaseMessage.MessageReadDate.ToString()))
-                                                {
-                                                    using (Html.BeginForm("DeleteApprovalMessage", "RequestApprovalMessage"))
+                                               
+                                                    @using (Html.BeginForm("DeleteApprovalMessage", "RequestApprovalMessage"))
                                                     {
                                                         @Html.AntiForgeryToken()
                                                         <fieldset id="createResponseApprovalMessageForm">
@@ -357,7 +373,7 @@
                                                             <input class="btn btn-danger btn-sm pull-right" value="Delete" type="submit" />
                                                         </fieldset>
                                                     }
-                                                }
+                                                
                                             </td>
 
                                         }

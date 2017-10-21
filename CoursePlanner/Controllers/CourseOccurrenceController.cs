@@ -334,14 +334,31 @@ namespace CoursePlanner.Controllers
         [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteCourseTeacher(int cid, int tid)
+        public ActionResult DeleteCourseTeacher(int cid, int tid,string removeButton)
         {
-
+            CourseOccurrence courseOccurrence = db.CourseOccurrence.Where(c => c.CourseOccurrenceID == cid).FirstOrDefault();
             CourseTeacher courseteacher = db.CourseTeacher.Where(c => c.CourseOccurrenceId == cid && c.TeacherId == tid).FirstOrDefault();
             db.CourseTeacher.Remove(courseteacher);
+           if(removeButton =="Remove & Notify")
+           {
+               // Create message 
+               BaseMessage baseMessage = new BaseMessage();
+               baseMessage.SenderID = GetTeacherId();
+               baseMessage.RecieverID = tid;
+               baseMessage.MessageText = "You have now been removed from the course " + courseOccurrence.Course.CourseName +" .Sorry for the inconvenience that occurred.";
+               baseMessage.MessageSendDate = DateTime.Now;
+               RequestApprovalMessage requestMessage = new RequestApprovalMessage();
+               requestMessage.CourseOccurrenceID = cid;
+               requestMessage.BaseMessage = baseMessage;
+               db.RequestApprovalMessage.Add(requestMessage);
+           }
+
+
             db.SaveChanges();
             return RedirectToAction("Details/" + courseteacher.CourseOccurrenceId);
         }
+
+    
 
         protected override void Dispose(bool disposing)
         {
@@ -352,10 +369,10 @@ namespace CoursePlanner.Controllers
         [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AllocateTeacherHours(int cid, int tid, int hours)
+        public ActionResult AllocateTeacherHours(int courseID, int tid, int hours)
         {
             var courseteacher = new CourseTeacher();
-            courseteacher.CourseOccurrenceId = cid;
+            courseteacher.CourseOccurrenceId = courseID;
             courseteacher.TeacherId = tid;
             courseteacher.Hours = hours;
             if (ModelState.IsValid)
