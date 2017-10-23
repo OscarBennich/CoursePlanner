@@ -480,7 +480,7 @@
                                                                 <input type="checkbox" name="approvalMessageSelection" value="@courseTeacher.TeacherId.ToString()" />
                                                             </td>
                                                             <td>
-                                                                @{string approvalResponse = "No Respond Message Sent"; }
+                                                                @{string approvalResponse = "Not Yet Responded"; }
                                                                   
                                                                 @foreach (ResponseApprovalMessage responseApprovalMessage in ViewBag.ResponseApprovalMessageList)
                                                                 {
@@ -504,7 +504,7 @@
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span class="label label-primary">@approvalResponse</span>
+                                                                    <span class="label label-default">@approvalResponse</span>
                                                                 }                                                                                                              
                                                             </td>
                                                         }
