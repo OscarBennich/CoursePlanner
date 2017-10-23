@@ -17,25 +17,45 @@
                         </a>
                     </h4>
                 </div>
-                <div id="conflictColorsCollapse" class="panel-collapse collapse">
-                    <div class="box-body">
-                        <div class="conflictDescription callout callout-info">
-                            <b>Notification</b>
-                            <p>Identifies a course with non-hour related issues.</p>
-                        </div>
-                        <div class="conflictDescription callout callout-success">
-                            <b>No issue</b>
-                            <p>Identifies a course with a balance of less than +-50 hours.</p>
-                        </div>
-                        <div class="conflictDescription callout callout-warning">
-                            <b>Minor hour issue</b>
-                            <p>Identifies a course with a balance of less than +-100 hours.</p>
-                        </div>
-                        <div class="conflictDescription callout callout-danger">
-                            <b>Major hour issue</b>
-                            <p> Identifies a course with a balance of more than than +- 100 hours.</p>
-                        </div>
 
+                <div id="conflictColorsCollapse" class="panel-collapse collapse">
+                    <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class=" info-box">
+                            <span style="color: #fff !important;" class="info-box-icon bg-gray"><i class="fa fa-thumbs-o-up"></i></span> @*fa-thumbs-o-up*@
+                            <div class="info-box-content">
+                                <span class="info-box-text">Approved or Completed course</span>
+                                <span class="info-box-number"><small>Completed course or course in which the hours have been approved</small></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class=" info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-smile-o"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">No issue</span>
+                                <span class="info-box-number"><small>Identifies a course with a balance of less than +-50 hours.</small></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class=" info-box">
+                            <span class="info-box-icon bg-yellow"><i class="fa fa-meh-o"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Minor hour issue</span>
+                                <span class="info-box-number"><small>Identifies a course with a balance of less than +-100 hours.</small></span>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class=" info-box">
+                                <span class="info-box-icon bg-red"><i class="fa fa-frown-o"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Major hour issue</span>
+                                    <span class="info-box-number"><small>Identifies a course with a balance of more than than +- 100 hours.</small></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
