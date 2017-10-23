@@ -1,6 +1,7 @@
 ﻿using CoursePlanner.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,6 +36,27 @@ namespace CoursePlanner.Controllers
             ViewBag.CurrentTeacherId = GetTeacherId();
             base.OnActionExecuting(filterContext);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult readRemoveMessage()
+        {
+            //CourseModel coursemodel = db.Courses.Find(id);
+            int currentTeacherId = GetTeacherId();
+            IEnumerable<BaseMessage> baseMessage = db.BaseMessage.Where(b => b.RecieverID == currentTeacherId && b.MessageText.Contains("removed")).ToList();
+            foreach (var item in baseMessage)
+            {
+                //BaseMessage existingBaseMessage = db.BaseMessage.Where(b => b.BaseMessageID == item.BaseMessageID).FirstOrDefault();
+                item.MessageReadDate = DateTime.Now;
+                db.Entry(item).State = EntityState.Modified;
+               
+            }
+            
+            db.SaveChanges();
+
+            return RedirectToAction("Index" , "RequestApprovalMessage");
+        }
+
 
         public int GetTeacherId()
         {
