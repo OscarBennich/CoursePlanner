@@ -172,33 +172,44 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu">
-                    <li class="header">MAIN NAVIGATION</li>
-                    <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-calendar"></i> <span>Overview</span></a></li>
-                    <li>
-                        <a href="@Url.Action("Index", "CourseOccurrence")"><i class="fa fa-book"></i> <span>Courses</span></a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "Teacher")"><i class="fa fa-users"></i> <span>Teachers</span></a>
-                    </li>
+       @using (Html.BeginForm("readRemoveMessage", "Base", FormMethod.Post, new { id = "readRemoveMessageFormMessage" }))
+       {
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <ul class="sidebar-menu">
+                <li class="header">MAIN NAVIGATION</li>
+                <li><a href="@Url.Action("Index", "Home")"><i class="active fa fa-calendar"></i> <span>Overview</span></a></li>
+                <li>
+                    <a href="@Url.Action("Index", "CourseOccurrence")"><i class="fa fa-book"></i> <span>Courses</span></a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Teacher")"><i class="fa fa-users"></i> <span>Teachers</span></a>
+                </li>
 
-                    @if (User.IsInRole("Study Director")) { 
-                  
+                @if (User.IsInRole("Study Director"))
+                {
+
                     <li>
                         <a href="@Url.Action("Create", "CourseTeacher")"><i class="fa fa-calendar-check-o"></i> <span>Allocate Teaching Hours</span></a>
                     </li>
                     @*<li>
-                        <a href="@Url.Action("RoleIndex", "Account")"><i class="fa fa-user-secret"></i> <span>Manage User Roles</span></a>
+                            <a href="@Url.Action("RoleIndex", "Account")"><i class="fa fa-user-secret"></i> <span>Manage User Roles</span></a>
 
-                    </li>*@
-                    }
-                    <li>
-                        <a href="@Url.Action("Index", "RequestApprovalMessage")"><i class="fa fa-inbox"></i> <span>Messages</span></a>
-                    </li>
+                        </li>*@
+                }
 
 
+                <li>
+                    <a onclick="readRemoveMessageFormMessage.submit();" style="cursor: pointer"><i class="fa fa-inbox"></i> <span>Messages</span></a>
+                </li>
 
-                </ul>
+
+
+            </ul>
+        </fieldset>
+       }
+
+
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -227,7 +238,7 @@
         <!-- Footer -->
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 2.0.0
+                <b>Version</b> 3.0.0
             </div>
             <strong>Copyright &copy; @DateTime.Now.Year Group Gamma.</strong> All rights
             reserved.

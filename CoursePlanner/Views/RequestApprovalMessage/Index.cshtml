@@ -242,7 +242,7 @@
                                             <td>
                                                 @if (item.BaseMessage.MessageText.Contains("removed"))
                                                 {
-                                                    <span class="label label-primary">No response needed</span>
+                                                    <span class="label label-primary">No Response Needed</span>
                                                 }
 
                                                 else { 
@@ -285,7 +285,7 @@
                                             <td>
                                                 @if (item.BaseMessage.MessageText.Contains("removed"))
                                                 {
-                                                    <span class="label label-primary">No response needed</span>
+                                                    <span class="label label-primary">No Response Needed</span>
                                                 }
                                                 else
                                                 {
@@ -358,17 +358,15 @@
                                                     @using (Html.BeginForm("DeleteApprovalMessage", "RequestApprovalMessage"))
                                                     {
                                                         @Html.AntiForgeryToken()
-                                                        <fieldset id="createResponseApprovalMessageForm">
-                                                            <input hidden value="1" name="senderId" />
-                                                            <input hidden value="33" name="receiverId" />
+                                                        <fieldset id="createResponseApprovalMessageForm">                                                           
                                                             <input hidden value="@item.RequestApprovalMessageID" name="deleteApprovalMessageId" />
 
-                                                            <p />
+                                                          
 
                                                             <p />
                                                             <p />
 
-                                                            <input class="btn btn-danger btn-sm pull-right" value="Delete" type="submit" />
+                                                            <input class="btn btn-danger btn-sm center-block" value="Delete" type="submit" />
                                                         </fieldset>
                                                     }
                                                 

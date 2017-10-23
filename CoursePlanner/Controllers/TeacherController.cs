@@ -176,8 +176,7 @@ namespace CoursePlanner.Controllers
             db.Comment.Add(comment);
             db.SaveChanges();
 
-
-            return RedirectToAction("Details/" + receiverId);
+            return new RedirectResult(Url.Action("Details/") + receiverId.ToString() + "#comments");
         }
 
         public ActionResult DeleteComment(int toDeleteComment)
@@ -190,7 +189,7 @@ namespace CoursePlanner.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Details/" + deletedComment.BaseMessage.RecieverID+"#comments");
+            return new RedirectResult(Url.Action("Details/") + deletedComment.BaseMessage.RecieverID + "#comments");
         }
 
         public ActionResult ReadComment(int toReadComment)
@@ -203,7 +202,7 @@ namespace CoursePlanner.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Details/" + deletedComment.BaseMessage.RecieverID);
+            return new RedirectResult(Url.Action("Details/") + deletedComment.BaseMessage.RecieverID + "#comments");
         }
 
         protected override void Dispose(bool disposing)

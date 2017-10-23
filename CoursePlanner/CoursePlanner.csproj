@@ -187,7 +187,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\CourseOccurrenceController.cs" />
     <Compile Include="Controllers\CourseTeacherController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -769,32 +768,13 @@
     <Content Include="Views\Account\RoleCreate.cshtml" />
     <Content Include="Views\Account\RoleIndex.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Course\Index.cshtml" />
-    <Content Include="Views\Course\Details.cshtml" />
-    <Content Include="Views\Course\Create.cshtml" />
-    <Content Include="Views\Course\Edit.cshtml" />
-    <Content Include="Views\Course\Delete.cshtml" />
     <Content Include="Views\Teacher\Index.cshtml" />
     <Content Include="Views\Teacher\Details.cshtml" />
-    <Content Include="Views\Teacher\Create.cshtml" />
-    <Content Include="Views\Teacher\Edit.cshtml" />
-    <Content Include="Views\Teacher\Delete.cshtml" />
     <Content Include="Views\CourseOccurrence\Index.cshtml" />
     <Content Include="Views\CourseOccurrence\Details.cshtml" />
-    <Content Include="Views\CourseOccurrence\Create.cshtml" />
-    <Content Include="Views\CourseOccurrence\Edit.cshtml" />
-    <Content Include="Views\CourseOccurrence\Delete.cshtml" />
     <Content Include="Views\CourseTeacher\Create.cshtml" />
-    <Content Include="Views\CourseTeacher\Delete.cshtml" />
-    <Content Include="Views\CourseTeacher\Details.cshtml" />
-    <Content Include="Views\CourseTeacher\Edit.cshtml" />
-    <Content Include="Views\CourseTeacher\Index.cshtml" />
     <Content Include="Views\Home\_CourseConflictTable.cshtml" />
     <Content Include="Views\RequestApprovalMessage\Index.cshtml" />
-    <Content Include="Views\RequestApprovalMessage\Details.cshtml" />
-    <Content Include="Views\RequestApprovalMessage\Create.cshtml" />
-    <Content Include="Views\RequestApprovalMessage\Edit.cshtml" />
-    <Content Include="Views\RequestApprovalMessage\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -821,7 +801,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55004</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55017/</IISUrl>
+          <IISUrl>http://localhost:55050/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

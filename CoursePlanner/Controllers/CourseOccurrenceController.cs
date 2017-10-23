@@ -172,7 +172,7 @@ namespace CoursePlanner.Controllers
             }
             catch (Exception E)
             {
-                return "no course responsible";
+                return "No course responsible";
             }
         }
 
@@ -351,7 +351,7 @@ namespace CoursePlanner.Controllers
                BaseMessage baseMessage = new BaseMessage();
                baseMessage.SenderID = GetTeacherId();
                baseMessage.RecieverID = tid;
-               baseMessage.MessageText = "You have now been removed from the course " + courseOccurrence.Course.CourseName +" .Sorry for the inconvenience that occurred.";
+               baseMessage.MessageText = "You have now been removed from the course " + courseOccurrence.Course.CourseName +". Sorry for the inconvenience.";
                baseMessage.MessageSendDate = DateTime.Now;
                RequestApprovalMessage requestMessage = new RequestApprovalMessage();
                requestMessage.CourseOccurrenceID = cid;
@@ -375,7 +375,7 @@ namespace CoursePlanner.Controllers
         [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AllocateTeacherHours(int courseID, int tid, int hours)
+        public ActionResult AllocateTeacherHours(int courseID, int tid, int hours = 0)
         {
             var courseteacher = new CourseTeacher();
             courseteacher.CourseOccurrenceId = courseID;
@@ -453,7 +453,7 @@ namespace CoursePlanner.Controllers
                     baseMessage.RecieverID = receiverID;
 
                     int currentHours = db.CourseTeacher.Where(c => c.TeacherId == receiverID && c.CourseOccurrenceId == courseOccurrenceID && c.CourseOccurrence.Year == currentYear).Select(c => c.Hours).FirstOrDefault();
-                    baseMessage.MessageText = "You need to approve or reject the changes that have been made to this course. Your hours are now " + currentHours.ToString() + ".";
+                    baseMessage.MessageText = "You need to approve or reject the changes that have been made to the course " + db.CourseOccurrence.Find(courseOccurrenceID).Course.CourseName + ". Your hours are now " + currentHours.ToString() + ".";
 
                     int courseResponsibleID = Convert.ToInt32(db.CourseOccurrence.Where(c => c.CourseOccurrenceID == courseOccurrenceID && c.Year == currentYear).Select(c => c.CourseResponsibleID).FirstOrDefault());
 
@@ -480,10 +480,26 @@ namespace CoursePlanner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ApproveCourse(int courseOccurrenceID)
+        public ActionResult ChangeCourseStatus(int courseOccurrenceID, string courseStatus)
         {
             CourseOccurrence courseOccurrence = db.CourseOccurrence.Find(courseOccurrenceID);
-            courseOccurrence.Status = Statuses.Approved;
+            
+            if(courseStatus == "Planning")
+            {
+                courseOccurrence.Status = Statuses.Planning;
+            }
+            else if(courseStatus == "WaitingForApproval")
+            {
+                courseOccurrence.Status = Statuses.WaitingForApproval;
+            }
+            else if (courseStatus == "Approved")
+            {
+                courseOccurrence.Status = Statuses.Approved;
+            }
+            else if (courseStatus == "Completed")
+            {
+                courseOccurrence.Status = Statuses.Completed;
+            }
 
             db.SaveChanges();
 

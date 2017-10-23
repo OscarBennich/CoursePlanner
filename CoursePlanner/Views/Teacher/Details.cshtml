@@ -42,7 +42,7 @@
 </style>
 
 <p>
-    <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action(" index", "Teacher" )'" />
+    <input type="button" class="btn btn-danger btn-sm" value="Back To List" onclick="location.href='@Url.Action("Index", "Teacher" )'" />
 </p>
 <div class="row">
     <div class="col-md-4">
@@ -89,7 +89,7 @@
                         <li class="list-group-item">
                             <b style="font-size: 1.5em;">&nbsp;</b>
 
-                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action(" create", "CourseTeacher" , new { tid=@Model.TeacherId })'"> Allocate teacher to courses </button>
+                            <button class="btn btn-danger btn-sm pull-right" type="button" onclick="location.href='@Url.Action("Create", "CourseTeacher" , new { tid=@Model.TeacherId })'"> Allocate Teacher To Courses </button>
 
                         </li>
                     }
@@ -254,16 +254,16 @@
                                                 {
                                                     <li class="item">
                                                         <div class="product-info">
-                                                            <a href="@Url.Action("Details", "Teacher" , new { id=c.BaseMessage.TeacherSender.TeacherId}, null)" class="name">
-                                                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> @c.BaseMessage.MessageSendDate</small>
+                                                            <a href="@Url.Action("Details", "Teacher" , new { id=c.BaseMessage.TeacherSender.TeacherId}, null)" class="name">                                                       
                                                                 @c.BaseMessage.TeacherSender.TeacherName
                                                             </a>
+                                                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> @c.BaseMessage.MessageSendDate</small>
                                                             <span class="product-description">
                                                                 @c.BaseMessage.MessageText
                                                             </span>
                                                             @if (User.IsInRole("Study Director"))
                                                             {
-                                                                <button class="btn btn-danger btn-xs pull-right" type="button" onclick="location.href='@Url.Action(" deletecomment", "Teacher" , new { todeletecomment=@c.BaseMessageID })'"> Remove</button>
+                                                                <button class="btn btn-danger btn-xs pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher" , new { toDeleteComment=@c.BaseMessageID })'"> Remove</button>
                                                             }
                                                         </div>
                                                     </li>
@@ -291,16 +291,16 @@
                                                 {
                                                     <li class="item">
                                                         <div class="product-info">
-                                                            <a href="@Url.Action("Details", "Teacher" , new { id=c.BaseMessage.TeacherSender.TeacherId}, null)" class="name">
-                                                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> @c.BaseMessage.MessageSendDate</small>
+                                                            <a href="@Url.Action("Details", "Teacher" , new { id=c.BaseMessage.TeacherSender.TeacherId}, null)" class="name">                                                              
                                                                 @c.BaseMessage.TeacherSender.TeacherName
                                                             </a>
+                                                            <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> @c.BaseMessage.MessageSendDate</small>
                                                             <span class="product-description">
                                                                 @c.BaseMessage.MessageText
                                                             </span>
                                                             @if (User.IsInRole("Study Director"))
                                                             {
-                                                                <button class="btn btn-danger btn-xs pull-right" type="button" onclick="location.href='@Url.Action(" deletecomment", "Teacher" , new { todeletecomment=@c.BaseMessageID })'"> Remove</button>
+                                                                <button class="btn btn-danger btn-xs pull-right" type="button" onclick="location.href='@Url.Action("DeleteComment", "Teacher" , new { toDeleteComment=@c.BaseMessageID })'"> Remove</button>
                                                             }
                                                         </div>
                                                     </li>

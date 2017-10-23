@@ -77,7 +77,7 @@ namespace CoursePlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourseTeacher courseteacher)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && courseteacher.Hours >= 0)
             {
                 db.CourseTeacher.Add(courseteacher);
                 try
@@ -89,12 +89,12 @@ namespace CoursePlanner.Controllers
                     Edit(courseteacher);
                 }
 
+                ViewBag.CourseOccurrenceId = new SelectList(db.CourseOccurrence, "CourseOccurrenceID", "Year", courseteacher.CourseOccurrenceId);
+                ViewBag.TeacherId = new SelectList(db.Teacher, "TeacherId", "TeacherName", courseteacher.TeacherId);
                 return RedirectToAction("Create", new { tid = courseteacher.TeacherId, cid = courseteacher.CourseOccurrenceId});
             }
 
-            ViewBag.CourseOccurrenceId = new SelectList(db.CourseOccurrence, "CourseOccurrenceID", "Year", courseteacher.CourseOccurrenceId);
-            ViewBag.TeacherId = new SelectList(db.Teacher, "TeacherId", "TeacherName", courseteacher.TeacherId);
-            return View(courseteacher);
+            return RedirectToAction("Create", new { tid = courseteacher.TeacherId, cid = courseteacher.CourseOccurrenceId });
         }
 
         //
@@ -115,7 +115,7 @@ namespace CoursePlanner.Controllers
 
         //
         // POST: /CourseTeacher/Edit/5
-         [Authorize(Roles = "Study Director")]
+        [Authorize(Roles = "Study Director")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CourseTeacher courseteacher)

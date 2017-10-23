@@ -155,7 +155,7 @@ namespace CoursePlanner.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateResponseApprovalMessage(int requestApprovalMessageId, int senderId, int receiverId, string messageText, string response)
-        {         
+        {   
             BaseMessage baseMessage = new BaseMessage();
             baseMessage.SenderID = senderId;
             baseMessage.RecieverID = receiverId;
@@ -187,12 +187,13 @@ namespace CoursePlanner.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteApprovalMessage(int deleteApprovalMessageId)
         {
-
-
             RequestApprovalMessage existingRequestMessage = db.RequestApprovalMessage.Find(deleteApprovalMessageId);
             BaseMessage existingBaseMessage = db.BaseMessage.Where(b => b.BaseMessageID == existingRequestMessage.BaseMessageID).FirstOrDefault();
             // BaseMessage existingRequestMessage = db.BaseMessage.Find(requestApprovalMessageId);
-
+            if (string.IsNullOrEmpty(existingBaseMessage.MessageReadDate.ToString()))
+            {
+                existingBaseMessage.MessageReadDate = DateTime.Now;
+            }
             existingBaseMessage.MessageDeletionDate = DateTime.Now;
             db.Entry(existingRequestMessage).State = EntityState.Modified;
 
